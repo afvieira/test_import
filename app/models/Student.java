@@ -9,7 +9,7 @@ import java.util.*;
 /**
  * Created by NRAM on 07/04/14.
  */
-public class Student extends Model {
+public class Student extends User{
 
     @Id
     @Constraints.Min(10)
@@ -28,20 +28,16 @@ public class Student extends Model {
     private String contact;
 
     @Constraints.Required
-    private String email;
-
-    @Constraints.Required
     private List<Shift> shifts = new ArrayList<Shift>();
 
     public Student() {
     }
 
-    public Student(String code, String name, Date birthdate, String contact, String email, List<Shift> shifts) {
+    public Student(String code, String name, Date birthdate, String contact, List<Shift> shifts) {
         this.code = code;
         this.name = name;
         this.birthdate = birthdate;
         this.contact = contact;
-        this.email = email;
         this.shifts = shifts;
     }
 
@@ -77,14 +73,6 @@ public class Student extends Model {
         this.contact = contact;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public List<Shift> getShifts() {
         return shifts;
     }
@@ -104,7 +92,6 @@ public class Student extends Model {
         if (!birthdate.equals(student.birthdate)) return false;
         if (!code.equals(student.code)) return false;
         if (!contact.equals(student.contact)) return false;
-        if (!email.equals(student.email)) return false;
         if (!id.equals(student.id)) return false;
         if (!name.equals(student.name)) return false;
         if (!shifts.equals(student.shifts)) return false;
@@ -120,7 +107,6 @@ public class Student extends Model {
         result = 31 * result + name.hashCode();
         result = 31 * result + birthdate.hashCode();
         result = 31 * result + contact.hashCode();
-        result = 31 * result + email.hashCode();
         result = 31 * result + shifts.hashCode();
         return result;
     }
@@ -133,7 +119,6 @@ public class Student extends Model {
                 ", name='" + name + '\'' +
                 ", birthdate=" + birthdate +
                 ", contact='" + contact + '\'' +
-                ", email='" + email + '\'' +
                 ", shifts=" + shifts +
                 '}';
     }

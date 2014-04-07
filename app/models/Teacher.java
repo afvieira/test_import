@@ -8,7 +8,7 @@ import javax.persistence.Id;
 /**
  * Created by NRAM on 07/04/14.
  */
-public class Teacher extends Model {
+public class Teacher extends User {
 
     @Id
     @Constraints.Min(10)
@@ -27,20 +27,16 @@ public class Teacher extends Model {
     private String contact;
 
     @Constraints.Required
-    private String email;
-
-    @Constraints.Required
     private List<Discipline> shifts = new ArrayList<Discipline>();
 
     public Teacher() {
     }
 
-    public Teacher(String code, String name, Date birthdate, String contact, String email, List<Discipline> shifts) {
+    public Teacher(String code, String name, Date birthdate, String contact, List<Discipline> shifts) {
         this.code = code;
         this.name = name;
         this.birthdate = birthdate;
         this.contact = contact;
-        this.email = email;
         this.shifts = shifts;
     }
 
@@ -76,14 +72,6 @@ public class Teacher extends Model {
         this.contact = contact;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public List<Discipline> getShifts() {
         return shifts;
     }
@@ -103,7 +91,6 @@ public class Teacher extends Model {
         if (!birthdate.equals(teacher.birthdate)) return false;
         if (!code.equals(teacher.code)) return false;
         if (!contact.equals(teacher.contact)) return false;
-        if (!email.equals(teacher.email)) return false;
         if (!id.equals(teacher.id)) return false;
         if (!name.equals(teacher.name)) return false;
         if (!shifts.equals(teacher.shifts)) return false;
@@ -119,7 +106,6 @@ public class Teacher extends Model {
         result = 31 * result + name.hashCode();
         result = 31 * result + birthdate.hashCode();
         result = 31 * result + contact.hashCode();
-        result = 31 * result + email.hashCode();
         result = 31 * result + shifts.hashCode();
         return result;
     }
@@ -132,7 +118,6 @@ public class Teacher extends Model {
                 ", name='" + name + '\'' +
                 ", birthdate=" + birthdate +
                 ", contact='" + contact + '\'' +
-                ", email='" + email + '\'' +
                 ", shifts=" + shifts +
                 '}';
     }
