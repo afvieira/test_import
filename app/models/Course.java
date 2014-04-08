@@ -18,13 +18,13 @@ public class Course extends Model {
 
     @Id
     @Constraints.Min(10)
-    private Long id;
+    public Long id;
 
     @Required
-    private String code;
+    public String code;
 
     @Required
-    private String description;
+    public String description;
 
     public Course(String code, String description) {
         this.code = code;
@@ -75,7 +75,6 @@ public class Course extends Model {
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + id.hashCode();
         result = 31 * result + code.hashCode();
         result = 31 * result + description.hashCode();
         return result;

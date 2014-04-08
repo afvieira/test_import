@@ -13,19 +13,19 @@ public class Discipline extends Model {
 
     @Id
     @Constraints.Min(10)
-    private Long id;
+    public Long id;
 
     @Constraints.Required
-    private Course course;
+    public Course course;
 
     @Constraints.Required
-    private String code;
+    public String code;
 
     @Constraints.Required
-    private Integer course_year;
+    public Integer course_year;
 
     @Constraints.Required
-    private Integer year;
+    public Integer year;
 
     public Discipline(Course course, String code, Integer course_year, Integer year) {
         this.course = course;

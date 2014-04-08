@@ -13,22 +13,22 @@ public class Student extends User{
 
     @Id
     @Constraints.Min(10)
-    private Long id;
+    public Long id;
 
     @Constraints.Required
-    private String code;
+    public String code;
 
     @Constraints.Required
-    private String name;
+    public String name;
 
     @Constraints.Required
-    private Date birthdate;
+    public Date birthdate;
 
     @Constraints.Required
-    private String contact;
+    public String contact;
 
     @Constraints.Required
-    private List<Shift> shifts = new ArrayList<Shift>();
+    public List<Shift> shifts = new ArrayList<Shift>();
 
     public Student() {
     }

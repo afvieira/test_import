@@ -15,16 +15,16 @@ public class Shift extends Model {
 
     @Id
     @Constraints.Min(10)
-    private Long id;
+    public Long id;
 
     @Constraints.Required
-    private String code;
+    public String code;
 
     @Constraints.Required
-    private String description;
+    public String description;
 
     @ManyToMany
-    private List<Student> students = new ArrayList<Student>();
+    public List<Student> students = new ArrayList<Student>();
 
     public Shift(String code, String description, List<Student> students) {
         this.code = code;

@@ -12,16 +12,16 @@ public class User extends Model {
 
     @Id
     @Constraints.Min(10)
-    private Long id;
+    public Long id;
 
     @Constraints.Required
-    private String email;
+    public String email;
 
     @Constraints.Required
-    private String encrypted_password;
+    public String encrypted_password;
 
     @Constraints.Required
-    private Date date_sign_up;
+    public Date date_sign_up;
 
     public User() {
     }

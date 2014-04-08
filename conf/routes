@@ -3,30 +3,30 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index()
+GET     /                                                               controllers.Application.index()
 
 # Cursos
-GET     /courses                    controllers.Courses.all()
-GET     /course/:id                 controllers.Courses.show(id: Long)
-POST    /course                     controllers.Courses.create()
-POST    /course/:id/delete          controllers.Courses.delete(id: Long)
+GET     /courses                                                        controllers.Courses.all()
+GET     /course/:id                                                     controllers.Courses.show(id: Long)
+POST    /course                                                         controllers.Courses.create()
+POST    /course/:id/delete                                              controllers.Courses.delete(id: Long)
 
 
 # Disciplinas
-GET     /disciplines                                    controllers.Disciplines.all()
-GET     /discipline/:id                                 controllers.Disciplines.show(id: Long)
-POST    /discipline                                     controllers.Disciplines.create()
-POST    /discipline/:id/delete                          controllers.Disciplines.delete(id: Long)
-GET     /course/:id_course/disciplines                  controllers.Disciplines.allByCourse(id_course: Long)
-GET     /course/:id_course/discipline/:id_discipline    controllers.Disciplines.showByCourse(id_course: Long, id_discipline: Long)
-POST    /course/:id_course/discipline                   controllers.Disciplines.createByCourse(id_course: Long)
+GET     /disciplines                                                    controllers.Disciplines.all()
+GET     /discipline/:id                                                 controllers.Disciplines.show(id: Long)
+POST    /discipline                                                     controllers.Disciplines.create()
+POST    /discipline/:id/delete                                          controllers.Disciplines.delete(id: Long)
+GET     /course/:id_course/disciplines                                  controllers.Disciplines.allByCourse(id_course: Long)
+GET     /course/:id_course/discipline/:id_discipline                    controllers.Disciplines.showByCourse(id_course: Long, id_discipline: Long)
+POST    /course/:id_course/discipline                                   controllers.Disciplines.createByCourse(id_course: Long)
 
 # Turnos
 
-GET     /course/:id_course/discipline/:id_discipline/shifts            controllers.Shifts.all(id_course: Long, id_discipline: Long)
-GET     /course/:id_course/discipline/:id_discipline/shift/:id         controllers.Shifts.show(id_course: Long, id_discipline: Long, id: Long)
-POST    /course/:id_course/discipline/:id_discipline/shift             controllers.Shifts.create(id_course: Long, id_discipline: Long)
-POST    /course/:id_course/discipline/:id_discipline/shift/:id/delete  controllers.Shifts.delete(id_course: Long, id_discipline: Long, id: Long)
+GET     /course/:id_course/discipline/:id_discipline/shifts             controllers.Shifts.all(id_course: Long, id_discipline: Long)
+GET     /course/:id_course/discipline/:id_discipline/shift/:id          controllers.Shifts.show(id_course: Long, id_discipline: Long, id: Long)
+POST    /course/:id_course/discipline/:id_discipline/shift              controllers.Shifts.create(id_course: Long, id_discipline: Long)
+POST    /course/:id_course/discipline/:id_discipline/shift/:id/delete   controllers.Shifts.delete(id_course: Long, id_discipline: Long, id: Long)
 
 # Perfil
 # Ainda não sei como vou implementar
