@@ -4,6 +4,7 @@ import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import java.util.*;
 
 /**
@@ -27,7 +28,7 @@ public class Student extends User{
     @Constraints.Required
     public String contact;
 
-    @Constraints.Required
+    @ManyToMany
     public List<Shift> shifts = new ArrayList<Shift>();
 
     public Student() {

@@ -18,7 +18,7 @@ public class Disciplines extends Controller {
 
     public static Result all(){
         return ok(
-                views.html.Disciplines.index.render(Discipline.all(), disciplineForm)
+                //views.html.Disciplines.index.render(Discipline.all(), disciplineForm)
         );
     }
 

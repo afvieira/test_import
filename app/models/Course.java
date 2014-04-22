@@ -9,6 +9,8 @@ import play.db.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
 /**
  * Created by NRAM on 07/04/14.
  */
@@ -20,18 +22,22 @@ public class Course extends Model {
     @Constraints.Min(10)
     public Long id;
 
-    @Required
+    @Constraints.Required
     public String code;
 
-    @Required
+    @Constraints.Required
     public String description;
 
-    public Course(String code, String description) {
-        this.code = code;
-        this.description = description;
-    }
+    @OneToMany
+    public List<Discipline> disciplines;
 
     public Course() {}
+
+    public Course(String code, String description, List<Discipline> disciplines) {
+        this.code = code;
+        this.description = description;
+        this.disciplines = disciplines;
+    }
 
     public Long getId() {
         return id;
@@ -57,6 +63,14 @@ public class Course extends Model {
         this.description = description;
     }
 
+    public List<Discipline> getDisciplines() {
+        return disciplines;
+    }
+
+    public void setDisciplines(List<Discipline> disciplines) {
+        this.disciplines = disciplines;
+    }
+
     @Override
     public boolean equals(Object object) {
         if (this == object) return true;
@@ -67,6 +81,7 @@ public class Course extends Model {
 
         if (!code.equals(course.code)) return false;
         if (!description.equals(course.description)) return false;
+        if (!disciplines.equals(course.disciplines)) return false;
         if (!id.equals(course.id)) return false;
 
         return true;
@@ -75,18 +90,23 @@ public class Course extends Model {
     @Override
     public int hashCode() {
         int result = super.hashCode();
+        result = 31 * result + id.hashCode();
         result = 31 * result + code.hashCode();
         result = 31 * result + description.hashCode();
+        result = 31 * result + disciplines.hashCode();
         return result;
     }
 
+
     @Override
     public String toString() {
-        return "Course{" +
-                "id=" + id +
-                ", code='" + code + '\'' +
-                ", description='" + description + '\'' +
-                '}';
+        final StringBuffer sb = new java.lang.StringBuffer("Course{");
+        sb.append("id=").append(id);
+        sb.append(", code='").append(code).append('\'');
+        sb.append(", description='").append(description).append('\'');
+        sb.append(", disciplines=").append(disciplines);
+        sb.append('}');
+        return sb.toString();
     }
 
     public static Finder<Long, Course> find = new Finder(
