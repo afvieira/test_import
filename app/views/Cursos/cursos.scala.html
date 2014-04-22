@@ -1,0 +1,31 @@
+@(courses: java.util.List[Curso], cursoForm: play.data.Form[Curso])
+
+@import helper._
+
+@main() {
+    <h1>@courses.size course(s)</h1>
+
+    <ul>
+    @for(course <- courses) {
+        <li>
+            @course.code
+
+            @form(routes.Cursos.delete(course.id)) {
+                <input type="submit" value="Delete">
+                }
+
+        </li>
+    }
+    </ul>
+
+    <h2>Add a new course</h2>
+
+    @form(routes.Cursos.create()) {
+
+        @inputText(cursoForm("code"))
+        @textarea(cursoForm("description"))
+
+        <input type="submit" value="Create">
+
+    }
+}

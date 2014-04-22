@@ -1,20 +1,18 @@
 package models;
 
 
-import java.util.*;
-
 import play.data.validation.Constraints;
-import play.data.validation.Constraints.*;
+import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.List;
 /**
  * Created by NRAM on 07/04/14.
  */
-
 @Entity
-public class Course extends Model {
+public class Curso extends Model {
 
     @Id
     @Constraints.Min(10)
@@ -26,12 +24,12 @@ public class Course extends Model {
     @Required
     public String description;
 
-    public Course(String code, String description) {
+    public Curso(String code, String description) {
         this.code = code;
         this.description = description;
     }
 
-    public Course() {}
+    public Curso() {}
 
     public Long getId() {
         return id;
@@ -63,11 +61,11 @@ public class Course extends Model {
         if (object == null || getClass() != object.getClass()) return false;
         if (!super.equals(object)) return false;
 
-        Course course = (Course) object;
+        Curso c = (Curso) object;
 
-        if (!code.equals(course.code)) return false;
-        if (!description.equals(course.description)) return false;
-        if (!id.equals(course.id)) return false;
+        if (!code.equals(c.code)) return false;
+        if (!description.equals(c.description)) return false;
+        if (!id.equals(c.id)) return false;
 
         return true;
     }
@@ -89,16 +87,25 @@ public class Course extends Model {
                 '}';
     }
 
-    public static Finder<Long, Course> find = new Finder(
-            Long.class, Course.class
+    public static Finder<Long, Curso> find = new Finder(
+            Long.class, Curso.class
     );
 
-    public static List<Course> all() {
+    public static List<Curso> all() {
         return find.all();
+
+
+//        find.where()
+//                .ilike("name", "%" + filter + "%")
+//                .orderBy(sortBy + " " + order)
+//                .fetch("company")
+//                .findPagingList(pageSize)
+//                .setFetchAhead(false)
+//                .getPage(page);
     }
 
-    public static void create(Course course){
-        course.save();
+    public static void create(Curso c){
+        c.save();
     }
 
     public static void delete(Long id){
