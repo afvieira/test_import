@@ -3,14 +3,14 @@
 
 # --- !Ups
 
-create table course (
+create table curso (
   id                        bigint not null,
   code                      varchar(255),
   description               varchar(255),
-  constraint pk_course primary key (id))
+  constraint pk_curso primary key (id))
 ;
 
-create sequence course_seq;
+create sequence curso_seq;
 
 
 
@@ -19,9 +19,9 @@ create sequence course_seq;
 
 SET REFERENTIAL_INTEGRITY FALSE;
 
-drop table if exists course;
+drop table if exists curso;
 
 SET REFERENTIAL_INTEGRITY TRUE;
 
-drop sequence if exists course_seq;
+drop sequence if exists curso_seq;
 

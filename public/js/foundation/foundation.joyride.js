@@ -17,7 +17,7 @@
       scroll_animation         : 'linear',  // supports 'swing' and 'linear', extend with jQuery UI.
       timer                    : 0,         // 0 = no timer , all other numbers = timer in milliseconds
       start_timer_on_click     : true,      // true or false - true requires clicking the first button start the timer
-      start_offset             : 0,         // the index of the tooltip you want to start on (index of the li)
+      start_offset             : 0,         // the indexCourses of the tooltip you want to start on (indexCourses of the li)
       next_button              : true,      // true or false to control whether a next button is used
       tip_animation            : 'fade',    // 'pop' or 'fade' in each tip
       pause_after              : [],        // array of indexes where to pause the tour after
@@ -38,7 +38,7 @@
       post_ride_callback     : function (){},    // A method to call once the tour closes (canceled or complete)
       post_step_callback     : function (){},    // A method to call after each step
       pre_step_callback      : function (){},    // A method to call before each step
-      pre_ride_callback      : function (){},    // A method to call before the tour starts (passed index, tip, and cloned exposed element)
+      pre_ride_callback      : function (){},    // A method to call before the tour starts (passed indexCourses, tip, and cloned exposed element)
       post_expose_callback   : function (){},    // A method to call after an element has been exposed
       template : { // HTML segments for tip layout
         link    : '<a href="#close" class="joyride-close-tip">&times;</a>',
@@ -178,7 +178,7 @@
         this.timer_instance(opts.index);
 
       $blank.append($(this.settings.template.wrapper));
-      $blank.first().attr(this.add_namespace('data-index'), opts.index);
+      $blank.first().attr(this.add_namespace('data-indexCourses'), opts.index);
       $('.joyride-content-wrapper', $blank).append(content);
 
       return $blank[0];
@@ -600,13 +600,13 @@
       exposeCover = $(this.settings.template.expose_cover);
 
       origCSS = {
-        zIndex: el.css('z-index'),
+        zIndex: el.css('z-indexCourses'),
         position: el.css('position')
       };
 
       origClasses = el.attr('class') == null ? '' : el.attr('class');
 
-      el.css('z-index',parseInt(expose.css('z-index'))+1);
+      el.css('z-indexCourses',parseInt(expose.css('z-indexCourses'))+1);
 
       if (origCSS.position == 'static') {
         el.css('position','relative');
@@ -672,9 +672,9 @@
       origCSS = el.data('expose-css');
 
       if (origCSS.zIndex == 'auto') {
-        el.css('z-index', '');
+        el.css('z-indexCourses', '');
       } else {
-        el.css('z-index', origCSS.zIndex);
+        el.css('z-indexCourses', origCSS.zIndex);
       }
 
       if (origCSS.position != el.css('position')) {
@@ -690,7 +690,7 @@
       el.removeData('orig-classes');
 
       el.removeData('expose');
-      el.removeData('expose-z-index');
+      el.removeData('expose-z-indexCourses');
       this.remove_exposed(el);
     },
 

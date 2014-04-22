@@ -16,7 +16,7 @@ public class Discipline extends Model {
     public Long id;
 
     @Constraints.Required
-    public Course course;
+    public Curso course;
 
     @Constraints.Required
     public String code;
@@ -27,7 +27,7 @@ public class Discipline extends Model {
     @Constraints.Required
     public Integer year;
 
-    public Discipline(Course course, String code, Integer course_year, Integer year) {
+    public Discipline(Curso course, String code, Integer course_year, Integer year) {
         this.course = course;
         this.code = code;
         this.course_year = course_year;
@@ -37,11 +37,11 @@ public class Discipline extends Model {
     public Discipline() {
     }
 
-    public Course getCourse() {
+    public Curso getCourse() {
         return course;
     }
 
-    public void setCourse(Course course) {
+    public void setCourse(Curso course) {
         this.course = course;
     }
 

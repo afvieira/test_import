@@ -278,7 +278,7 @@
       }
     },
 
-    // Remove old dropdown rule index
+    // Remove old dropdown rule indexCourses
     clear_idx : function () {
       var sheet = Foundation.stylesheet;
 
