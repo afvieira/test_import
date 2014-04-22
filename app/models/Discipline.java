@@ -116,6 +116,10 @@ public class Discipline extends Model {
         return find.all();
     }
 
+    public static List<Discipline> allByCourse(Long id_course){
+
+    }
+
     public static void create(Discipline discipline){
         discipline.save();
     }
