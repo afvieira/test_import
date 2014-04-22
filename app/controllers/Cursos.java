@@ -1,13 +1,13 @@
 package controllers;
 
 import models.Curso;
-import play.data.Form;
-import play.mvc.Controller;
-import play.mvc.Result;
+import play.data.*;
+import play.mvc.*;
 
 /**
  * Created by afv on 19/04/14.
  */
+//@Security.Authenticated(Secured.class)
 public class Cursos extends Controller {
 
     final static Form<Curso> cursoForm = Form.form(Curso.class);

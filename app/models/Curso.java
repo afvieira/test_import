@@ -7,6 +7,7 @@ import play.db.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.List;
 /**
  * Created by NRAM on 07/04/14.
@@ -16,13 +17,16 @@ public class Curso extends Model {
 
     @Id
     @Constraints.Min(10)
-    public Long id;
+    private Long id;
 
     @Required
-    public String code;
+    private String code;
 
     @Required
-    public String description;
+    private String description;
+
+    @OneToMany
+    private List<Discipline> disciplinas;
 
     public Curso(String code, String description) {
         this.code = code;
@@ -53,6 +57,14 @@ public class Curso extends Model {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Discipline> getDisciplinas() {
+        return disciplinas;
+    }
+
+    public void setDisciplinas(List<Discipline> disciplinas) {
+        this.disciplinas = disciplinas;
     }
 
     @Override

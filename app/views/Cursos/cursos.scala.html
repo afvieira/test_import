@@ -8,9 +8,9 @@
     <ul>
     @for(course <- courses) {
         <li>
-            @course.code
+            @course.getCode()
 
-            @form(routes.Cursos.delete(course.id)) {
+            @form(routes.Cursos.delete(course.getId())) {
                 <input type="submit" value="Delete">
                 }
 

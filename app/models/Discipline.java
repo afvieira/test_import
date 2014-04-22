@@ -3,18 +3,22 @@ package models;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.util.*;
+import javax.persistence.ManyToOne;
+import java.util.List;
 
 /**
  * Created by NRAM on 07/04/14.
  */
+@Entity
 public class Discipline extends Model {
 
     @Id
     @Constraints.Min(10)
     public Long id;
 
+    @ManyToOne
     @Constraints.Required
     public Curso course;
 
