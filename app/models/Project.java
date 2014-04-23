@@ -5,6 +5,7 @@ import play.db.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.Date;
 import java.util.List;
 
@@ -36,9 +37,17 @@ public class Project extends Model {
     @Constraints.Required
     public Date endDate;
 
+    @OneToMany
+    public List<Milestone> milestones;
+
+    @OneToMany
+    public List<Group> groups;
+
+    @OneToMany
+    public List<Student> students;
 
     public static Finder<Long, Project> find = new Finder(
-            Long.class, Milestone.class
+            Long.class, Project.class
     );
 
     public static List<Project> all() {

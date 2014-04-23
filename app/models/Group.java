@@ -39,16 +39,16 @@ public class Group extends Model {
     public Boolean closed;
 
 
-    public static Finder<Long, Milestone> find = new Finder(
-            Long.class, Milestone.class
+    public static Finder<Long, Group> find = new Finder(
+            Long.class, Group.class
     );
 
-    public static List<Milestone> all() {
+    public static List<Group> all() {
         return find.all();
     }
 
-    public static void create(Milestone milestone){
-        milestone.save();
+    public static void create(Group group){
+        group.save();
     }
 
     public static void delete(Long id){
