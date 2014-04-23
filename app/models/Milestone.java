@@ -3,10 +3,7 @@ package models;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
@@ -44,8 +41,11 @@ public class Milestone extends Model {
     @Constraints.Required
     public Integer percentage;
 
-    @ManyToMany
-    public List<Group> groups;
+    @OneToMany
+    public List<GroupMilestone> groups;
+
+    @OneToMany
+    public List<StudentMilestone> students;
 
 
     public static Finder<Long, Milestone> find = new Finder(
