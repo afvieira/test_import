@@ -1,13 +1,17 @@
 package models;
 
 import play.data.validation.Constraints;
-import play.db.ebean.Model;
-import java.util.*;
+
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by NRAM on 07/04/14.
  */
+@Entity
 public class Teacher extends User {
 
     @Id

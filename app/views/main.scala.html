@@ -4,7 +4,7 @@
 
 <!-- Funcoes para criação de links -->
 @link_to_Cursos(text: String) = {
-    <a href="/cursos" class="">@text</a>
+    <a href="/courses" class="">@text</a>
 }
 
 @link_to_Disciplinas(text: String) = {
@@ -64,12 +64,12 @@
                         <h5>Gestão de projetos</h5>
 
                         <form>
-                            <input tabindex="1" id="autocomplete" type="search" placeholder="Procurar cursos, disciplinas, ...">
+                            <input tabindex="1" id="autocomplete" type="search" placeholder="Procurar courses, disciplinas, ...">
                         </form>
                     </div>
                     <ul class="off-canvas-list">
                         <li><a href="/">Início</a></li>
-                        <li>@link_to_Cursos("Cursos")</li>
+                        <li>@link_to_Cursos("Courses")</li>
                     </ul>
                 </aside>
 
@@ -81,12 +81,12 @@
                                     <br/>
                                     <h5>Gestão de projetos</h5>
                                     <form>
-                                        <input tabindex="1" id="autocomplete" type="search" placeholder="Procurar cursos, disciplinas, ...">
+                                        <input tabindex="1" id="autocomplete" type="search" placeholder="Procurar courses, disciplinas, ...">
                                     </form>
 
                                     <nav>
                                         <ul class="side-nav">
-                                            <li>@link_to_Cursos("Cursos")</li>
+                                            <li>@link_to_Cursos("Courses")</li>
                                         </ul>
                                     </nav>
                                 </div>

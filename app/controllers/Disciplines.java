@@ -10,14 +10,16 @@ import views.html.*;
  * Created by NRAM on 07/04/14.
  */
 public class Disciplines extends Controller {
-    static Form<Discipline> courseForm = Form.form(Discipline.class);
+    static Form<Discipline> disciplineForm = Form.form(Discipline.class);
 
     public static Result index(){
         return ok(index.render("Your new application Courses is ready."));
     }
 
     public static Result all(){
-        return TODO;
+        return ok(
+                //views.html.Disciplines.index.render(Discipline.all(), disciplineForm)
+        );
     }
 
     public static Result show(Long id){
@@ -33,7 +35,7 @@ public class Disciplines extends Controller {
     }
 
     public static Result allByCourse(Long id_course){
-        return TODO;
+        return ok();//ok(views.html.Disciplines.disciplines.render(Discipline.allByCourse(id_course), disciplineForm));
     }
 
     public static Result showByCourse(Long id_course, Long id_discipline){

@@ -3,19 +3,25 @@ package models;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
+import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 import java.util.*;
 
 /**
  * Created by NRAM on 07/04/14.
  */
+@Entity
 public class Shift extends Model {
 
     @Id
     @Constraints.Min(10)
     public Long id;
+
+    @ManyToOne
+    public Discipline discipline;
 
     @Constraints.Required
     public String code;

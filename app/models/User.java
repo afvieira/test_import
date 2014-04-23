@@ -25,9 +25,6 @@ public class User extends Model {
     private String email;
 
     @Constraints.Required
-    private String nome;
-
-    @Constraints.Required
     private String encrypted_password;
 
     @Constraints.Required
@@ -50,12 +47,6 @@ public class User extends Model {
     }
     public void setEmail(String email) {
         this.email = email;
-    }
-    public String getNome() {
-        return nome;
-    }
-    public void setNome(String nome) {
-        this.nome = nome;
     }
     public String getEncrypted_password() {
         return encrypted_password;
@@ -85,7 +76,6 @@ public class User extends Model {
         if (encrypted_password != null ? !encrypted_password.equals(user.encrypted_password) : user.encrypted_password != null)
             return false;
         if (id != null ? !id.equals(user.id) : user.id != null) return false;
-        if (nome != null ? !nome.equals(user.nome) : user.nome != null) return false;
 
         return true;
     }
@@ -95,7 +85,6 @@ public class User extends Model {
         int result = super.hashCode();
         result = 31 * result + (id != null ? id.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (nome != null ? nome.hashCode() : 0);
         result = 31 * result + (encrypted_password != null ? encrypted_password.hashCode() : 0);
         result = 31 * result + (date_sign_up != null ? date_sign_up.hashCode() : 0);
         return result;
@@ -106,7 +95,6 @@ public class User extends Model {
         return "User{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
-                ", nome='" + nome + '\'' +
                 ", encrypted_password='" + encrypted_password + '\'' +
                 ", date_sign_up=" + date_sign_up +
                 "} " + super.toString();

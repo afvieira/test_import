@@ -1,4 +1,4 @@
-@(courses: java.util.List[Curso], cursoForm: play.data.Form[Curso])
+@(courses: java.util.List[Course], cursoForm: play.data.Form[Course])
 
 @import helper._
 
@@ -10,7 +10,7 @@
         <li>
             @course.getCode()
 
-            @form(routes.Cursos.delete(course.getId())) {
+            @form(routes.Courses.delete(course.getId())) {
                 <input type="submit" value="Delete">
                 }
 
@@ -20,10 +20,10 @@
 
     <h2>Add a new course</h2>
 
-    @form(routes.Cursos.create()) {
+    @form(routes.Courses.create()) {
 
-        @inputText(cursoForm("code"))
-        @textarea(cursoForm("description"))
+        @inputText(cursoForm("code"), '_label -> "Código")
+        @textarea(cursoForm("description"), '_label -> "Descrição")
 
         <input type="submit" value="Create">
 

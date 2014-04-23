@@ -46,7 +46,7 @@ public class Application extends Controller {
         } else {
             session().clear();
             session("email", loginForm.get().email);
-            return redirect(routes.Cursos.all());
+            return redirect(routes.Courses.all());
         }
     }
 

@@ -6,7 +6,8 @@ import play.db.ebean.Model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import java.util.List;
+import javax.persistence.OneToMany;
+import java.util.*;
 
 /**
  * Created by NRAM on 07/04/14.
@@ -20,7 +21,7 @@ public class Discipline extends Model {
 
     @ManyToOne
     @Constraints.Required
-    public Curso course;
+    public Course course;
 
     @Constraints.Required
     public String code;
@@ -31,21 +32,25 @@ public class Discipline extends Model {
     @Constraints.Required
     public Integer year;
 
-    public Discipline(Curso course, String code, Integer course_year, Integer year) {
+    @OneToMany
+    public List<Shift> shifts;
+
+    public Discipline(Course course, String code, Integer course_year, Integer year, List<Shift> shifts) {
         this.course = course;
         this.code = code;
         this.course_year = course_year;
         this.year = year;
+        this.shifts = shifts;
     }
 
     public Discipline() {
     }
 
-    public Curso getCourse() {
+    public Course getCourse() {
         return course;
     }
 
-    public void setCourse(Curso course) {
+    public void setCourse(Course course) {
         this.course = course;
     }
 
@@ -73,6 +78,14 @@ public class Discipline extends Model {
         this.year = year;
     }
 
+    public List<Shift> getShifts() {
+        return shifts;
+    }
+
+    public void setShifts(List<Shift> shifts) {
+        this.shifts = shifts;
+    }
+
     @Override
     public boolean equals(Object object) {
         if (this == object) return true;
@@ -81,11 +94,12 @@ public class Discipline extends Model {
 
         Discipline that = (Discipline) object;
 
-        if (!code.equals(that.code)) return false;
-        if (!course.equals(that.course)) return false;
-        if (!course_year.equals(that.course_year)) return false;
-        if (!id.equals(that.id)) return false;
-        if (!year.equals(that.year)) return false;
+        if (code != null ? !code.equals(that.code) : that.code != null) return false;
+        if (course != null ? !course.equals(that.course) : that.course != null) return false;
+        if (course_year != null ? !course_year.equals(that.course_year) : that.course_year != null) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (shifts != null ? !shifts.equals(that.shifts) : that.shifts != null) return false;
+        if (year != null ? !year.equals(that.year) : that.year != null) return false;
 
         return true;
     }
@@ -93,23 +107,26 @@ public class Discipline extends Model {
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + id.hashCode();
-        result = 31 * result + course.hashCode();
-        result = 31 * result + code.hashCode();
-        result = 31 * result + course_year.hashCode();
-        result = 31 * result + year.hashCode();
+        result = 31 * result + (id != null ? id.hashCode() : 0);
+        result = 31 * result + (course != null ? course.hashCode() : 0);
+        result = 31 * result + (code != null ? code.hashCode() : 0);
+        result = 31 * result + (course_year != null ? course_year.hashCode() : 0);
+        result = 31 * result + (year != null ? year.hashCode() : 0);
+        result = 31 * result + (shifts != null ? shifts.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return "Discipline{" +
-                "id=" + id +
-                ", course=" + course +
-                ", code='" + code + '\'' +
-                ", course_year=" + course_year +
-                ", year=" + year +
-                '}';
+        final java.lang.StringBuffer sb = new java.lang.StringBuffer("Discipline{");
+        sb.append("id=").append(id);
+        sb.append(", course=").append(course);
+        sb.append(", code='").append(code).append('\'');
+        sb.append(", course_year=").append(course_year);
+        sb.append(", year=").append(year);
+        sb.append(", shifts=").append(shifts);
+        sb.append('}');
+        return sb.toString();
     }
 
     public static Finder<Long, Discipline> find = new Finder(
@@ -118,6 +135,13 @@ public class Discipline extends Model {
 
     public static List<Discipline> all() {
         return find.all();
+    }
+
+    //TODO: duvidas
+    public static List<Discipline> allByCourse(Long id_course){
+        return find.where()
+                .eq("course.id", id_course)
+                .findList();
     }
 
     public static void create(Discipline discipline){
