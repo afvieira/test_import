@@ -26,7 +26,7 @@ public class Courses extends Controller {
     }
 
     public static Result all(){
-        return ok(views.html.Courses.courses.render(Course.all(), courseForm));
+        return ok("OK");
     }
 
     public static Result show(Long id){
@@ -41,9 +41,7 @@ public class Courses extends Controller {
     public static Result create(){
         Form<Course> filledForm = courseForm.bindFromRequest();
         if(filledForm.hasErrors()){
-            return badRequest(
-                    views.html.Courses.courses.render(Course.all(), filledForm)
-            );
+            return badRequest("BAD");
         }else{
             Course.create(filledForm.get());
             return redirect(routes.Courses.all());
