@@ -1,7 +1,7 @@
 package controllers;
 
 import models.User;
-import play.data.*;
+import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 
@@ -12,6 +12,8 @@ public class Application extends Controller {
     public static Result index() {
         return ok(views.html.index.render("Your new application is ready."));
     }
+
+    final static Form<User> userForm = Form.form(User.class);
 
     // -- Authentication
 
@@ -32,8 +34,7 @@ public class Application extends Controller {
      * Login page.
      */
     public static Result login() {
-        return ok(views.html.login.render(form(Login.class))
-        );
+        return ok(views.html.login.render(form(Login.class)));
     }
 
     /**
@@ -57,6 +58,23 @@ public class Application extends Controller {
         session().clear();
         flash("Sucesso", "O utilizador efetuou logout.");
         return redirect(routes.Application.login());
+    }
+
+    public static Result register(){
+        return ok(views.html.Account.register.render(User.findAll(), form(User.class)));
+    }
+
+    public static Result createUser(){
+
+        Form<User> filledForm = userForm.bindFromRequest();
+        if(filledForm.hasErrors()){
+            return badRequest(
+                    views.html.Account.register.render(User.findAll(), filledForm)
+            );
+        }else{
+            User.create(filledForm.get());
+            return redirect(routes.Application.login());
+        }
     }
 
 }

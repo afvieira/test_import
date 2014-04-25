@@ -4,16 +4,24 @@ import models.Course;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 
 /**
  * Created by NRAM on 07/04/14.
  */
-//@Security.Authenticated(Secured.class)
+@Security.Authenticated(Secured.class)
 public class Courses extends Controller {
 
     final static Form<Course> courseForm = Form.form(Course.class);
 
     public static Result index(){
+//        return ok(views.html.Courses.courses.render
+//                dashboard.render(
+//                        Project.findInvolving(request().username()),
+//                        Task.findTodoInvolving(request().username()),
+//                        User.find.byId(request().username())
+//                )
+//        );
         return ok("Hello Course!!!");
     }
 

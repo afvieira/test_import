@@ -1,0 +1,31 @@
+@(users: java.util.List[User], _form: play.data.Form[models.User])
+
+@import helper._
+
+@main() {
+    <h1>Novo Registo</h1>
+
+    @if(_form.hasGlobalErrors) {
+        <p class="error">
+        @_form.globalError.message
+        </p>
+    }
+
+    <h1>Users</h1>
+    @for(u <- users) {
+        @u.getEmail()
+        @u.getDate_sign_up()
+        @u.getEncrypted_password()
+        @u.getId()
+        <hr/>
+    }
+
+    @form(routes.Application.createUser()) {
+
+        @inputText(_form("email"), '_label -> "Email", '_help -> "")
+        @inputPassword(_form("encrypted_password"), '_label -> "Password", '_help -> "")
+
+        <input type="submit" value="Create">
+    }
+
+}

@@ -20,6 +20,7 @@ public class User extends Model {
     private Long id;
 
     @Constraints.Required
+    @Constraints.Email
     @Formats.NonEmpty
     @Column(unique = true, nullable = false)
     private String email;
@@ -27,7 +28,6 @@ public class User extends Model {
     @Constraints.Required
     private String encrypted_password;
 
-    @Constraints.Required
     private Date date_sign_up;
 
     //Construtores
@@ -105,6 +105,7 @@ public class User extends Model {
     public static Finder<Long, User> find = new Finder( Long.class, User.class );
 
     public static void create(User user){
+        user.date_sign_up = new Date();
         user.save();
     }
 
@@ -132,7 +133,7 @@ public class User extends Model {
     public static User authenticate(String email, String password) {
         return find.where()
                 .eq("email", email)
-                .eq("password", password)
+                .eq("encrypted_password", password)
                 .findUnique();
     }
 }

@@ -1,0 +1,180 @@
+
+# Users
+users:
+
+    - !!models.User
+            id:                 1
+            email:              a@sample.com
+            encrypted_password: secret
+            date_sign_up:       2011-11-15 13:51:52
+
+    - !!models.User
+            id:                 2
+            email:              b@sample.com
+            encrypted_password: secret
+            date_sign_up:       2011-11-15 13:51:52
+
+    - !!models.User
+            id:                 3
+            email:              c@sample.com
+            encrypted_password: secret
+            date_sign_up:       2011-11-15 13:51:52
+
+    - !!models.User
+            id:                 4
+            email:              d@sample.com
+            encrypted_password: secret
+            date_sign_up:       2011-11-15 13:51:52
+
+    - !!models.User
+            id:                 5
+            email:              e@sample.com
+            encrypted_password: secret
+            date_sign_up:       2011-11-15 13:51:52
+
+#Estudantes
+students:
+
+    - !!models.Student
+            id: 1
+            code: pg2001
+            name: Nome_estudante_1
+            birthdate: 1989-11-15 13:51:52
+            contact : email_1@sample.com
+            email:              1@sample.com
+            encrypted_password: secret
+            date_sign_up:       2011-11-15 13:51:52
+
+    - !!models.Student
+            id: 2
+            code: pg2002
+            name: Nome_estudante_2
+            birthdate: 1989-11-15 13:51:52
+            contact : email_2@sample.com
+            email:              2@sample.com
+            encrypted_password: secret
+            date_sign_up:       2011-11-15 13:51:52
+
+    - !!models.Student
+            id: 3
+            code: pg2003
+            name: Nome_estudante_3
+            birthdate: 1989-11-15 13:51:52
+            contact : email_3@sample.com
+            email:              3@sample.com
+            encrypted_password: secret
+            date_sign_up:       2011-11-15 13:51:52
+
+#Turnos
+shifts:
+
+    - !!models.Shift
+            id: 1
+            code: turno_1
+            description: Descricao_Turno1
+            students:
+              - !!models.Student
+                id: 1
+              - !!models.Student
+                id: 2
+              - !!models.Student
+                id: 3
+
+    - !!models.Shift
+            id: 2
+            code: turno_2
+            description: Descricao_Turno2
+            students:
+              - !!models.Student
+                id: 2
+              - !!models.Student
+                id: 3
+
+# Disciplinas
+disciplines:
+
+    - !!models.Discipline
+            id:           1
+            code:         CodDisc_1
+            course_year:  1
+            year:         2014
+            shifts:
+              - !!models.Shift
+                id: 1
+              - !!models.Shift
+                id: 2
+
+    - !!models.Discipline
+            id:           2
+            code:         CodDisc_2
+            course_year:  2
+            year:         2014
+            shifts:
+              - !!models.Shift
+                id: 1
+
+    - !!models.Discipline
+            id:           3
+            code:         CodDisc_3
+            course_year:  3
+            year:         2014
+            shifts:
+              - !!models.Shift
+                id: 2
+
+    - !!models.Discipline
+            id:           4
+            code:         CodDisc_4
+            course_year:  4
+            year:         2014
+            shifts:
+              - !!models.Shift
+                id: 2
+
+
+#Cursos
+courses:
+
+    - !!models.Course
+        id:           1
+        code:         CODE_LEI_1
+        description:  LEI_1
+        disciplines:
+            - !!models.Discipline
+                id: 1
+            - !!models.Discipline
+                id: 2
+            - !!models.Discipline
+                id: 3
+            - !!models.Discipline
+                id: 4
+
+    - !!models.Course
+        id:           2
+        code:         CODE_LEI_2
+        description:  LEI_2
+        disciplines:
+            - !!models.Discipline
+                id: 1
+            - !!models.Discipline
+                id: 2
+            - !!models.Discipline
+                id: 3
+
+    - !!models.Course
+        id:           3
+        code:         CODE_LEI_3
+        description:  LEI_3
+        disciplines:
+            - !!models.Discipline
+                id: 1
+            - !!models.Discipline
+                id: 2
+
+    - !!models.Course
+        id:           4
+        code:         CODE_LEI_4
+        description:  LEI_4
+        disciplines:
+            - !!models.Discipline
+                id: 4
