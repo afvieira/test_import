@@ -1,0 +1,37 @@
+@(projects: java.util.List[Project], projectForm: play.data.Form[Project])
+
+@import helper._
+
+@main() {
+    <h1>@projects.size project(s)</h1>
+
+    <ul>
+    @for(p <- projects) {
+        <li>
+            @p.toString()
+
+            @form(routes.Projects.delete(p.id)) {
+                <input type="submit" value="Delete">
+                }
+
+        </li>
+
+        <hr/>
+
+    }
+    </ul>
+
+    <h2>Add a new project</h2>
+
+    @form(routes.Projects.create()) {
+
+        @inputText(projectForm("code"), '_label -> "Código")
+        @inputText(projectForm("title"), '_label -> "Título")
+        @textarea(projectForm("description"), '_label -> "Descrição")
+        @inputDate(projectForm("startDate"), '_label -> "Data de início")
+        @inputDate(projectForm("endDate"), '_label -> "Data de fim")
+
+        <input type="submit" value="Create">
+
+    }
+}

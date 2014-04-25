@@ -15,18 +15,11 @@ public class Courses extends Controller {
     final static Form<Course> courseForm = Form.form(Course.class);
 
     public static Result index(){
-//        return ok(views.html.Courses.courses.render
-//                dashboard.render(
-//                        Project.findInvolving(request().username()),
-//                        Task.findTodoInvolving(request().username()),
-//                        User.find.byId(request().username())
-//                )
-//        );
         return ok("Hello Course!!!");
     }
 
     public static Result all(){
-        return ok("OK");
+        return ok(views.html.Courses.courses.render(Course.all(), courseForm));
     }
 
     public static Result show(Long id){

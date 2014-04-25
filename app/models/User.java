@@ -14,94 +14,81 @@ import java.util.List;
 @Entity
 public class User extends Model {
 
+    public enum UserType{
+        Student,        //Users do tipo estudante
+        Teacher,        //Users do tipo Professor
+        Administrator   //Users do tipo Administrador
+    }
+
     //Variáveis de instância
     @Id
     @Constraints.Min(10)
-    private Long id;
+    public Long id;
 
-    @Constraints.Required
-    @Constraints.Email
+    public String code;
+
+    @Constraints.Required(message = "O nome é obrigatório.")
+    public String name;
+
+    @Constraints.Required(message = "A data de nascimento é obrigatória.")
+    public Date birthdate;
+
+    public String contact;
+
+    @Constraints.Required(message = "O email é obrigatório.")
+    @Constraints.Email(message = "O formato do email está incorreto.")
     @Formats.NonEmpty
     @Column(unique = true, nullable = false)
-    private String email;
+    public String email;
 
-    @Constraints.Required
-    private String encrypted_password;
+    @Constraints.Required(message = "A password é obrigatória.")
+    public String encrypted_password;
 
-    private Date date_sign_up;
+    @ManyToMany
+    public List<Discipline> disciplines;
+
+    @OneToMany
+    public List<StudentProject> projects;
+
+    @ManyToMany
+    public List<Group> group;
+
+    @ManyToMany
+    public List<Shift> shifts;
+
+    @OneToMany
+    public List<StudentMilestone> milestones;
+
+    public Date date_sign_up;
+
+    public String userType;
 
     //Construtores
     public User() {
     }
 
-    //Propriedades
-
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    public String getEncrypted_password() {
-        return encrypted_password;
-    }
-    public void setEncrypted_password(String encrypted_password) {
-        this.encrypted_password = encrypted_password;
-    }
-    public Date getDate_sign_up() {
-        return date_sign_up;
-    }
-    public void setDate_sign_up(Date date_sign_up) {
-        this.date_sign_up = date_sign_up;
-    }
-
-    //Equals, HashCode e toString
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-
-        User user = (User) o;
-
-        if (date_sign_up != null ? !date_sign_up.equals(user.date_sign_up) : user.date_sign_up != null) return false;
-        if (email != null ? !email.equals(user.email) : user.email != null) return false;
-        if (encrypted_password != null ? !encrypted_password.equals(user.encrypted_password) : user.encrypted_password != null)
-            return false;
-        if (id != null ? !id.equals(user.id) : user.id != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (id != null ? id.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (encrypted_password != null ? encrypted_password.hashCode() : 0);
-        result = 31 * result + (date_sign_up != null ? date_sign_up.hashCode() : 0);
-        return result;
-    }
-
+    //ToString
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
+                ", code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", birthdate=" + birthdate +
+                ", contact='" + contact + '\'' +
                 ", email='" + email + '\'' +
                 ", encrypted_password='" + encrypted_password + '\'' +
+                ", disciplines=" + disciplines +
+                ", group=" + group +
+                ", shifts=" + shifts +
+                ", milestones=" + milestones +
+                ", projects=" + projects +
+                ", userType=" + userType +
                 ", date_sign_up=" + date_sign_up +
                 "} " + super.toString();
     }
 
-    //Funcoes
-
+    //DataBase
     public static Finder<Long, User> find = new Finder( Long.class, User.class );
 
     public static void create(User user){

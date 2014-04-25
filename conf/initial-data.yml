@@ -4,66 +4,69 @@ users:
 
     - !!models.User
             id:                 1
-            email:              a@sample.com
-            encrypted_password: secret
+            code:               pg2001
+            name:               Nome_estudante_1
+            birthdate:          1989-11-15 13:51:52
+            contact :           919876543
+            email:              1@sapum.com
+            encrypted_password: asd
             date_sign_up:       2011-11-15 13:51:52
+            userType:           Student
 
     - !!models.User
             id:                 2
-            email:              b@sample.com
-            encrypted_password: secret
+            code:               pg2002
+            name:               Nome_estudante_2
+            birthdate:          1989-11-15 13:51:52
+            contact :           919876543
+            email:              2@sapum.com
+            encrypted_password: asd
             date_sign_up:       2011-11-15 13:51:52
+            userType:           Student
 
     - !!models.User
             id:                 3
-            email:              c@sample.com
-            encrypted_password: secret
+            code:               pg2003
+            name:               Nome_estudante_3
+            birthdate:          1989-11-15 13:51:52
+            contact :           919876543
+            email:              3@sapum.com
+            encrypted_password: asd
             date_sign_up:       2011-11-15 13:51:52
+            userType:           Teacher
 
     - !!models.User
             id:                 4
-            email:              d@sample.com
-            encrypted_password: secret
+            code:               pg2004
+            name:               Nome_estudante_4
+            birthdate:          1989-11-15 13:51:52
+            contact :           919876543
+            email:              4@sapum.com
+            encrypted_password: asd
             date_sign_up:       2011-11-15 13:51:52
+            userType:           Teacher
 
     - !!models.User
             id:                 5
-            email:              e@sample.com
-            encrypted_password: secret
+            code:               pg2005
+            name:               Nome_estudante_5
+            birthdate:          1989-11-15 13:51:52
+            contact :           919876543
+            email:              5@sapum.com
+            encrypted_password: asd
             date_sign_up:       2011-11-15 13:51:52
+            userType:           Administrator
 
-#Estudantes
-students:
-
-    - !!models.Student
-            id: 1
-            code: pg2001
-            name: Nome_estudante_1
-            birthdate: 1989-11-15 13:51:52
-            contact : email_1@sample.com
-            email:              1@sample.com
-            encrypted_password: secret
+    - !!models.User
+            id:                 6
+            code:               pg2006
+            name:               Nome_estudante_6
+            birthdate:          1989-11-15 13:51:52
+            contact :           919876543
+            email:              6@sapum.com
+            encrypted_password: asd
             date_sign_up:       2011-11-15 13:51:52
-
-    - !!models.Student
-            id: 2
-            code: pg2002
-            name: Nome_estudante_2
-            birthdate: 1989-11-15 13:51:52
-            contact : email_2@sample.com
-            email:              2@sample.com
-            encrypted_password: secret
-            date_sign_up:       2011-11-15 13:51:52
-
-    - !!models.Student
-            id: 3
-            code: pg2003
-            name: Nome_estudante_3
-            birthdate: 1989-11-15 13:51:52
-            contact : email_3@sample.com
-            email:              3@sample.com
-            encrypted_password: secret
-            date_sign_up:       2011-11-15 13:51:52
+            userType:           Administrator
 
 #Turnos
 shifts:
@@ -72,23 +75,25 @@ shifts:
             id: 1
             code: turno_1
             description: Descricao_Turno1
-            students:
-              - !!models.Student
-                id: 1
-              - !!models.Student
-                id: 2
-              - !!models.Student
-                id: 3
+            discipline:
 
     - !!models.Shift
             id: 2
             code: turno_2
             description: Descricao_Turno2
-            students:
-              - !!models.Student
-                id: 2
-              - !!models.Student
-                id: 3
+            discipline:
+
+    - !!models.Shift
+            id: 3
+            code: turno_3
+            description: Descricao_Turno3
+            discipline:
+
+    - !!models.Shift
+            id: 4
+            code: turno_4
+            description: Descricao_Turno4
+            discipline:
 
 # Disciplinas
 disciplines:
@@ -111,7 +116,7 @@ disciplines:
             year:         2014
             shifts:
               - !!models.Shift
-                id: 1
+                id: 3
 
     - !!models.Discipline
             id:           3
@@ -120,7 +125,7 @@ disciplines:
             year:         2014
             shifts:
               - !!models.Shift
-                id: 2
+                id: 4
 
     - !!models.Discipline
             id:           4
@@ -130,7 +135,8 @@ disciplines:
             shifts:
               - !!models.Shift
                 id: 2
-
+              - !!models.Shift
+                id: 4
 
 #Cursos
 courses:

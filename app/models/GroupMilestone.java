@@ -5,7 +5,7 @@ import play.db.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 
 /**
  * Created by NRAM on 23/04/14.
@@ -13,14 +13,15 @@ import javax.persistence.OneToMany;
 @Entity
 public class GroupMilestone extends Model {
 
+    //Variaveis
     @Id
     @Constraints.Min(10)
     public Long id;
 
-    @Constraints.Required
+    @ManyToOne
     public Group group;
 
-    @Constraints.Required
+    @ManyToOne
     public Milestone milestone;
 
     public Integer avaliation;
@@ -32,5 +33,26 @@ public class GroupMilestone extends Model {
     public String publicCommentTeacher;
 
     public String publicCommentStudent;
+
+    //Construtor
+    public GroupMilestone() {
+    }
+
+    //ToString
+    @Override
+    public String toString() {
+        return "GroupMilestone{" +
+                "id=" + id +
+                ", group=" + group +
+                ", milestone=" + milestone +
+                ", avaliation=" + avaliation +
+                ", path='" + path + '\'' +
+                ", privateComment='" + privateComment + '\'' +
+                ", publicCommentTeacher='" + publicCommentTeacher + '\'' +
+                ", publicCommentStudent='" + publicCommentStudent + '\'' +
+                "} " + super.toString();
+    }
+
+    //DataBase
 
 }

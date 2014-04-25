@@ -73,8 +73,13 @@ public class Application extends Controller {
             );
         }else{
             User.create(filledForm.get());
-            return redirect(routes.Application.login());
+            return redirect(routes.Application.register());
         }
+    }
+
+    public static Result deleteUser(Long id){
+        User.delete(id);
+        return redirect(routes.Application.register());
     }
 
 }

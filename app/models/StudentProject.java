@@ -8,10 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 /**
- * Created by NRAM on 23/04/14.
+ * Created by afv on 25/04/14.
  */
 @Entity
-public class StudentMilestone extends Model {
+public class StudentProject extends Model {
 
     //Variaveis
     @Id
@@ -22,34 +22,22 @@ public class StudentMilestone extends Model {
     public User student;
 
     @ManyToOne
-    public Milestone milestone;
+    public Project project;
 
     public Integer avaliation;
 
-    public String path;
-
-    public String privateComment;
-
-    public String publicCommentTeacher;
-
-    public String publicCommentStudent;
-
     //Construtor
-    public StudentMilestone() {
+    public StudentProject() {
     }
 
     //ToString
     @Override
     public String toString() {
-        return "StudentMilestone{" +
+        return "StudentProject{" +
                 "id=" + id +
                 ", student=" + student +
-                ", milestone=" + milestone +
+                ", project=" + project +
                 ", avaliation=" + avaliation +
-                ", path='" + path + '\'' +
-                ", privateComment='" + privateComment + '\'' +
-                ", publicCommentTeacher='" + publicCommentTeacher + '\'' +
-                ", publicCommentStudent='" + publicCommentStudent + '\'' +
                 "} " + super.toString();
     }
 

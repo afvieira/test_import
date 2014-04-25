@@ -13,6 +13,7 @@ import java.util.List;
 @Entity
 public class Milestone extends Model {
 
+    //Variaveis
     @Id
     @Constraints.Min(10)
     public Long id;
@@ -47,7 +48,29 @@ public class Milestone extends Model {
     @OneToMany
     public List<StudentMilestone> students;
 
+    //Construtor
+    public Milestone() {
+    }
 
+    //ToString
+    @Override
+    public String toString() {
+        return "Milestone{" +
+                "id=" + id +
+                ", project=" + project +
+                ", code='" + code + '\'' +
+                ", description='" + description + '\'' +
+                ", number=" + number +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", path='" + path + '\'' +
+                ", percentage=" + percentage +
+                ", groups=" + groups +
+                ", students=" + students +
+                "} " + super.toString();
+    }
+
+    //DataBase
     public static Finder<Long, Milestone> find = new Finder(
             Long.class, Milestone.class
     );

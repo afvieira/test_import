@@ -3,20 +3,30 @@
 @import helper._
 
 @main() {
-    <h1>@courses.size course(s)</h1>
 
-    <ul>
-    @for(course <- courses) {
-        <li>
-            @course.getCode()
+    <h1>Cursos</h1>
+    <table width="100%">
+        <tr>
+            <th>ID</th>
+            <th>Código</th>
+            <th>Descrição</th>
+            <th></th>
+        </tr>
+        @for(c <- courses) {
+            <tr>
+                <td align="center">@c.id</td>
+                <td align="center">@c.code</td>
+                <td align="center">@c.description</td>
+                <td align="center">
+                @form(routes.Courses.delete(c.id)) {
+                    <input type="submit" value="Remover" class="small-centered button radius">
+                    }
+                </td>
+            </tr>
+        }
+    </table>
 
-            @form(routes.Courses.delete(course.getId())) {
-                <input type="submit" value="Delete">
-                }
-
-        </li>
-    }
-    </ul>
+    <hr/>
 
     <h2>Add a new course</h2>
 

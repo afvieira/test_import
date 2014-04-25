@@ -21,27 +21,29 @@ public class Global extends GlobalSettings {
         public static void insert(Application app) {
             if(Ebean.find(User.class).findRowCount() == 0) {
 
+
                 @SuppressWarnings("unchecked")
-                Map<String,List<Object>> all = (Map<String,List<Object>>)Yaml.load("initial-data.yml");
+                Map<String,List<Object>> all = (Map<String,List<Object>>) Yaml.load("initial-data.yml");
 
                 //Users
                 Ebean.save(all.get("users"));
 
-                //Students
-                Ebean.save(all.get("students"));
-
-                //shifts
+                //turnos
                 Ebean.save(all.get("shifts"));
-                for(Object shift: all.get("shifts")) {
-                    // Insert the shift/student relation
-                    Ebean.saveManyToManyAssociations(shift, "students");
-                }
+
+                //disciplines
+//                Ebean.save(all.get("disciplines"));
+//                for(Object shift: all.get("disciplines")) {
+//                    // Insert the shift/student relation
+//                    Ebean.saveManyToManyAssociations(shift, "students");
+//                }
 
                 //disciplines
                 Ebean.save(all.get("disciplines"));
 
                 //Courses
                 Ebean.save(all.get("courses"));
+
 
             }
         }

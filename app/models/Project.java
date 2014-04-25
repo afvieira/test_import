@@ -3,9 +3,7 @@ package models;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
@@ -15,11 +13,13 @@ import java.util.List;
 @Entity
 public class Project extends Model {
 
+    //Variaveis
     @Id
     @Constraints.Min(10)
     public Long id;
 
     @Constraints.Required
+    @ManyToOne
     public Discipline discipline;
 
     @Constraints.Required
@@ -41,11 +41,33 @@ public class Project extends Model {
     public List<Milestone> milestones;
 
     @OneToMany
-    public List<Group> groups;
+    public List<GroupProject> groups;
 
     @OneToMany
-    public List<Student> students;
+    public List<StudentProject> students;
 
+    //Construtor
+    public Project() {
+    }
+
+    //ToString
+    @Override
+    public String toString() {
+        return "Project{" +
+                "id=" + id +
+                ", discipline=" + discipline +
+                ", code='" + code + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", milestones=" + milestones +
+                ", groups=" + groups +
+                ", students=" + students +
+                "} " + super.toString();
+    }
+
+    //DataBase
     public static Finder<Long, Project> find = new Finder(
             Long.class, Project.class
     );

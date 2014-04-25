@@ -16,6 +16,7 @@ import java.util.List;
 @Entity
 public class Course extends Model {
 
+    //Variaveis
     @Id
     @Constraints.Min(10)
     public Long id;
@@ -29,72 +30,10 @@ public class Course extends Model {
     @OneToMany
     public List<Discipline> disciplines;
 
+    //construtor
     public Course() {}
 
-    public Course(String code, String description, List<Discipline> disciplines) {
-        this.code = code;
-        this.description = description;
-        this.disciplines = disciplines;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public List<Discipline> getDisciplines() {
-        return disciplines;
-    }
-
-    public void setDisciplines(List<Discipline> disciplines) {
-        this.disciplines = disciplines;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        if (this == object) return true;
-        if (object == null || getClass() != object.getClass()) return false;
-        if (!super.equals(object)) return false;
-
-        Course course = (Course) object;
-
-        if (!code.equals(course.code)) return false;
-        if (!description.equals(course.description)) return false;
-        if (!disciplines.equals(course.disciplines)) return false;
-        if (!id.equals(course.id)) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 31 * result + (id != null ? id.hashCode() : 0);
-        result = 31 * result + (code != null ? code.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (disciplines != null ? disciplines.hashCode() : 0);
-        return result;
-    }
-
+    //ToString
     @Override
     public String toString() {
         final StringBuffer sb = new java.lang.StringBuffer("Course{");
@@ -106,6 +45,7 @@ public class Course extends Model {
         return sb.toString();
     }
 
+    //Data Base
     public static Finder<Long, Course> find = new Finder(
             Long.class, Course.class
     );
