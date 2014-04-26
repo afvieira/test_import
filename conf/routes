@@ -41,6 +41,9 @@ GET         /course/:id_course/discipline/:id_discipline/shift/:id              
 POST        /course/:id_course/discipline/:id_discipline/shift                   controllers.Shifts.create(id_course: Long, id_discipline: Long)
 POST        /course/:id_course/discipline/:id_discipline/shift/:id/delete        controllers.Shifts.delete(id_course: Long, id_discipline: Long, id: Long)
 
+# Dashboard
+GET         /dashboard                                                           controllers.DashboardStudent.index()
+
 # Perfil
 # Ainda não sei como vou implementar
 
