@@ -61,6 +61,7 @@ public class User extends Model {
 
     public Date date_sign_up;
 
+    @Constraints.Required
     public String userType;
 
     //Construtores
