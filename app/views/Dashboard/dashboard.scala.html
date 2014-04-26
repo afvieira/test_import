@@ -1,0 +1,20 @@
+@(disciplines: List[Discipline])
+
+@import helper._
+
+@main() {
+
+    <h1>Dashboard</h1>
+    <table width="50%">
+        <tr>
+            <td>Disciplinas que frequenta</td>
+        </tr>
+
+        @for(discipline <- disciplines) {
+            <tr>
+                <td align="center">@discipline.code</td>
+            </tr>
+        }
+    </table>
+
+}
