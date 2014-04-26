@@ -37,6 +37,9 @@ public class Project extends Model {
     @Constraints.Required
     public Date endDate;
 
+    @Constraints.Required
+    public Date creationDate;
+
     @OneToMany
     public List<Milestone> milestones;
 
@@ -61,6 +64,7 @@ public class Project extends Model {
                 ", description='" + description + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
+                ", createdDate=" + creationDate +
                 ", milestones=" + milestones +
                 ", groups=" + groups +
                 ", students=" + students +
@@ -82,5 +86,12 @@ public class Project extends Model {
 
     public static void delete(Long id){
         find.ref(id).delete();
+    }
+
+    public static List<Project> getByCreatedDate(String emailuser){
+        return find.where()
+                .eq("students.student.email", emailuser)
+                .orderBy("createdDate")
+                .findList();
     }
 }

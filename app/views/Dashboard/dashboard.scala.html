@@ -1,4 +1,4 @@
-@(disciplines: List[Discipline])
+@(disciplines: List[Discipline], milestones: List[Milestone])
 
 @import helper._
 
@@ -11,6 +11,7 @@
             <div id="disciplines"></div>
         </div>
         <div class="large-6 columns">
+            <div id="milestones"></div>
             // TODO: Prazo das próximas etapas a entregar
         </div>
     </div>
@@ -44,7 +45,7 @@
     $("#disciplines").kendoGrid({
         columns: [
             { title: "Disciplina", field: "discipline" },
-            { title: "Ano", field: "year"}
+            { title: "Ano",         field: "year"}
         ],
         dataSource: disciplines,
         sortable: true,
@@ -54,5 +55,29 @@
             buttonCount: 5
         }
     });
+
+    var milestones = [];
+    @for(milestone <- milestones) {
+        milestones.push({
+            projectname: "@milestone.project.code",
+            milestone: "@milestone.code",
+            endDate: "@milestone.endDate"
+        });
+    };
+
+    $("#milestones").kendoGrid({
+        columns: [
+            { title: "Projecto", field: "projectname" },
+            { title: "Etapa",    field: "milestone"},
+            { title: "Entrega",  field: "endDate"}
+    ],
+    dataSource: milestones,
+    sortable: true,
+    pageable: {
+        refresh: true,
+        pageSizes: true,
+        buttonCount: 5
+    }
+});
 </script>
 }

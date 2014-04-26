@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Discipline;
+import models.Milestone;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -18,7 +19,8 @@ public class DashboardStudent extends Controller {
     public static Result index() {
         return ok(
                 views.html.Dashboard.dashboard.render(
-                    Discipline.findByStudent(request().username())
+                    Discipline.findByStudent(request().username()),
+                    Milestone.findByStudent(request().username())
                 )
         );
     }

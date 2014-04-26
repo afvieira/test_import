@@ -73,6 +73,7 @@ create table project (
   description               varchar(255),
   start_date                timestamp,
   end_date                  timestamp,
+  creation_date             timestamp,
   constraint pk_project primary key (id))
 ;
 

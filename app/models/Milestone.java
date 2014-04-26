@@ -75,6 +75,12 @@ public class Milestone extends Model {
             Long.class, Milestone.class
     );
 
+    public static List<Milestone> findByStudent(String emailuser){
+        return find.where()
+                .eq("students.student.email", emailuser)
+                .findList();
+    }
+
     public static List<Milestone> all() {
         return find.all();
     }

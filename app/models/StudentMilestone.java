@@ -6,6 +6,7 @@ import play.db.ebean.Model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.util.List;
 
 /**
  * Created by NRAM on 23/04/14.
@@ -54,4 +55,5 @@ public class StudentMilestone extends Model {
     }
 
     //DataBase
+
 }
