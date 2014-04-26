@@ -39,6 +39,10 @@ public class Discipline extends Model {
     @OneToMany
     public List<Project> projects;
 
+    @ManyToMany
+    @JoinTable(name = "user_discipline")
+    public List<User> users;
+
     //construtor
     public Discipline() {
     }
@@ -76,7 +80,7 @@ public class Discipline extends Model {
 
     public static List<Discipline> findByStudent(String emailuser){
         return find.where()
-                .eq("user.email", emailuser)
+                .eq("users.email", emailuser)
                 .findList();
     }
 
