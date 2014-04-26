@@ -120,9 +120,9 @@ create table user (
 
 
 create table user_discipline (
-  user_id                        bigint not null,
   discipline_id                  bigint not null,
-  constraint pk_user_discipline primary key (user_id, discipline_id))
+  user_id                        bigint not null,
+  constraint pk_user_discipline primary key (discipline_id, user_id))
 ;
 
 create table user_GroupTable (
@@ -187,9 +187,9 @@ create index ix_student_project_project_13 on student_project (project_id);
 
 
 
-alter table user_discipline add constraint fk_user_discipline_user_01 foreign key (user_id) references user (id) on delete restrict on update restrict;
+alter table user_discipline add constraint fk_user_discipline_discipline_01 foreign key (discipline_id) references discipline (id) on delete restrict on update restrict;
 
-alter table user_discipline add constraint fk_user_discipline_discipline_02 foreign key (discipline_id) references discipline (id) on delete restrict on update restrict;
+alter table user_discipline add constraint fk_user_discipline_user_02 foreign key (user_id) references user (id) on delete restrict on update restrict;
 
 alter table user_GroupTable add constraint fk_user_GroupTable_user_01 foreign key (user_id) references user (id) on delete restrict on update restrict;
 
@@ -206,6 +206,8 @@ SET REFERENTIAL_INTEGRITY FALSE;
 drop table if exists course;
 
 drop table if exists discipline;
+
+drop table if exists user_discipline;
 
 drop table if exists GroupTable;
 
@@ -224,8 +226,6 @@ drop table if exists student_milestone;
 drop table if exists student_project;
 
 drop table if exists user;
-
-drop table if exists user_discipline;
 
 drop table if exists user_GroupTable;
 
