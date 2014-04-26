@@ -5,16 +5,43 @@
 @main() {
 
     <h1>Dashboard</h1>
-    <table width="50%">
-        <tr>
-            <td>Disciplinas que frequenta</td>
-        </tr>
 
-        @for(discipline <- disciplines) {
-            <tr>
-                <td align="center">@discipline.code</td>
-            </tr>
-        }
-    </table>
+    <div class="row">
+        <div class="large-6 columns">
+            <table width="100%">
+                <thead>
+                    <tr>
+                        <td>Disciplinas que frequenta</td>
+                    </tr>
+                </thead>
+                <tbody>
+                @for(discipline <- disciplines) {
+                    <tr>
+                        <td align="center">@discipline.code</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="large-6 columns">
+            <div id="grid"></div>
+        </div>
+    </div>
+
 
 }
+
+<script>
+$(window).load(function() {
+var dataSource = new kendo.data.DataSource ( {
+data :[ { name : "Jane Doe" }, { name : "John Doe" } ]
+} ) ;
+$ ( "#grid" ).kendoGrid ( {
+autoBind : false,
+dataSource : dataSource
+} ) ;
+dataSource.read ( ) ;
+});
+</script>
