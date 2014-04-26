@@ -74,6 +74,12 @@ public class Discipline extends Model {
                 .findList();
     }
 
+    public static List<Discipline> findByStudent(String emailuser){
+        return find.where()
+                .eq("user.email", emailuser)
+                .findList();
+    }
+
     public static void create(Discipline discipline){
         discipline.save();
     }
