@@ -108,6 +108,9 @@ disciplines:
                 id: 1
               - !!models.Shift
                 id: 2
+            users:
+              - !!models.User
+                id: 1
 
     - !!models.Discipline
             id:           2
@@ -117,6 +120,9 @@ disciplines:
             shifts:
               - !!models.Shift
                 id: 3
+            users:
+              - !!models.User
+                id: 1
 
     - !!models.Discipline
             id:           3
