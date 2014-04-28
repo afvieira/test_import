@@ -64,7 +64,7 @@ public class Project extends Model {
                 ", description='" + description + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
-                ", createdDate=" + creationDate +
+                ", creationDate=" + creationDate +
                 ", milestones=" + milestones +
                 ", groups=" + groups +
                 ", students=" + students +
@@ -91,7 +91,7 @@ public class Project extends Model {
     public static List<Project> getByCreatedDate(String emailuser){
         return find.where()
                 .eq("students.student.email", emailuser)
-                .orderBy("createdDate")
+                .orderBy("creationDate desc")
                 .findList();
     }
 }
