@@ -94,6 +94,7 @@ create table student_milestone (
   private_comment           varchar(255),
   public_comment_teacher    varchar(255),
   public_comment_student    varchar(255),
+  last_update               timestamp,
   constraint pk_student_milestone primary key (id))
 ;
 
