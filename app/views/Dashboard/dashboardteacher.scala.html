@@ -1,0 +1,156 @@
+@(disciplines: List[Discipline], milestones: List[Milestone], lastProjects: List[Project], lastAvaliations: List[StudentMilestone])
+
+@import helper._
+
+@main() {
+
+    <h1>Dashboard</h1>
+
+    <div class="row">
+        <div class="large-6 columns">
+            <h3>Disciplinas Leccionadas</h3>
+            <div id="disciplines"></div>
+        </div>
+        <div class="large-6 columns">
+            <h3>Próximas Étapas para Entrega</h3>
+            <div id="milestones"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="large-6 columns">
+            <h3>Últimos Trabalhos Adicionados</h3>
+            <div id="lastProjects"></div>
+        </div>
+        <div class="large-6 columns">
+            <h3>Trabalhos em Falta</h3>
+            <div id="faultAvaliation"></div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="large-12 columns">
+            <h3>Estatísticas</h3>
+            // Todo: Fazer gráfico
+        </div>
+    </div>
+
+    <script>
+
+    var disciplines = [];
+        @for(discipline <- disciplines) {
+            disciplines.push({
+            discipline: "@discipline.code",
+            year: "@discipline.year"
+            });
+        };
+
+
+    $("#disciplines").kendoGrid({
+    columns: [
+    { title: "Disciplina", field: "discipline" },
+    { title: "Ano",         field: "year"}
+    ],
+    dataSource: disciplines,
+    sortable: true,
+    pageable: {
+    refresh: true,
+    pageSizes: true,
+    buttonCount: 5,
+    messages: {
+    itemsPerPage: "disciplinas por página",
+    empty: "Sem Informação"
+    }
+    }
+    });
+
+    var milestones = [];
+        @for(milestone <- milestones) {
+            milestones.push({
+            projectname: "@milestone.project.code",
+            milestone: "@milestone.code",
+            endDate: "@milestone.endDate"
+            });
+        };
+
+    $("#milestones").kendoGrid({
+    columns: [
+    { title: "Projecto", field: "projectname" },
+    { title: "Etapa",    field: "milestone"},
+    { title: "Entrega",  field: "endDate"}
+    ],
+    dataSource: milestones,
+    sortable: true,
+    pageable: {
+    refresh: true,
+    pageSizes: true,
+    buttonCount: 5,
+    messages: {
+    itemsPerPage: "etapas por página",
+    empty: "Sem Informação"
+    }
+    }
+    });
+
+
+    var lastProjects = [];
+        @for(lastProject <- lastProjects) {
+            lastProjects.push({
+            projectname: "@lastProject.code",
+            startDate: "@lastProject.startDate",
+            endDate: "@lastProject.endDate"
+            });
+        };
+
+    $("#lastProjects").kendoGrid({
+    columns: [
+    { title: "Projecto", field: "projectname" },
+    { title: "Início",    field: "startDate"},
+    { title: "Entrega",  field: "endDate"}
+    ],
+    dataSource: lastProjects,
+    sortable: true,
+    pageable: {
+    refresh: true,
+    pageSizes: true,
+    buttonCount: 5,
+    messages: {
+    itemsPerPage: "projectos por página",
+    empty: "Sem Informação"
+    }
+    }
+    });
+
+
+    var lastAvaliations = [];
+        @for(lastAvaliation <- lastAvaliations) {
+            lastAvaliations.push({
+            codemilestone: "@lastAvaliation.milestone.project.code",
+            codemilestone: "@lastAvaliation.milestone.code",
+            avaliation: "@lastAvaliation.avaliation"
+            });
+        };
+
+
+    $("#faultAvaliation").kendoGrid({
+        columns: [
+            { title: "Projecto", field: "projectname" },
+            { title: "Milestone",    field: "codemilestone"},
+            { title: "Nota",  field: "avaliation"}
+        ],
+        dataSource: lastProjects,
+        sortable: true,
+        pageable: {
+            refresh: true,
+            pageSizes: true,
+            buttonCount: 5,
+            messages: {
+                itemsPerPage: "avaliações por página",
+                empty: "Sem Informação"
+            }
+        }
+    });
+
+    </script>
+}
