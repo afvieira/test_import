@@ -6,6 +6,7 @@ import play.db.ebean.Model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,6 +36,9 @@ public class StudentMilestone extends Model {
 
     public String publicCommentStudent;
 
+    @Constraints.Required
+    public Date lastUpdate;
+
     //Construtor
     public StudentMilestone() {
     }
@@ -51,9 +55,34 @@ public class StudentMilestone extends Model {
                 ", privateComment='" + privateComment + '\'' +
                 ", publicCommentTeacher='" + publicCommentTeacher + '\'' +
                 ", publicCommentStudent='" + publicCommentStudent + '\'' +
+                ", lastUpdate='" + lastUpdate + '\'' +
                 "} " + super.toString();
     }
 
+
     //DataBase
+    public static Finder<Long, StudentMilestone> find = new Finder(
+            Long.class, StudentMilestone.class
+    );
+
+    public static List<StudentMilestone> all() {
+        return find.all();
+    }
+
+    public static void create(StudentMilestone studentmilestone){
+        studentmilestone.save();
+    }
+
+    public static void delete(Long id){
+        find.ref(id).delete();
+    }
+
+    // TODO: Alterar o nome do método
+    public static List<StudentMilestone> getLastAvaliations(String emailuser){
+        return find.where()
+                .eq("student.email", emailuser)
+                .orderBy("lastUpdate desc")
+                .findList();
+    }
 
 }
