@@ -39,6 +39,9 @@ public class StudentMilestone extends Model {
     @Constraints.Required
     public Date lastUpdate;
 
+    @Constraints.Required
+    public boolean closed;
+
     //Construtor
     public StudentMilestone() {
     }
@@ -55,6 +58,7 @@ public class StudentMilestone extends Model {
                 ", privateComment='" + privateComment + '\'' +
                 ", publicCommentTeacher='" + publicCommentTeacher + '\'' +
                 ", publicCommentStudent='" + publicCommentStudent + '\'' +
+                ", closed='" + closed + '\'' +
                 ", lastUpdate='" + lastUpdate + '\'' +
                 "} " + super.toString();
     }

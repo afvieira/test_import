@@ -11,7 +11,6 @@ import play.mvc.Security;
 /**
  * Created by NRAM on 26/04/14.
  */
-@Security.Authenticated(Secured.class)
 public class DashboardStudent extends Controller {
 
     /**
@@ -19,6 +18,7 @@ public class DashboardStudent extends Controller {
      *
      * @return
      */
+    @Security.Authenticated(Secured.class)
     public static Result index() {
         return ok(
                 views.html.Dashboard.dashboard.render(
