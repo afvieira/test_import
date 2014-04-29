@@ -39,6 +39,8 @@ create table group_milestone (
   private_comment           varchar(255),
   public_comment_teacher    varchar(255),
   public_comment_student    varchar(255),
+  last_update               timestamp,
+  closed                    boolean,
   constraint pk_group_milestone primary key (id))
 ;
 
@@ -94,6 +96,8 @@ create table student_milestone (
   private_comment           varchar(255),
   public_comment_teacher    varchar(255),
   public_comment_student    varchar(255),
+  last_update               timestamp,
+  closed                    boolean,
   constraint pk_student_milestone primary key (id))
 ;
 

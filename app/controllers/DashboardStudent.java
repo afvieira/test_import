@@ -1,7 +1,6 @@
 package controllers;
 
-import models.Discipline;
-import models.Milestone;
+import models.*;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -9,18 +8,22 @@ import play.mvc.Security;
 /**
  * Created by NRAM on 26/04/14.
  */
-@Security.Authenticated(Secured.class)
 public class DashboardStudent extends Controller {
 
     /**
      * Display the Dashboard
+     *
      * @return
      */
+    @Security.Authenticated(Secured.class)
     public static Result index() {
         return ok(
                 views.html.Dashboard.dashboard.render(
-                    Discipline.findByStudent(request().username()),
-                    Milestone.findByStudent(request().username())
+                        User.findByEmail(request().username()),
+                        Discipline.findByUser(request().username()),                // Disciplinas Que frequenta
+                        Milestone.findByStudent(request().username()),              // Procurar próximas etapas para entrega
+                        Project.getByCreatedDate(request().username()),             // Procurar últimos projetos submetidos
+                        StudentMilestone.getLastAvaliations(request().username())   // Últimas Avaliações adicionadas
                 )
         );
     }

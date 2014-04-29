@@ -6,6 +6,7 @@ import play.db.ebean.Model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.util.Date;
 
 /**
  * Created by NRAM on 23/04/14.
@@ -34,6 +35,12 @@ public class GroupMilestone extends Model {
 
     public String publicCommentStudent;
 
+    @Constraints.Required
+    public Date lastUpdate;
+
+    @Constraints.Required
+    public boolean closed;
+
     //Construtor
     public GroupMilestone() {
     }
@@ -50,6 +57,8 @@ public class GroupMilestone extends Model {
                 ", privateComment='" + privateComment + '\'' +
                 ", publicCommentTeacher='" + publicCommentTeacher + '\'' +
                 ", publicCommentStudent='" + publicCommentStudent + '\'' +
+                ", lastUpdate='" + lastUpdate + '\'' +
+                ", closed='" + closed + '\'' +
                 "} " + super.toString();
     }
 

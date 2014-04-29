@@ -78,7 +78,7 @@ public class Discipline extends Model {
                 .findList();
     }
 
-    public static List<Discipline> findByStudent(String emailuser){
+    public static List<Discipline> findByUser(String emailuser){
         return find.where()
                 .eq("users.email", emailuser)
                 .findList();
