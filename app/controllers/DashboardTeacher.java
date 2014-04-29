@@ -21,7 +21,7 @@ public class DashboardTeacher extends Controller {
                 views.html.Dashboard.dashboardteacher.render(
                         // TODO: Página do professor
                         User.findByEmail(request().username()),
-                        Discipline.findByStudent(request().username()),
+                        Discipline.findByUser(request().username()), // Disciplinas Lecionadas
                         Milestone.findByStudent(request().username()),
                         Project.getByCreatedDate(request().username()),
                         StudentMilestone.getLastAvaliations(request().username())

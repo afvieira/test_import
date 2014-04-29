@@ -20,10 +20,10 @@ public class DashboardStudent extends Controller {
         return ok(
                 views.html.Dashboard.dashboard.render(
                         User.findByEmail(request().username()),
-                        Discipline.findByStudent(request().username()),
-                        Milestone.findByStudent(request().username()),
-                        Project.getByCreatedDate(request().username()),
-                        StudentMilestone.getLastAvaliations(request().username())
+                        Discipline.findByUser(request().username()),                // Disciplinas Que frequenta
+                        Milestone.findByStudent(request().username()),              // Procurar próximas etapas para entrega
+                        Project.getByCreatedDate(request().username()),             // Procurar últimos projetos submetidos
+                        StudentMilestone.getLastAvaliations(request().username())   // Últimas Avaliações adicionadas
                 )
         );
     }
