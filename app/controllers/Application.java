@@ -51,6 +51,12 @@ public class Application extends Controller {
         }
     }
 
+    public static Result authenticateAfterRegister(Form<User> registerForm) {
+        session().clear();
+        session("email", registerForm.get().email);
+        return redirect(routes.Courses.all());
+    }
+
     /**
      * Logout and clean the session.
      */
@@ -73,7 +79,7 @@ public class Application extends Controller {
             );
         }else{
             User.create(filledForm.get());
-            return redirect(routes.Application.register());
+            return authenticateAfterRegister(filledForm);
         }
     }
 

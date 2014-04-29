@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Course;
+import models.User;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -19,7 +20,7 @@ public class Courses extends Controller {
     }
 
     public static Result all(){
-        return ok(views.html.Courses.courses.render(Course.all(), courseForm));
+        return ok(views.html.Courses.courses.render(User.findByEmail(request().username()), Course.all(), courseForm));
     }
 
     public static Result show(Long id){

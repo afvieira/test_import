@@ -1,8 +1,8 @@
-@(courses: java.util.List[Course], cursoForm: play.data.Form[Course])
+@(user: User, courses: java.util.List[Course], cursoForm: play.data.Form[Course])
 
 @import helper._
 
-@main() {
+@main(user) {
 
     <h1>Cursos</h1>
     <table width="100%">

@@ -1,4 +1,4 @@
-@(title: String = "SAPUM - Sistema de Apoio a Projetos da Universidade do Minho")(content: Html)
+@(user: User = null, title: String = "SAPUM - Sistema de Apoio a Projetos da Universidade do Minho")(content: Html)
 
 <!DOCTYPE html>
 
@@ -56,9 +56,28 @@
 
                     <section class="top-bar-section">
                         <ul class="right">
-                            <li class="has-form">
-                                <a href="/login" class="small button radius">Iniciar sessão</a>
-                            </li>
+
+                            @if(user == null) {
+                                <li class="has-form">
+                                    <a href="/login" class="small button radius">Iniciar sessão</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li class="has-form">
+                                    <a href="/register" class="small button radius">Registar</a>
+                                </li>
+                            }else{
+                                <ul class="title-area">
+                                    <li class="name">
+                                        <h1><a> @user.name</a></h1>
+                                    </li>
+                                </ul>
+
+                                <li class="divider"></li>
+                                <li class="has-form">
+                                    <a href="/logout" class="small button alert radius">Terminar sessão</a>
+                                </li>
+                            }
+
                         </ul>
                     </section>
                 </nav>

@@ -3,7 +3,6 @@
 users:
 
     - !!models.User
-            id:                 1
             code:               pg2001
             name:               Nome_estudante_1
             birthdate:          1989-11-15 13:51:52
@@ -14,7 +13,6 @@ users:
             userType:           Student
 
     - !!models.User
-            id:                 2
             code:               pg2002
             name:               Nome_estudante_2
             birthdate:          1989-11-15 13:51:52
@@ -25,7 +23,6 @@ users:
             userType:           Student
 
     - !!models.User
-            id:                 3
             code:               pg2003
             name:               Nome_estudante_3
             birthdate:          1989-11-15 13:51:52
@@ -36,7 +33,6 @@ users:
             userType:           Teacher
 
     - !!models.User
-            id:                 4
             code:               pg2004
             name:               Nome_estudante_4
             birthdate:          1989-11-15 13:51:52
@@ -47,7 +43,6 @@ users:
             userType:           Teacher
 
     - !!models.User
-            id:                 5
             code:               pg2005
             name:               Nome_estudante_5
             birthdate:          1989-11-15 13:51:52
@@ -58,7 +53,6 @@ users:
             userType:           Administrator
 
     - !!models.User
-            id:                 6
             code:               pg2006
             name:               Nome_estudante_6
             birthdate:          1989-11-15 13:51:52
