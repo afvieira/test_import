@@ -73,22 +73,18 @@ public class DashboardStudent extends Controller {
         return TODO;
     }
 
+    // O Aluno não pode criar um projeto
     @Security.Authenticated(Secured.class)
     public static Result createProject() {
-        /*
-            TODO:
-             - Não tem permissões para criar projeto
-         */
-        return TODO;
+        User u = User.findByEmail(request().username());
+        return badRequest(views.html.notFound.render(u));
     }
 
+    // O ALuno não pode apagar um projeto
     @Security.Authenticated(Secured.class)
     public static Result deleteProject(Long id) {
-        /*
-            TODO:
-             - Não tem permissões para Apagar Projeto
-         */
-        return TODO;
+        User u = User.findByEmail(request().username());
+        return badRequest(views.html.notFound.render(u));
     }
 
     @Security.Authenticated(Secured.class)
@@ -111,22 +107,18 @@ public class DashboardStudent extends Controller {
         return TODO;
     }
 
+    // O Aluno não pode criar uma milestone
     @Security.Authenticated(Secured.class)
     public static Result createMilestone(Long id_project) {
-        /*
-            TODO:
-             - Sem permissões
-         */
-        return TODO;
+        User u = User.findByEmail(request().username());
+        return badRequest(views.html.notFound.render(u));
     }
 
+    // O Aluno não pode apagar uma milestone
     @Security.Authenticated(Secured.class)
     public static Result deleteMilestone(Long id_project, Long id_milestone) {
-        /*
-            TODO:
-             - Sem permissões para Apagar Milestone
-         */
-        return TODO;
+        User u = User.findByEmail(request().username());
+        return badRequest(views.html.notFound.render(u));
     }
 
     @Security.Authenticated(Secured.class)
@@ -158,12 +150,10 @@ public class DashboardStudent extends Controller {
         return TODO;
     }
 
+    // O Aluno não pode apagar uma avaliação
     @Security.Authenticated(Secured.class)
     public static Result deleteAvaliation(Long id_project,Long id_milestone, Long id_avaliation) {
-        /*
-            TODO:
-                - NAO!!
-         */
-        return TODO;
+        User u = User.findByEmail(request().username());
+        return badRequest(views.html.notFound.render(u));
     }
 }

@@ -121,10 +121,10 @@ public class Dashboards extends Controller {
         if(u != null){
             switch(u.userType){
                 case "Teacher":
-                    result =  DashboardTeacher.milestones();
+                    result =  DashboardTeacher.milestones(id_project);
                     break;
                 case "Student":
-                    result =  DashboardStudent.milestones();
+                    result =  DashboardStudent.milestones(id_project);
                     break;
                 case "Administrator":
                     break;
@@ -158,10 +158,10 @@ public class Dashboards extends Controller {
         if(u != null){
             switch(u.userType){
                 case "Teacher":
-                    result =  DashboardTeacher.avaliation();
+                    result =  DashboardTeacher.avaliations(id_project,id_milestone);
                     break;
                 case "Student":
-                    result =  DashboardStudent.avaliation();
+                    result =  DashboardStudent.avaliations(id_project,id_milestone);
                     break;
                 case "Administrator":
                     break;
@@ -174,7 +174,7 @@ public class Dashboards extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result showAvaliation(Long id_project,Long id_milestone, Long id_avaliation) {
+    public static Result showAvaliation(Long id_project, Long id_milestone, Long id_avaliation) {
         return TODO;
     }
 
