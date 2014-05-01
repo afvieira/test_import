@@ -115,7 +115,7 @@ public class Dashboards extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result milestones() {
+    public static Result milestones(Long id_project) {
         Result result = null;
         User u = User.findByEmail(request().username());
         if(u != null){
@@ -137,22 +137,22 @@ public class Dashboards extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result showMilestone(Long id) {
+    public static Result showMilestone(Long id_project, Long id_milestone) {
         return TODO;
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result createMilestone() {
+    public static Result createMilestone(Long id_project) {
         return TODO;
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result deleteMilestone(Long id) {
+    public static Result deleteMilestone(Long id_project, Long id_milestone) {
         return TODO;
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result avaliation() {
+    public static Result avaliations(Long id_project,Long id_milestone) {
         Result result = null;
         User u = User.findByEmail(request().username());
         if(u != null){
@@ -174,17 +174,17 @@ public class Dashboards extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result showAvaliation(Long id) {
+    public static Result showAvaliation(Long id_project,Long id_milestone, Long id_avaliation) {
         return TODO;
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result createAvaliation() {
+    public static Result createAvaliation(Long id_project,Long id_milestone) {
         return TODO;
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result deleteAvaliation(Long id) {
+    public static Result deleteAvaliation(Long id_project,Long id_milestone, Long id_avaliation) {
         return TODO;
     }
 
