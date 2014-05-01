@@ -47,8 +47,6 @@ GET         /dashboard                                                          
 # Dashboard Disciplines
 GET         /dashboard/disciplines                                               controllers.Dashboards.disciplines()
 GET         /dashboard/discipline/:id                                            controllers.Dashboards.showDiscipline(id: Long)
-POST        /dashboard/discipline                                                controllers.Dashboards.createDiscipline()
-POST        /dashboard/discipline/:id/delete                                     controllers.Dashboards.deleteDiscipline(id: Long)
 
 # Dashboard Projects
 GET         /dashboard/projects                                                  controllers.Dashboards.projects()
