@@ -138,6 +138,7 @@ disciplines:
               - !!models.Shift
                 id: 4
 
+
 #Cursos
 courses:
 
@@ -184,3 +185,96 @@ courses:
         disciplines:
             - !!models.Discipline
                 id: 4
+
+
+# StudentProject
+studentprojects:
+
+    - !!models.StudentProject
+      id:               1
+      student: !!models.User
+                        id: 1
+
+    - !!models.StudentProject
+      id:               2
+      student: !!models.User
+                        id: 1
+
+    - !!models.StudentProject
+      id:               3
+      student: !!models.User
+                        id: 2
+
+    - !!models.StudentProject
+      id:               4
+      student: !!models.User
+                        id: 2
+
+# Projects
+projects:
+
+    - !!models.Project
+      id:             1
+      discipline: !!models.Discipline
+                      id: 1
+      code:           PROJECT 1
+      title:          Projeto 1 TESTE Title
+      description:    Descrição do primeiro projeto
+      startDate:      2014-01-01
+      endDate:        2014-02-27
+      creationDate:   2014-01-01
+      milestones:
+      groups:
+      students:
+
+    - !!models.Project
+          id:             2
+          discipline: !!models.Discipline
+                          id: 1
+          code:           PROJECT 2
+          title:          Projeto 2 TESTE Title
+          description:    Descrição do segund projeto
+          startDate:      2014-05-01
+          endDate:        2014-07-27
+          creationDate:   2014-01-05
+          milestones:
+          groups:
+          students:
+                  - !!models.StudentProject
+                          id: 1
+                  - !!models.StudentProject
+                          id: 2
+
+    - !!models.Project
+          id:             3
+          discipline: !!models.Discipline
+                          id: 1
+          code:           PROJECT 3
+          title:          Projeto 3 TESTE Title
+          description:    Descrição do terceiro projeto
+          startDate:      2014-05-01
+          endDate:        2014-07-27
+          creationDate:   2014-02-05
+          milestones:
+          groups:
+          students:
+                  - !!models.StudentProject
+                          id: 1
+
+
+
+# Milestone
+milestones:
+  - !!models.Milestone
+    id: 1
+    project: !!models.Project
+      id: 1
+    code: Mil1_Proj_1
+    description: DESC_MIL1_PRJ_1
+    number: 1
+    startDate:    2014-05-01
+    endDate:      2014-06-01
+    path:
+    percentage: 10
+    groups:
+    students:

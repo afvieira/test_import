@@ -18,7 +18,7 @@ public class DashboardTeacher extends Controller {
     @Security.Authenticated(Secured.class)
     public static Result index() {
         return ok(
-                views.html.Dashboard.dashboardteacher.render(
+                views.html.Dashboard.Teacher.dashboard.render(
                         // TODO: Página do professor
                         User.findByEmail(request().username()),
                         Discipline.findByUser(request().username()), // Disciplinas Lecionadas
@@ -27,5 +27,25 @@ public class DashboardTeacher extends Controller {
                         StudentMilestone.getLastAvaliations(request().username())
                 )
         );
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result disciplines() {
+        return TODO;
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result projects() {
+        return TODO;
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result milestones() {
+        return TODO;
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result avaliation() {
+        return TODO;
     }
 }

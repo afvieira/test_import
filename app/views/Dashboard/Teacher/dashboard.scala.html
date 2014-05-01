@@ -1,8 +1,8 @@
-@(user: User = null, disciplines: List[Discipline], milestones: List[Milestone], lastProjects: List[Project], lastAvaliations: List[StudentMilestone])
+@(user: User, disciplines: List[Discipline], milestones: List[Milestone], lastProjects: List[Project], lastAvaliations: List[StudentMilestone])
 
 @import helper._
 
-@main() {
+@main(user) {
 
     <h1>Dashboard</h1>
 

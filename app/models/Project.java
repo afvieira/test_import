@@ -54,21 +54,24 @@ public class Project extends Model {
     }
 
     //ToString
+
+
     @Override
     public String toString() {
-        return "Project{" +
-                "id=" + id +
-                ", discipline=" + discipline +
-                ", code='" + code + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", creationDate=" + creationDate +
-                ", milestones=" + milestones +
-                ", groups=" + groups +
-                ", students=" + students +
-                "} " + super.toString();
+        final StringBuffer sb = new StringBuffer("Project{");
+        sb.append("id=").append(id);
+        sb.append(", discipline=").append(discipline);
+        sb.append(", code='").append(code).append('\'');
+        sb.append(", title='").append(title).append('\'');
+        sb.append(", description='").append(description).append('\'');
+        sb.append(", startDate=").append(startDate);
+        sb.append(", endDate=").append(endDate);
+        sb.append(", creationDate=").append(creationDate);
+        sb.append(", milestones=").append(milestones);
+        sb.append(", groups=").append(groups);
+        sb.append(", students=").append(students);
+        sb.append('}');
+        return sb.toString();
     }
 
     //DataBase
@@ -88,6 +91,7 @@ public class Project extends Model {
         find.ref(id).delete();
     }
 
+    // TODO: Corrigir
     public static List<Project> getByCreatedDate(String emailuser){
         return find.where()
                 .eq("students.student.email", emailuser)

@@ -88,31 +88,6 @@ public class Application extends Controller {
         User.delete(id);
         return redirect(routes.Application.register());
     }
-    /**
-     * Display the Dashboard
-     *
-     * @return
-     */
-    @Security.Authenticated(Secured.class)
-    public static Result dashboard() {
-        Result result = null;
-        User u = User.findByEmail(request().username());
-        if(u != null){
-            switch(u.userType.toString()){
-                case "Teacher":
-                    break;
-                case "Student":
-                    result =  DashboardStudent.index();
-                    break;
-                case "Administrator":
-                    break;
-                default:
-                    // TODO: Aqui certamente temos que mandar para uma página de erro!!! (nunca deverá acontecer)
-                    result = ok("BUUMMM");
-            }
-        }
-        return result;
-    }
 
 }
 

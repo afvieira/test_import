@@ -42,7 +42,11 @@ POST        /course/:id_course/discipline/:id_discipline/shift                  
 POST        /course/:id_course/discipline/:id_discipline/shift/:id/delete        controllers.Shifts.delete(id_course: Long, id_discipline: Long, id: Long)
 
 # Dashboard
-GET         /dashboard                                                           controllers.Application.dashboard()
+GET         /dashboard                                                           controllers.Dashboards.index()
+GET         /dashboard/Disciplines                                               controllers.Dashboards.disciplines()
+GET         /dashboard/Projects                                                  controllers.Dashboards.projects()
+GET         /dashboard/Milestones                                                controllers.Dashboards.milestones()
+GET         /dashboard/Avaliation                                                controllers.Dashboards.avaliation()
 
 # Perfil
 # Ainda não sei como vou implementar

@@ -68,6 +68,10 @@ public class User extends Model {
     public User() {
     }
 
+    public User(Long id) {
+        this.id = id;
+    }
+
     //ToString
     @Override
     public String toString() {
