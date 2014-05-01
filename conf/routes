@@ -60,7 +60,7 @@ GET         /dashboard/project/:id_project/milestone/:id_milestone              
 POST        /dashboard/project/:id_project/milestone                                         controllers.Dashboards.createMilestone(id_project: Long)
 POST        /dashboard/project/:id_project/milestone/:id_milestone/delete                    controllers.Dashboards.deleteMilestone(id_project: Long, id_milestone: Long)
 
-# Dashboard Milestones
+# Dashboard Avaliations
 GET         /dashboard/project/:id_project/milestone/:id_milestone/avaliations                          controllers.Dashboards.avaliation(id_project: Long, id_milestone: Long)
 GET         /dashboard/project/:id_project/milestone/:id_milestone/avaliation/:id_avaliation            controllers.Dashboards.showAvaliation(id_project: Long, id_milestone: Long, id: id_avaliation)
 POST        /dashboard/project/:id_project/milestone/:id_milestone/avaliation                           controllers.Dashboards.createAvaliation(id_project: Long, id_milestone: Long)
