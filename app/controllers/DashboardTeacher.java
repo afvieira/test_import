@@ -10,11 +10,6 @@ import play.mvc.Security;
  */
 public class DashboardTeacher extends Controller {
 
-    /**
-     * Display the Dashboard
-     *
-     * @return
-     */
     @Security.Authenticated(Secured.class)
     public static Result index() {
         return ok(
@@ -35,7 +30,37 @@ public class DashboardTeacher extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
+    public static Result showDiscipline(Long id) {
+        return TODO;
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result createDiscipline() {
+        return TODO;
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result deleteDiscipline(Long id) {
+        return TODO;
+    }
+
+    @Security.Authenticated(Secured.class)
     public static Result projects() {
+        return TODO;
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result showProject(Long id) {
+        return TODO;
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result createProject() {
+        return TODO;
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result deleteProject(Long id) {
         return TODO;
     }
 
@@ -45,7 +70,37 @@ public class DashboardTeacher extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
+    public static Result showMilestone(Long id) {
+        return TODO;
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result createMilestone() {
+        return TODO;
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result deleteMilestone(Long id) {
+        return TODO;
+    }
+
+    @Security.Authenticated(Secured.class)
     public static Result avaliation() {
+        return TODO;
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result showAvaliation(Long id) {
+        return TODO;
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result createAvaliation() {
+        return TODO;
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result deleteAvaliation(Long id) {
         return TODO;
     }
 }
