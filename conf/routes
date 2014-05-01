@@ -57,16 +57,16 @@ POST        /dashboard/project                                                  
 POST        /dashboard/project/:id/delete                                        controllers.Dashboards.deleteProject(id: Long)
 
 # Dashboard Milestones
-GET         /dashboard/milestones                                                controllers.Dashboards.milestones()
-GET         /dashboard/milestone/:id                                             controllers.Dashboards.showMilestone(id: Long)
-POST        /dashboard/milestone                                                 controllers.Dashboards.createMilestone()
-POST        /dashboard/milestone/:id/delete                                      controllers.Dashboards.deleteMilestone(id: Long)
+GET         /dashboard/project/:id/milestones                                                controllers.Dashboards.milestones()
+GET         /dashboard/project/:id_project/milestone/:id_milestone                           controllers.Dashboards.showMilestone(id_project: Long, id_milestone: Long)
+POST        /dashboard/project/:id/milestone                                                 controllers.Dashboards.createMilestone()
+POST        /dashboard/project/:id_project/milestone/:id_milestone/delete                    controllers.Dashboards.deleteMilestone(id_project: Long, id_milestone: Long)
 
 # Dashboard Milestones
-GET         /dashboard/avaliations                                               controllers.Dashboards.avaliation()
-GET         /dashboard/avaliation/:id                                            controllers.Dashboards.showAvaliation(id: Long)
-POST        /dashboard/avaliation                                                controllers.Dashboards.createAvaliation()
-POST        /dashboard/avaliation/:id/delete                                     controllers.Dashboards.deleteAvaliation(id: Long)
+GET         /dashboard/project/:id_project/milestone/:id_milestone/avaliations                          controllers.Dashboards.avaliation()
+GET         /dashboard/project/:id_project/milestone/:id_milestone/avaliation/:id_avaliation            controllers.Dashboards.showAvaliation(id_project: Long, id_milestone: Long, id: id_avaliation)
+POST        /dashboard/project/:id_project/milestone/:id_milestone/avaliation                           controllers.Dashboards.createAvaliation()
+POST        /dashboard/project/:id_project/milestone/:id_milestone/avaliation/:id_avaliation/delete     controllers.Dashboards.deleteAvaliation(id_project: Long, id_milestone: Long, id: id_avaliation)
 
 # Perfil
 GET         /profile                                                             controllers.Profiles.index()
