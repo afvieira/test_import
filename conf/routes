@@ -43,13 +43,34 @@ POST        /course/:id_course/discipline/:id_discipline/shift/:id/delete       
 
 # Dashboard
 GET         /dashboard                                                           controllers.Dashboards.index()
+
+# Dashboard Disciplines
 GET         /dashboard/disciplines                                               controllers.Dashboards.disciplines()
+GET         /dashboard/discipline/:id                                            controllers.Dashboards.showDiscipline(id: Long)
+POST        /dashboard/discipline                                                controllers.Dashboards.createDiscipline()
+POST        /dashboard/discipline/:id/delete                                     controllers.Dashboards.deleteDiscipline(id: Long)
+
+# Dashboard Projects
 GET         /dashboard/projects                                                  controllers.Dashboards.projects()
+GET         /dashboard/project/:id                                               controllers.Dashboards.showProject(id: Long)
+POST        /dashboard/project                                                   controllers.Dashboards.createProject()
+POST        /dashboard/project/:id/delete                                        controllers.Dashboards.deleteProject(id: Long)
+
+# Dashboard Milestones
 GET         /dashboard/milestones                                                controllers.Dashboards.milestones()
-GET         /dashboard/avaliation                                                controllers.Dashboards.avaliation()
+GET         /dashboard/milestone/:id                                             controllers.Dashboards.showMilestone(id: Long)
+POST        /dashboard/milestone                                                 controllers.Dashboards.createMilestone()
+POST        /dashboard/milestone/:id/delete                                      controllers.Dashboards.deleteMilestone(id: Long)
+
+# Dashboard Milestones
+GET         /dashboard/avaliations                                               controllers.Dashboards.avaliation()
+GET         /dashboard/avaliation/:id                                            controllers.Dashboards.showAvaliation(id: Long)
+POST        /dashboard/avaliation                                                controllers.Dashboards.createAvaliation()
+POST        /dashboard/avaliation/:id/delete                                     controllers.Dashboards.deleteAvaliation(id: Long)
 
 # Perfil
-# Ainda não sei como vou implementar
+GET         /profile                                                             controllers.Profiles.index()
+GET         /profile/:id                                                         controllers.Profiles.showProfile(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                                                        controllers.Assets.at(path="/public", file)
