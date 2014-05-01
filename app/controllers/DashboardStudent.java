@@ -18,7 +18,7 @@ public class DashboardStudent extends Controller {
     @Security.Authenticated(Secured.class)
     public static Result index() {
         return ok(
-                views.html.Dashboard.Student.dashboard.render(
+                views.html.Dashboard.Student.index.render(
                         User.findByEmail(request().username()),
                         Discipline.findByUser(request().username()),                // Disciplinas Que frequenta
                         Milestone.findByStudent(request().username()),              // Procurar próximas etapas para entrega

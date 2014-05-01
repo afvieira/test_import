@@ -13,7 +13,7 @@ public class DashboardTeacher extends Controller {
     @Security.Authenticated(Secured.class)
     public static Result index() {
         return ok(
-                views.html.Dashboard.Teacher.dashboard.render(
+                views.html.Dashboard.Teacher.index.render(
                         // TODO: Página do professor
                         User.findByEmail(request().username()),
                         Discipline.findByUser(request().username()), // Disciplinas Lecionadas
