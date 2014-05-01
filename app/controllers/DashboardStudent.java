@@ -5,6 +5,8 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 
+import java.util.List;
+
 /**
  * Created by NRAM on 26/04/14.
  */
@@ -30,6 +32,11 @@ public class DashboardStudent extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result disciplines() {
+        User user = User.findByEmail(request().username());
+        List<Discipline> disciplines = Discipline.findByUser(request().username());
+        List<Project> projects = Project.getByCreatedDate(request().username());
+        List<Milestone> milestones = Milestone.nextDeliveryByUser(request().username());
+
         /*
             TODO:
              - Mostrar todas as diciplinas do Aluno

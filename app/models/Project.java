@@ -93,7 +93,7 @@ public class Project extends Model {
 
     // TODO: Corrigir
     public static List<Project> getByCreatedDate(String emailuser){
-        return find.where()
+        return find.fetch("students").where()
                 .eq("students.student.email", emailuser)
                 .orderBy("creationDate desc")
                 .findList();

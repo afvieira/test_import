@@ -76,8 +76,8 @@ public class Milestone extends Model {
     );
 
     public static List<Milestone> findByStudent(String emailuser){
-        return find.where()
-                .eq("students.student.email", emailuser)
+        return find.fetch("students").where()
+                    .eq("students.student.email", emailuser)
                 .findList();
     }
 
@@ -91,5 +91,13 @@ public class Milestone extends Model {
 
     public static void delete(Long id){
         find.ref(id).delete();
+    }
+
+    public static List<Milestone> nextDeliveryByUser(String emailuser) {
+        return find.fetch("students").where()
+                .ge("endDate", new Date())
+                .eq("students.student.email", emailuser)
+                .orderBy("endDate ASC")
+                .findList();
     }
 }

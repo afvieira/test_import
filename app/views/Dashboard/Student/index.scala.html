@@ -126,7 +126,7 @@
     var lastAvaliations = [];
     @for(lastAvaliation <- lastAvaliations) {
         lastAvaliations.push({
-            codemilestone: "@lastAvaliation.milestone.project.code",
+            projectname: "@lastAvaliation.milestone.project.code",
             codemilestone: "@lastAvaliation.milestone.code",
             avaliation: "@lastAvaliation.avaliation"
         });
@@ -139,7 +139,7 @@
             { title: "Milestone",    field: "codemilestone"},
             { title: "Nota",  field: "avaliation"}
         ],
-        dataSource: lastProjects,
+        dataSource: lastAvaliations,
         sortable: true,
         pageable: {
             refresh: true,

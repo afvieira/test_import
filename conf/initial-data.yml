@@ -187,28 +187,6 @@ courses:
                 id: 4
 
 
-# StudentProject
-studentprojects:
-
-    - !!models.StudentProject
-      id:               1
-      student: !!models.User
-                        id: 1
-
-    - !!models.StudentProject
-      id:               2
-      student: !!models.User
-                        id: 1
-
-    - !!models.StudentProject
-      id:               3
-      student: !!models.User
-                        id: 2
-
-    - !!models.StudentProject
-      id:               4
-      student: !!models.User
-                        id: 2
 
 # Projects
 projects:
@@ -240,10 +218,6 @@ projects:
           milestones:
           groups:
           students:
-                  - !!models.StudentProject
-                          id: 1
-                  - !!models.StudentProject
-                          id: 2
 
     - !!models.Project
           id:             3
@@ -258,10 +232,38 @@ projects:
           milestones:
           groups:
           students:
-                  - !!models.StudentProject
-                          id: 1
 
 
+
+
+# StudentProject
+studentprojects:
+
+    - !!models.StudentProject
+      id:               1
+      student: !!models.User
+                  id: 1
+      project: !!models.Project
+                  id: 1
+
+    - !!models.StudentProject
+      id:               2
+      student: !!models.User
+                        id: 1
+      project: !!models.Project
+                  id: 2
+
+    - !!models.StudentProject
+      id:               3
+      student: !!models.User
+                        id: 2
+      project: !!models.Project
+                  id: 1
+
+    - !!models.StudentProject
+      id:               4
+      student: !!models.User
+                        id: 2
 
 # Milestone
 milestones:
@@ -272,9 +274,46 @@ milestones:
     code: Mil1_Proj_1
     description: DESC_MIL1_PRJ_1
     number: 1
+    startDate:    2014-02-01
+    endDate:      2014-03-01
+    path:
+    percentage: 10
+    groups:
+    students:
+
+# Milestone
+milestones:
+  - !!models.Milestone
+    id: 2
+    project: !!models.Project
+      id: 1
+    code: Mil2_Proj_1
+    description: DESC_MIL2_PRJ_1
+    number: 2
     startDate:    2014-05-01
     endDate:      2014-06-01
     path:
     percentage: 10
     groups:
     students:
+
+
+# StudentMilestone
+studentmilestone:
+    - !!models.StudentMilestone
+          id:               1
+          student: !!models.User
+                   id: 1
+          milestone: !!models.Milestone
+            id: 1
+          avaliation: 10
+
+
+# StudentMilestone
+studentmilestone:
+    - !!models.StudentMilestone
+          id:               2
+          student: !!models.User
+                   id: 1
+          milestone: !!models.Milestone
+            id: 2

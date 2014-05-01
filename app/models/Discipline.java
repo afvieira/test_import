@@ -81,6 +81,7 @@ public class Discipline extends Model {
     public static List<Discipline> findByUser(String emailuser){
         return find.where()
                 .eq("users.email", emailuser)
+                .orderBy("year DESC")
                 .findList();
     }
 
