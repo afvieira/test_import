@@ -49,10 +49,10 @@ GET         /dashboard/disciplines                                              
 GET         /dashboard/discipline/:id                                            controllers.Dashboards.showDiscipline(id: Long)
 
 # Dashboard Projects
-GET         /dashboard/projects                                                  controllers.Dashboards.projects()
-GET         /dashboard/project/:id                                               controllers.Dashboards.showProject(id: Long)
-POST        /dashboard/project                                                   controllers.Dashboards.createProject()
-POST        /dashboard/project/:id/delete                                        controllers.Dashboards.deleteProject(id: Long)
+GET         /dashboard/discipline/:id_discipline/projects                                                  controllers.Dashboards.projects(id_discipline: Long)
+GET         /dashboard/discipline/:id_discipline/project/:id                                               controllers.Dashboards.showProject(id_discipline: Long, id: Long)
+POST        /dashboard/discipline/:id_discipline/project                                                   controllers.Dashboards.createProject(id_discipline: Long)
+POST        /dashboard/discipline/:id_discipline/project/:id/delete                                        controllers.Dashboards.deleteProject(id_discipline: Long, id: Long)
 
 # Dashboard Milestones
 GET         /dashboard/project/:id_project/milestones                                        controllers.Dashboards.milestones(id_project: Long)
