@@ -281,8 +281,6 @@ milestones:
     groups:
     students:
 
-# Milestone
-milestones:
   - !!models.Milestone
     id: 2
     project: !!models.Project
@@ -299,7 +297,8 @@ milestones:
 
 
 # StudentMilestone
-studentmilestone:
+studentmilestones:
+
     - !!models.StudentMilestone
           id:               1
           student: !!models.User
@@ -308,9 +307,6 @@ studentmilestone:
             id: 1
           avaliation: 10
 
-
-# StudentMilestone
-studentmilestone:
     - !!models.StudentMilestone
           id:               2
           student: !!models.User

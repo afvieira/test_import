@@ -50,13 +50,11 @@ public class Global extends GlobalSettings {
                 //StudentProjects
                 Ebean.save(all.get("studentprojects"));
 
-
                 // Milestones
                 Ebean.save(all.get("milestones"));
 
-
                 //Student Milestone
-                Ebean.save(all.get("studentmilestone"));
+                Ebean.save(all.get("studentmilestones"));
 
 
             }
