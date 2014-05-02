@@ -40,7 +40,7 @@ public class Project extends Model {
     @Constraints.Required
     public Date creationDate;
 
-    @Constraints.Required
+    @ManyToOne
     public User createdBy;
 
     @OneToMany
@@ -154,7 +154,7 @@ public class Project extends Model {
         return find
                 .where()
                 .eq("createdBy.email", emailUser)
-                .orderBy("creationDate desc")
+                .orderBy("creationDate DESC")
                 .findList();
     }
 

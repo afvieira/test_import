@@ -76,6 +76,7 @@ create table project (
   start_date                timestamp,
   end_date                  timestamp,
   creation_date             timestamp,
+  created_by_id             bigint,
   constraint pk_project primary key (id))
 ;
 
@@ -179,16 +180,18 @@ alter table milestone add constraint fk_milestone_project_7 foreign key (project
 create index ix_milestone_project_7 on milestone (project_id);
 alter table project add constraint fk_project_discipline_8 foreign key (discipline_id) references discipline (id);
 create index ix_project_discipline_8 on project (discipline_id);
-alter table shift add constraint fk_shift_discipline_9 foreign key (discipline_id) references discipline (id);
-create index ix_shift_discipline_9 on shift (discipline_id);
-alter table student_milestone add constraint fk_student_milestone_student_10 foreign key (student_id) references general_user (id);
-create index ix_student_milestone_student_10 on student_milestone (student_id);
-alter table student_milestone add constraint fk_student_milestone_mileston_11 foreign key (milestone_id) references milestone (id);
-create index ix_student_milestone_mileston_11 on student_milestone (milestone_id);
-alter table student_project add constraint fk_student_project_student_12 foreign key (student_id) references general_user (id);
-create index ix_student_project_student_12 on student_project (student_id);
-alter table student_project add constraint fk_student_project_project_13 foreign key (project_id) references project (id);
-create index ix_student_project_project_13 on student_project (project_id);
+alter table project add constraint fk_project_createdBy_9 foreign key (created_by_id) references general_user (id);
+create index ix_project_createdBy_9 on project (created_by_id);
+alter table shift add constraint fk_shift_discipline_10 foreign key (discipline_id) references discipline (id);
+create index ix_shift_discipline_10 on shift (discipline_id);
+alter table student_milestone add constraint fk_student_milestone_student_11 foreign key (student_id) references general_user (id);
+create index ix_student_milestone_student_11 on student_milestone (student_id);
+alter table student_milestone add constraint fk_student_milestone_mileston_12 foreign key (milestone_id) references milestone (id);
+create index ix_student_milestone_mileston_12 on student_milestone (milestone_id);
+alter table student_project add constraint fk_student_project_student_13 foreign key (student_id) references general_user (id);
+create index ix_student_project_student_13 on student_project (student_id);
+alter table student_project add constraint fk_student_project_project_14 foreign key (project_id) references project (id);
+create index ix_student_project_project_14 on student_project (project_id);
 
 
 

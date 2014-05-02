@@ -316,7 +316,7 @@ public class Milestone extends Model {
      */
     public static List<Milestone> getAllMilestoneByAllDisciplinesTeacher(String emailUser){
         return find
-                .fetch("project").fetch("discipline")
+                .fetch("project")
                 .where()
                 .eq("project.discipline.users.email", emailUser)
                 .orderBy("endDate ASC")
