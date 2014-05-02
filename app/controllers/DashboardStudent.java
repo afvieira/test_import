@@ -23,7 +23,7 @@ public class DashboardStudent extends Controller {
                 views.html.Dashboard.Student.index.render(
                         User.findByEmail(request().username()),
                         Discipline.findByUser(request().username()),                // Disciplinas Que frequenta
-                        Milestone.findByStudent(request().username()),              // Procurar próximas etapas para entrega
+                        Milestone.nextDeliveryByUser(request().username()),              // Procurar próximas etapas para entrega
                         Project.getByCreatedDate(request().username()),             // Procurar últimos projetos submetidos
                         StudentMilestone.getLastAvaliations(request().username())   // Últimas Avaliações adicionadas
                 )

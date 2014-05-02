@@ -40,7 +40,7 @@ public class Discipline extends Model {
     public List<Project> projects;
 
     @ManyToMany
-    @JoinTable(name = "user_discipline")
+    @JoinTable(name = "general_user_discipline") // Tabela user => general_user
     public List<User> users;
 
     //construtor

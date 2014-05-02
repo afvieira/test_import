@@ -100,4 +100,15 @@ public class Milestone extends Model {
                 .orderBy("endDate ASC")
                 .findList();
     }
+
+    public static List<Milestone> notDeliveryByUser(String emailUser){
+        return find
+                .fetch("students")
+                .where()
+                .lt("endDate", new Date())
+                .isNull("path")
+                .eq("students.student.email", emailUser)
+                .orderBy("endDate ASC")
+                .findList();
+    }
 }

@@ -109,7 +109,7 @@ create table student_project (
   constraint pk_student_project primary key (id))
 ;
 
-create table user (
+create table general_user (
   id                        bigint not null,
   code                      varchar(255),
   name                      varchar(255),
@@ -119,27 +119,27 @@ create table user (
   encrypted_password        varchar(255),
   date_sign_up              timestamp,
   user_type                 varchar(255),
-  constraint uq_user_email unique (email),
-  constraint pk_user primary key (id))
+  constraint uq_general_user_email unique (email),
+  constraint pk_general_user primary key (id))
 ;
 
 
-create table user_discipline (
+create table general_user_discipline (
   discipline_id                  bigint not null,
-  user_id                        bigint not null,
-  constraint pk_user_discipline primary key (discipline_id, user_id))
+  general_user_id                bigint not null,
+  constraint pk_general_user_discipline primary key (discipline_id, general_user_id))
 ;
 
-create table user_GroupTable (
-  user_id                        bigint not null,
+create table general_user_GroupTable (
+  general_user_id                bigint not null,
   GroupTable_id                  bigint not null,
-  constraint pk_user_GroupTable primary key (user_id, GroupTable_id))
+  constraint pk_general_user_GroupTable primary key (general_user_id, GroupTable_id))
 ;
 
-create table user_shift (
-  user_id                        bigint not null,
+create table general_user_shift (
+  general_user_id                bigint not null,
   shift_id                       bigint not null,
-  constraint pk_user_shift primary key (user_id, shift_id))
+  constraint pk_general_user_shift primary key (general_user_id, shift_id))
 ;
 create sequence course_seq;
 
@@ -161,82 +161,78 @@ create sequence student_milestone_seq;
 
 create sequence student_project_seq;
 
-create sequence user_seq;
+create sequence general_user_seq;
 
-alter table discipline add constraint fk_discipline_course_1 foreign key (course_id) references course (id) on delete restrict on update restrict;
+alter table discipline add constraint fk_discipline_course_1 foreign key (course_id) references course (id);
 create index ix_discipline_course_1 on discipline (course_id);
-alter table GroupTable add constraint fk_GroupTable_discipline_2 foreign key (discipline_id) references discipline (id) on delete restrict on update restrict;
+alter table GroupTable add constraint fk_GroupTable_discipline_2 foreign key (discipline_id) references discipline (id);
 create index ix_GroupTable_discipline_2 on GroupTable (discipline_id);
-alter table group_milestone add constraint fk_group_milestone_group_3 foreign key (group_id) references GroupTable (id) on delete restrict on update restrict;
+alter table group_milestone add constraint fk_group_milestone_group_3 foreign key (group_id) references GroupTable (id);
 create index ix_group_milestone_group_3 on group_milestone (group_id);
-alter table group_milestone add constraint fk_group_milestone_milestone_4 foreign key (milestone_id) references milestone (id) on delete restrict on update restrict;
+alter table group_milestone add constraint fk_group_milestone_milestone_4 foreign key (milestone_id) references milestone (id);
 create index ix_group_milestone_milestone_4 on group_milestone (milestone_id);
-alter table group_project add constraint fk_group_project_group_5 foreign key (group_id) references GroupTable (id) on delete restrict on update restrict;
+alter table group_project add constraint fk_group_project_group_5 foreign key (group_id) references GroupTable (id);
 create index ix_group_project_group_5 on group_project (group_id);
-alter table group_project add constraint fk_group_project_project_6 foreign key (project_id) references project (id) on delete restrict on update restrict;
+alter table group_project add constraint fk_group_project_project_6 foreign key (project_id) references project (id);
 create index ix_group_project_project_6 on group_project (project_id);
-alter table milestone add constraint fk_milestone_project_7 foreign key (project_id) references project (id) on delete restrict on update restrict;
+alter table milestone add constraint fk_milestone_project_7 foreign key (project_id) references project (id);
 create index ix_milestone_project_7 on milestone (project_id);
-alter table project add constraint fk_project_discipline_8 foreign key (discipline_id) references discipline (id) on delete restrict on update restrict;
+alter table project add constraint fk_project_discipline_8 foreign key (discipline_id) references discipline (id);
 create index ix_project_discipline_8 on project (discipline_id);
-alter table shift add constraint fk_shift_discipline_9 foreign key (discipline_id) references discipline (id) on delete restrict on update restrict;
+alter table shift add constraint fk_shift_discipline_9 foreign key (discipline_id) references discipline (id);
 create index ix_shift_discipline_9 on shift (discipline_id);
-alter table student_milestone add constraint fk_student_milestone_student_10 foreign key (student_id) references user (id) on delete restrict on update restrict;
+alter table student_milestone add constraint fk_student_milestone_student_10 foreign key (student_id) references general_user (id);
 create index ix_student_milestone_student_10 on student_milestone (student_id);
-alter table student_milestone add constraint fk_student_milestone_mileston_11 foreign key (milestone_id) references milestone (id) on delete restrict on update restrict;
+alter table student_milestone add constraint fk_student_milestone_mileston_11 foreign key (milestone_id) references milestone (id);
 create index ix_student_milestone_mileston_11 on student_milestone (milestone_id);
-alter table student_project add constraint fk_student_project_student_12 foreign key (student_id) references user (id) on delete restrict on update restrict;
+alter table student_project add constraint fk_student_project_student_12 foreign key (student_id) references general_user (id);
 create index ix_student_project_student_12 on student_project (student_id);
-alter table student_project add constraint fk_student_project_project_13 foreign key (project_id) references project (id) on delete restrict on update restrict;
+alter table student_project add constraint fk_student_project_project_13 foreign key (project_id) references project (id);
 create index ix_student_project_project_13 on student_project (project_id);
 
 
 
-alter table user_discipline add constraint fk_user_discipline_discipline_01 foreign key (discipline_id) references discipline (id) on delete restrict on update restrict;
+alter table general_user_discipline add constraint fk_general_user_discipline_di_01 foreign key (discipline_id) references discipline (id);
 
-alter table user_discipline add constraint fk_user_discipline_user_02 foreign key (user_id) references user (id) on delete restrict on update restrict;
+alter table general_user_discipline add constraint fk_general_user_discipline_ge_02 foreign key (general_user_id) references general_user (id);
 
-alter table user_GroupTable add constraint fk_user_GroupTable_user_01 foreign key (user_id) references user (id) on delete restrict on update restrict;
+alter table general_user_GroupTable add constraint fk_general_user_GroupTable_ge_01 foreign key (general_user_id) references general_user (id);
 
-alter table user_GroupTable add constraint fk_user_GroupTable_GroupTable_02 foreign key (GroupTable_id) references GroupTable (id) on delete restrict on update restrict;
+alter table general_user_GroupTable add constraint fk_general_user_GroupTable_Gr_02 foreign key (GroupTable_id) references GroupTable (id);
 
-alter table user_shift add constraint fk_user_shift_user_01 foreign key (user_id) references user (id) on delete restrict on update restrict;
+alter table general_user_shift add constraint fk_general_user_shift_general_01 foreign key (general_user_id) references general_user (id);
 
-alter table user_shift add constraint fk_user_shift_shift_02 foreign key (shift_id) references shift (id) on delete restrict on update restrict;
+alter table general_user_shift add constraint fk_general_user_shift_shift_02 foreign key (shift_id) references shift (id);
 
 # --- !Downs
 
-SET REFERENTIAL_INTEGRITY FALSE;
+drop table if exists course cascade;
 
-drop table if exists course;
+drop table if exists discipline cascade;
 
-drop table if exists discipline;
+drop table if exists general_user_discipline cascade;
 
-drop table if exists user_discipline;
+drop table if exists GroupTable cascade;
 
-drop table if exists GroupTable;
+drop table if exists group_milestone cascade;
 
-drop table if exists group_milestone;
+drop table if exists group_project cascade;
 
-drop table if exists group_project;
+drop table if exists milestone cascade;
 
-drop table if exists milestone;
+drop table if exists project cascade;
 
-drop table if exists project;
+drop table if exists shift cascade;
 
-drop table if exists shift;
+drop table if exists student_milestone cascade;
 
-drop table if exists student_milestone;
+drop table if exists student_project cascade;
 
-drop table if exists student_project;
+drop table if exists general_user cascade;
 
-drop table if exists user;
+drop table if exists general_user_GroupTable cascade;
 
-drop table if exists user_GroupTable;
-
-drop table if exists user_shift;
-
-SET REFERENTIAL_INTEGRITY TRUE;
+drop table if exists general_user_shift cascade;
 
 drop sequence if exists course_seq;
 
@@ -258,5 +254,5 @@ drop sequence if exists student_milestone_seq;
 
 drop sequence if exists student_project_seq;
 
-drop sequence if exists user_seq;
+drop sequence if exists general_user_seq;
 

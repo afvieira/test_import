@@ -85,6 +85,7 @@ public class StudentMilestone extends Model {
     public static List<StudentMilestone> getLastAvaliations(String emailuser){
         return find.where()
                 .eq("student.email", emailuser)
+                .isNotNull("avaliation")
                 .orderBy("lastUpdate desc")
                 .findList();
     }
