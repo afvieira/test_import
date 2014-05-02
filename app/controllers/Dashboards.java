@@ -86,35 +86,35 @@ public class Dashboards extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result projects() {
+    public static Result projects(Long id_project) {
         return routing(
-                DashboardStudent.projects(),
-                DashboardTeacher.projects(),
+                DashboardStudent.projects(id_project),
+                DashboardTeacher.projects(id_project),
                 TODO);
     }
 
 
     @Security.Authenticated(Secured.class)
-    public static Result showProject(Long id) {
+    public static Result showProject(Long id_project, Long id) {
         return routing(
-                DashboardStudent.showProject(id),
-                DashboardTeacher.showProject(id),
+                DashboardStudent.showProject(id_project, id),
+                DashboardTeacher.showProject(id_project, id),
                 TODO);
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result createProject() {
+    public static Result createProject(Long id_project) {
         return routing(
-                DashboardStudent.createProject(),
-                DashboardTeacher.createProject(),
+                DashboardStudent.createProject(id_project),
+                DashboardTeacher.createProject(id_project),
                 TODO);
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result deleteProject(Long id) {
+    public static Result deleteProject(Long id_project, Long id) {
         return routing(
-                DashboardStudent.deleteProject(id),
-                DashboardTeacher.deleteProject(id),
+                DashboardStudent.deleteProject(id_project, id),
+                DashboardTeacher.deleteProject(id_project, id),
                 TODO);
     }
 
