@@ -159,10 +159,10 @@ public class Dashboards extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result showAvaliation(Long id_project, Long id_milestone, Long id_avaliation) {
+    public static Result showAvaliation(Long id_project, Long id_milestone) {
         return routing(
-                DashboardStudent.showAvaliation(id_project,id_milestone,id_avaliation),
-                DashboardTeacher.showAvaliation(id_project,id_milestone,id_avaliation),
+                DashboardStudent.showAvaliation(id_project,id_milestone),
+                DashboardTeacher.showAvaliation(id_project,id_milestone),
                 TODO);
     }
 
@@ -175,10 +175,10 @@ public class Dashboards extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result deleteAvaliation(Long id_project,Long id_milestone, Long id_avaliation) {
+    public static Result deleteAvaliation(Long id_project,Long id_milestone) {
         return routing(
-                DashboardStudent.deleteAvaliation(id_project,id_milestone,id_avaliation),
-                DashboardTeacher.deleteAvaliation(id_project,id_milestone,id_avaliation),
+                DashboardStudent.deleteAvaliation(id_project,id_milestone),
+                DashboardTeacher.deleteAvaliation(id_project,id_milestone),
                 TODO);
     }
 

@@ -178,19 +178,59 @@ public class Milestone extends Model {
     }
 
     /**
-     * Etapas de um projeto
-     * @param emailUser
-     * @param id_discipline
+     * Todas as etapas de um projeto
+     * @param id_project
      * @return Lista de Milestones
      */
     public static List<Milestone> allMilestonesByProject(Long id_project){
         return find
-                .fetch("students")
                 .where()
                 .eq("project.id",id_project)
                 .orderBy("endDate ASC")
                 .findList();
     }
 
+    /**
+     * Próximas Etapas de um projeto
+     * @param id_project
+     * @return List<Milestone>
+     */
+    public static List<Milestone> nextDeliveriesByProject(Long id_project){
+        return find
+                .where()
+                .eq("project.id",id_project)
+                .ge("endDate", new Date())
+                .orderBy("endDate ASC")
+                .findList();
+    }
+
+
+    /**
+     * Etapas não entregues de um projeto
+     * @param id_project
+     * @return List<Milestone>
+     */
+    public static List<Milestone> notDeliveriesByUserProject(String emailUser, Long id_project){
+        return find
+                .fetch("students")
+                .where()
+                .eq("project.id",id_project)
+                .eq("students.student.email", emailUser)
+                .ge("endDate", new Date())
+                .orderBy("endDate ASC")
+                .findList();
+    }
+
+    /**
+     * Dados de uma Etapa
+     * @param id_milestone
+     * @return Milestone
+     */
+    public static Milestone getById(Long id_milestone){
+        return find
+                .where()
+                .eq("id", id_milestone)
+                .findUnique();
+    }
 
 }

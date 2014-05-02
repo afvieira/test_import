@@ -81,7 +81,6 @@ public class StudentMilestone extends Model {
         find.ref(id).delete();
     }
 
-    // TODO: Alterar o nome do método
     public static List<StudentMilestone> getLastAvaliations(String emailuser){
         return find.where()
                 .eq("student.email", emailuser)
@@ -90,4 +89,34 @@ public class StudentMilestone extends Model {
                 .findList();
     }
 
+    /**
+     * Obter a lista de  StudentMilestone pelo User e id do projeto
+     * @param emailUser
+     * @param id_project
+     * @return
+     */
+    public static List<StudentMilestone> getByProject(String emailUser, Long id_project){
+        return find
+                .fetch("milestone")
+                .where()
+                .eq("milestone.project.id", id_project)
+                .eq("student.email",emailUser)
+                .orderBy("milestone.endDate DESC")
+                .findList();
+
+    }
+
+    /**
+     * Obter o StudentMilestone pelo User e id da etapa
+     * @param emailUser
+     * @param id_milestone
+     * @return
+     */
+    public static StudentMilestone getByUserMilestone(String emailUser, Long id_milestone){
+        return find
+                .where()
+                .eq("milestone.id", id_milestone)
+                .eq("student.email",emailUser)
+                .findUnique();
+    }
 }

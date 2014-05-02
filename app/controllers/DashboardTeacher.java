@@ -140,7 +140,7 @@ public class DashboardTeacher extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result showAvaliation(Long id_project, Long id_milestone, Long id_avaliation) {
+    public static Result showAvaliation(Long id_project, Long id_milestone) {
         /*
             TODO:
                 - Mostrar informação da avaliação
@@ -154,7 +154,7 @@ public class DashboardTeacher extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result deleteAvaliation(Long id_project,Long id_milestone, Long id_avaliation) {
+    public static Result deleteAvaliation(Long id_project,Long id_milestone) {
         return TODO;
     }
 }

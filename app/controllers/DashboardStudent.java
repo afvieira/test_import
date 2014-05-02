@@ -68,16 +68,18 @@ public class DashboardStudent extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result showProject(Long id_discipline, Long id) {
+    public static Result showProject(Long id_discipline, Long id_project) {
         // Até que faça sentido, o ID da disciplina não será usado
-        /*
-            TODO:
-             - Informação do Projeto
-             - Lista de Milestones
-             - Próximas entregas
-             - Milestones não entregues
-         */
-        return TODO;
+        // Se calhar não é preciso fazer 2 queries para ir buscar praticamente a mesma informação, mas sim filtrar no controlador as próximas milestones da lista total de milestones
+        return ok(
+                views.html.Dashboard.Student.project.render(
+                        User.findByEmail(request().username()),
+                        Project.getById(id_project),                                            // Informação do Projeto
+                        Milestone.allMilestonesByProject(id_project),                           // Lista de Milestones do Projeto
+                        Milestone.nextDeliveriesByProject(id_project),                          // Próximas Milestones
+                        Milestone.notDeliveriesByUserProject(request().username(), id_project)  // Milestones não entregues
+                )
+        );
     }
 
     // O Aluno não pode criar um projeto
@@ -96,22 +98,26 @@ public class DashboardStudent extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result milestones(Long id_project) {
-        /*
-            TODO:
-                - Mostrar todas as Milestones do Projeto
-                - Proximas entregas
-                - Notas gerais do aluno/grupo
-         */
-        return TODO;
+        return ok(
+                views.html.Dashboard.Student.milestones.render(
+                        User.findByEmail(request().username()),
+                        Milestone.allMilestonesByProject(id_project),                           // Lista de Milestones de um dado Projeto
+                        Milestone.nextDeliveriesByProject(id_project),                          // Próximas Milestones do projeto
+                        Milestone.notDeliveriesByUserProject(request().username(), id_project),  // Milestones não entregues
+                        StudentMilestone.getByProject(request().username(), id_project)         // Todas as notas (incluindo as que ainda não estão dadas - Ver na UI)
+                )
+        );
     }
 
     @Security.Authenticated(Secured.class)
     public static Result showMilestone(Long id_project, Long id_milestone) {
-        /*
-            TODO:
-                - Informação da Milestone
-         */
-        return TODO;
+        // Id do Projeto não foi usado
+        return ok(
+                views.html.Dashboard.Student.milestone.render(
+                        User.findByEmail(request().username()),
+                        Milestone.getById(id_milestone) //Dados da Milestone
+                )
+        );
     }
 
     // O Aluno não pode criar uma milestone
@@ -128,38 +134,33 @@ public class DashboardStudent extends Controller {
         return badRequest(views.html.notFound.render(u));
     }
 
+    // Não faz sentido o aluno ver as notas da milestone dos restantes alunos?
     @Security.Authenticated(Secured.class)
     public static Result avaliations(Long id_project,Long id_milestone) {
-        /*
-            TODO:
-                - Mostrar notas da milestone do grupo e aluno
-                - Mostrar as datas das entregas
-
-         */
-        return TODO;
+        User u = User.findByEmail(request().username());
+        return badRequest(views.html.notFound.render(u));
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result showAvaliation(Long id_project, Long id_milestone, Long id_avaliation) {
-        /*
-            TODO:
-                - Mostrar informação da avaliação
-         */
-        return TODO;
+    public static Result showAvaliation(Long id_project, Long id_milestone) {
+        return ok(
+                views.html.Dashboard.Student.avaliations.render(
+                        User.findByEmail(request().username()),
+                        StudentMilestone.getByUserMilestone(request().username(), id_milestone)
+                )
+        );
     }
 
+    // O aluno não pode criar avaliações
     @Security.Authenticated(Secured.class)
     public static Result createAvaliation(Long id_project,Long id_milestone) {
-        /*
-            TODO:
-                - Enviar AVALIAçAO?
-         */
-        return TODO;
+        User u = User.findByEmail(request().username());
+        return badRequest(views.html.notFound.render(u));
     }
 
     // O Aluno não pode apagar uma avaliação
     @Security.Authenticated(Secured.class)
-    public static Result deleteAvaliation(Long id_project,Long id_milestone, Long id_avaliation) {
+    public static Result deleteAvaliation(Long id_project,Long id_milestone) {
         User u = User.findByEmail(request().username());
         return badRequest(views.html.notFound.render(u));
     }

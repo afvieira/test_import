@@ -128,4 +128,16 @@ public class Project extends Model {
                 .orderBy("creationDate desc")
                 .findList();
     }
+
+    /**
+     * Informação de um dado projeto
+     * @param id_project
+     * @return Project
+     */
+    public static Project getById(Long id_project){
+        return find.
+                where()
+                .eq("id", id_project)
+                .findUnique();
+    }
 }
