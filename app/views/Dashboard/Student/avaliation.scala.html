@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+@(user: User, avaliationGroup: GroupMilestone, avaliationStudent: StudentMilestone)
+/*
+ * Esta página é capaz de ser complicada de tratar desta forma.
+        - GroupMilestone só é enviado quando é chamada a route de notas do grupo
+        - StudentMilestone: Só é enviado quando é chamada a route da nota de 1 dado aluno
+    -> no entanto eu até acho que deveria vir uma lista das classificações de cada aluno no grupo, se também considerares esta hipótese terá que se criar uma página para o grupo e avaliação individual.
+ */
+@import helper._
 
-</body>
-</html>
+@main(user) {
+
+}

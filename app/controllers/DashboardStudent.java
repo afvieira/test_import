@@ -173,8 +173,8 @@ public class DashboardStudent extends Controller {
         if(gm != null){
             Group g = gm.getGroup();
             boolean exists = false;
-            for(User u : g.getStudents()){
-                if(u.getEmail().equals(request().username())){
+            for(User uUser : g.getStudents()){
+                if(uUser.getEmail().equals(request().username())){
                     exists = true;
                 }
             }
@@ -183,7 +183,8 @@ public class DashboardStudent extends Controller {
                 return ok(
                         views.html.Dashboard.Student.avaliation.render(
                                 u,
-                                gm
+                                gm,
+                                null
                         )
                 );
             }
@@ -206,6 +207,7 @@ public class DashboardStudent extends Controller {
                 return ok(
                         views.html.Dashboard.Student.avaliation.render(
                                 u,
+                                null,
                                 sm
                         )
                 );

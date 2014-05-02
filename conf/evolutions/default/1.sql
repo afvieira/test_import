@@ -19,7 +19,7 @@ create table discipline (
   constraint pk_discipline primary key (id))
 ;
 
-create table GroupTable (
+create table general_group (
   id                        bigint not null,
   discipline_id             bigint,
   code                      varchar(255),
@@ -27,7 +27,7 @@ create table GroupTable (
   limit_number              integer,
   password_registration     varchar(255),
   closed                    boolean,
-  constraint pk_GroupTable primary key (id))
+  constraint pk_general_group primary key (id))
 ;
 
 create table group_milestone (
@@ -130,10 +130,10 @@ create table general_user_discipline (
   constraint pk_general_user_discipline primary key (discipline_id, general_user_id))
 ;
 
-create table general_user_GroupTable (
+create table general_user_general_group (
+  general_group_id               bigint not null,
   general_user_id                bigint not null,
-  GroupTable_id                  bigint not null,
-  constraint pk_general_user_GroupTable primary key (general_user_id, GroupTable_id))
+  constraint pk_general_user_general_group primary key (general_group_id, general_user_id))
 ;
 
 create table general_user_shift (
@@ -145,7 +145,7 @@ create sequence course_seq;
 
 create sequence discipline_seq;
 
-create sequence GroupTable_seq;
+create sequence general_group_seq;
 
 create sequence group_milestone_seq;
 
@@ -165,13 +165,13 @@ create sequence general_user_seq;
 
 alter table discipline add constraint fk_discipline_course_1 foreign key (course_id) references course (id);
 create index ix_discipline_course_1 on discipline (course_id);
-alter table GroupTable add constraint fk_GroupTable_discipline_2 foreign key (discipline_id) references discipline (id);
-create index ix_GroupTable_discipline_2 on GroupTable (discipline_id);
-alter table group_milestone add constraint fk_group_milestone_group_3 foreign key (group_id) references GroupTable (id);
+alter table general_group add constraint fk_general_group_discipline_2 foreign key (discipline_id) references discipline (id);
+create index ix_general_group_discipline_2 on general_group (discipline_id);
+alter table group_milestone add constraint fk_group_milestone_group_3 foreign key (group_id) references general_group (id);
 create index ix_group_milestone_group_3 on group_milestone (group_id);
 alter table group_milestone add constraint fk_group_milestone_milestone_4 foreign key (milestone_id) references milestone (id);
 create index ix_group_milestone_milestone_4 on group_milestone (milestone_id);
-alter table group_project add constraint fk_group_project_group_5 foreign key (group_id) references GroupTable (id);
+alter table group_project add constraint fk_group_project_group_5 foreign key (group_id) references general_group (id);
 create index ix_group_project_group_5 on group_project (group_id);
 alter table group_project add constraint fk_group_project_project_6 foreign key (project_id) references project (id);
 create index ix_group_project_project_6 on group_project (project_id);
@@ -196,9 +196,9 @@ alter table general_user_discipline add constraint fk_general_user_discipline_di
 
 alter table general_user_discipline add constraint fk_general_user_discipline_ge_02 foreign key (general_user_id) references general_user (id);
 
-alter table general_user_GroupTable add constraint fk_general_user_GroupTable_ge_01 foreign key (general_user_id) references general_user (id);
+alter table general_user_general_group add constraint fk_general_user_general_group_01 foreign key (general_group_id) references general_group (id);
 
-alter table general_user_GroupTable add constraint fk_general_user_GroupTable_Gr_02 foreign key (GroupTable_id) references GroupTable (id);
+alter table general_user_general_group add constraint fk_general_user_general_group_02 foreign key (general_user_id) references general_user (id);
 
 alter table general_user_shift add constraint fk_general_user_shift_general_01 foreign key (general_user_id) references general_user (id);
 
@@ -212,7 +212,9 @@ drop table if exists discipline cascade;
 
 drop table if exists general_user_discipline cascade;
 
-drop table if exists GroupTable cascade;
+drop table if exists general_group cascade;
+
+drop table if exists general_user_general_group cascade;
 
 drop table if exists group_milestone cascade;
 
@@ -230,15 +232,13 @@ drop table if exists student_project cascade;
 
 drop table if exists general_user cascade;
 
-drop table if exists general_user_GroupTable cascade;
-
 drop table if exists general_user_shift cascade;
 
 drop sequence if exists course_seq;
 
 drop sequence if exists discipline_seq;
 
-drop sequence if exists GroupTable_seq;
+drop sequence if exists general_group_seq;
 
 drop sequence if exists group_milestone_seq;
 

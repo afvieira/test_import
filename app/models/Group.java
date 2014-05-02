@@ -10,7 +10,7 @@ import java.util.List;
  * Created by NRAM on 23/04/14.
  */
 @Entity
-@Table(name = "GroupTable") //a tabela nao se pode chamar Group, visto ser uma palavra reservada da base de dados
+@Table(name = "general_group") //a tabela nao se pode chamar Group, visto ser uma palavra reservada da base de dados
 public class Group extends Model {
 
     //Variaveis
@@ -37,7 +37,8 @@ public class Group extends Model {
     @Constraints.Required
     public Boolean closed;
 
-    @OneToMany
+    @ManyToMany
+    @JoinTable(name = "general_user_general_group")
     public List<User> students;
 
     @OneToMany

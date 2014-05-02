@@ -104,9 +104,9 @@ public class DashboardTeacher extends Controller {
         return ok(
                 views.html.Dashboard.Teacher.milestones.render(
                         User.findByEmail(request().username()),
-                        Project.getById(id),                                    // Vai buscar a informação de um projeto
-                        Milestone.allMilestonesByProject(id),                   // Todas as milestones de um projeto
-                        Milestone.nextDeliveriesByProject(id)                   // Próximas milestones a entregar de um projeto
+                        Project.getById(id_project),                                    // Vai buscar a informação de um projeto
+                        Milestone.allMilestonesByProject(id_project),                   // Todas as milestones de um projeto
+                        Milestone.nextDeliveriesByProject(id_project)                   // Próximas milestones a entregar de um projeto
                         // TODO: Saber os Grupos e alunos que não entregaram etapas
                         // TODO: Notas Gerais
                 )
@@ -122,7 +122,7 @@ public class DashboardTeacher extends Controller {
                 - Alunos/Grupos que faltam entregar
          */
         return ok(
-                views.html.Dashboard.Teacher.milestones.render(
+                views.html.Dashboard.Teacher.milestone.render(
                         User.findByEmail(request().username()),
                         Project.getById(id_project),                                    // Vai buscar a informação de um projeto
                         Milestone.getById(id_milestone)                                // Informação da milestone
@@ -199,7 +199,8 @@ public class DashboardTeacher extends Controller {
             return ok(
                     views.html.Dashboard.Teacher.avaliation.render(
                             u,
-                            gm
+                            gm,
+                            null
                     )
             );
         }
@@ -218,6 +219,7 @@ public class DashboardTeacher extends Controller {
             return ok(
                     views.html.Dashboard.Teacher.avaliation.render(
                             u,
+                            null,
                             sm
                     )
             );
