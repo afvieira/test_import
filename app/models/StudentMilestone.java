@@ -46,6 +46,94 @@ public class StudentMilestone extends Model {
     public StudentMilestone() {
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getStudent() {
+        return student;
+    }
+
+    public void setStudent(User student) {
+        this.student = student;
+    }
+
+    public Milestone getMilestone() {
+        return milestone;
+    }
+
+    public void setMilestone(Milestone milestone) {
+        this.milestone = milestone;
+    }
+
+    public Integer getAvaliation() {
+        return avaliation;
+    }
+
+    public void setAvaliation(Integer avaliation) {
+        this.avaliation = avaliation;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getPrivateComment() {
+        return privateComment;
+    }
+
+    public void setPrivateComment(String privateComment) {
+        this.privateComment = privateComment;
+    }
+
+    public String getPublicCommentTeacher() {
+        return publicCommentTeacher;
+    }
+
+    public void setPublicCommentTeacher(String publicCommentTeacher) {
+        this.publicCommentTeacher = publicCommentTeacher;
+    }
+
+    public String getPublicCommentStudent() {
+        return publicCommentStudent;
+    }
+
+    public void setPublicCommentStudent(String publicCommentStudent) {
+        this.publicCommentStudent = publicCommentStudent;
+    }
+
+    public Date getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public boolean isClosed() {
+        return closed;
+    }
+
+    public void setClosed(boolean closed) {
+        this.closed = closed;
+    }
+
+    public static Finder<Long, StudentMilestone> getFind() {
+        return find;
+    }
+
+    public static void setFind(Finder<Long, StudentMilestone> find) {
+        StudentMilestone.find = find;
+    }
+
     //ToString
     @Override
     public String toString() {
@@ -125,5 +213,13 @@ public class StudentMilestone extends Model {
                 .where()
                 .eq("milestone.id", id_milestone)
                 .findList();
+    }
+
+    public static StudentMilestone getByStudentMilestone(Long id_milestone, Long id_student){
+        return find
+                .where()
+                .eq("milestone.id", id_milestone)
+                .eq("student.id", id_student)
+                .findUnique();
     }
 }

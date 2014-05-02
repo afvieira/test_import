@@ -125,7 +125,7 @@ public class DashboardTeacher extends Controller {
                 views.html.Dashboard.Teacher.milestones.render(
                         User.findByEmail(request().username()),
                         Project.getById(id_project),                                    // Vai buscar a informação de um projeto
-                        Milestone.getById(id_milestone),                                // Informação da milestone
+                        Milestone.getById(id_milestone)                                // Informação da milestone
                         // TODO: Saber os Grupos e alunos que não entregaram esta etapa
                         // TODO: Notas Gerais
                 )
@@ -191,11 +191,39 @@ public class DashboardTeacher extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result showAvaliationByGroup(Long id_project, Long id_milestone, Long id_group) {
-        return TODO;
+        // Verificar se pertence à milestone
+        GroupMilestone gm = GroupMilestone.getByGroupMilestone(id_milestone, id_group);
+        User u = User.findByEmail(request().username());
+        if(gm != null){
+            // TODO: Se calhar é melhor criar outra VIEW
+            return ok(
+                    views.html.Dashboard.Teacher.avaliation.render(
+                            u,
+                            gm
+                    )
+            );
+        }
+
+        // TODO: Não sei se é a melhor maneira de tratar este assunto. (Quando não pertence à milestone)
+        return badRequest(views.html.notFound.render(u));
     }
 
     @Security.Authenticated(Secured.class)
     public static Result showAvaliationByStudent(Long id_project, Long id_milestone, Long id_student) {
-        return TODO;
+        // Verificar se pertence à milestone
+        StudentMilestone sm = StudentMilestone.getByStudentMilestone(id_milestone, id_student);
+        User u = User.findByEmail(request().username());
+        if(sm != null){
+            // TODO: Se calhar é melhor criar outra VIEW
+            return ok(
+                    views.html.Dashboard.Teacher.avaliation.render(
+                            u,
+                            sm
+                    )
+            );
+        }
+
+        // TODO: Não sei se é a melhor maneira de tratar este assunto. (Quando não pertence à milestone)
+        return badRequest(views.html.notFound.render(u));
     }
 }

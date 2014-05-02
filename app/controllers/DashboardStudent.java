@@ -167,11 +167,52 @@ public class DashboardStudent extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result showAvaliationByGroup(Long id_project, Long id_milestone, Long id_group) {
-        return TODO;
+        // Verificar se está num grupo que pertence à milestone
+        GroupMilestone gm = GroupMilestone.getByGroupMilestone(id_milestone, id_group);
+        User u = User.findByEmail(request().username());
+        if(gm != null){
+            Group g = gm.getGroup();
+            boolean exists = false;
+            for(User u : g.getStudents()){
+                if(u.getEmail().equals(request().username())){
+                    exists = true;
+                }
+            }
+            if(exists) {
+                // TODO: Se calhar é melhor criar outra VIEW
+                return ok(
+                        views.html.Dashboard.Student.avaliation.render(
+                                u,
+                                gm
+                        )
+                );
+            }
+        }
+
+        // TODO: Não sei se é a melhor maneira de tratar este assunto. (Quando não pertence ao grupo ou o grupo não existe)
+        return badRequest(views.html.notFound.render(u));
     }
 
     @Security.Authenticated(Secured.class)
     public static Result showAvaliationByStudent(Long id_project, Long id_milestone, Long id_student) {
-        return TODO;
+        // Verificar se pertence à milestone
+        StudentMilestone sm = StudentMilestone.getByUserMilestone(request().username(), id_milestone);
+        User u = User.findByEmail(request().username());
+        if(sm != null){
+            User userMilestone = sm.getStudent();
+
+            if(userMilestone.getId() == id_student) {
+                // TODO: Se calhar é melhor criar outra VIEW
+                return ok(
+                        views.html.Dashboard.Student.avaliation.render(
+                                u,
+                                sm
+                        )
+                );
+            }
+        }
+
+        // TODO: Não sei se é a melhor maneira de tratar este assunto. (Quando não pertence à milestone ou não é o próprio)
+        return badRequest(views.html.notFound.render(u));
     }
 }

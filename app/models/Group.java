@@ -38,6 +38,9 @@ public class Group extends Model {
     public Boolean closed;
 
     @OneToMany
+    public List<User> students;
+
+    @OneToMany
     public List<GroupMilestone> milestones;
 
     @OneToMany
@@ -45,6 +48,94 @@ public class Group extends Model {
 
     //Construtor
     public Group() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Discipline getDiscipline() {
+        return discipline;
+    }
+
+    public void setDiscipline(Discipline discipline) {
+        this.discipline = discipline;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getLimitNumber() {
+        return limitNumber;
+    }
+
+    public void setLimitNumber(Integer limitNumber) {
+        this.limitNumber = limitNumber;
+    }
+
+    public String getPasswordRegistration() {
+        return passwordRegistration;
+    }
+
+    public void setPasswordRegistration(String passwordRegistration) {
+        this.passwordRegistration = passwordRegistration;
+    }
+
+    public Boolean getClosed() {
+        return closed;
+    }
+
+    public void setClosed(Boolean closed) {
+        this.closed = closed;
+    }
+
+    public List<GroupMilestone> getMilestones() {
+        return milestones;
+    }
+
+    public void setMilestones(List<GroupMilestone> milestones) {
+        this.milestones = milestones;
+    }
+
+    public List<GroupProject> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<GroupProject> projects) {
+        this.projects = projects;
+    }
+
+    public static Finder<Long, Group> getFind() {
+        return find;
+    }
+
+    public static void setFind(Finder<Long, Group> find) {
+        Group.find = find;
+    }
+
+    public List<User> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<User> students) {
+        this.students = students;
     }
 
     //ToString
