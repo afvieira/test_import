@@ -50,7 +50,7 @@ public class DashboardTeacher extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result projects() {
+    public static Result projects(Long id_discipline) {
         /*
             TODO:
              - Lista de Projetos
@@ -59,7 +59,7 @@ public class DashboardTeacher extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result showProject(Long id) {
+    public static Result showProject(Long id_discipline,Long id) {
         /*
             TODO:
              - Informação do Projeto
@@ -71,7 +71,7 @@ public class DashboardTeacher extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result createProject() {
+    public static Result createProject(Long id_discipline) {
         /*
             TODO:
              - Criar Projeto (Não esquecer de selecionar os alunos ou grupos)
@@ -80,7 +80,7 @@ public class DashboardTeacher extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result deleteProject(Long id) {
+    public static Result deleteProject(Long id_discipline,Long id) {
         /*
             TODO:
              - Apagar Projeto

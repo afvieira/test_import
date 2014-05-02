@@ -91,10 +91,40 @@ public class Project extends Model {
         find.ref(id).delete();
     }
 
-    // TODO: Corrigir
     public static List<Project> getByCreatedDate(String emailuser){
-        return find.fetch("students").where()
+        return find
+                .fetch("students")
+                .where()
                 .eq("students.student.email", emailuser)
+                .orderBy("creationDate desc")
+                .findList();
+    }
+
+    /**
+     * Lista de Projetos por Disciplina e User
+     * @param emailUser
+     * @param id_discipline
+     * @return List<Project>
+     */
+    public static List<Project> getAllByUserDiscipline(String emailUser, Long id_discipline){
+        return find
+                .fetch("students")
+                .where()
+                .eq("discipline.id", id_discipline)
+                .eq("students.student.email", emailUser)
+                .orderBy("creationDate desc")
+                .findList();
+    }
+
+    /**
+     * Lista de Projetos de uma disciplina
+     * @param id_discipline
+     * @return List<Project>
+     */
+    public static List<Project> getAllByDiscipline(Long id_discipline){
+        return find
+                .where()
+                .eq("discipline.id", id_discipline)
                 .orderBy("creationDate desc")
                 .findList();
     }

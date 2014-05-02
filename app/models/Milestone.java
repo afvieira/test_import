@@ -93,6 +93,12 @@ public class Milestone extends Model {
         find.ref(id).delete();
     }
 
+
+    /**
+     * Próximas etapas a entregar de um dado utilizador
+     * @param emailuser
+     * @return List<Milestone>
+     */
     public static List<Milestone> nextDeliveryByUser(String emailuser) {
         return find.fetch("students").where()
                 .ge("endDate", new Date())
@@ -101,6 +107,11 @@ public class Milestone extends Model {
                 .findList();
     }
 
+    /**
+     * Etapas não entregues por estudante
+     * @param emailUser
+     * @return List<Milestone>
+     */
     public static List<Milestone> notDeliveryByUser(String emailUser){
         return find
                 .fetch("students")
@@ -111,4 +122,75 @@ public class Milestone extends Model {
                 .orderBy("endDate ASC")
                 .findList();
     }
+
+    /**
+     * Próximas etapas para entrega de uma dada disciplina e utilizador
+     * @param emailUser
+     * @param id_discipline
+     * @return List<Milestone>
+     */
+    public static List<Milestone> nextDeliveryByUserDiscipline(String emailUser, Long id_discipline){
+        return find
+                .fetch("project")
+                .fetch("students")
+                .where()
+                .ge("endDate", new Date())
+                .eq("students.student.email", emailUser)
+                .eq("project.discipline.id",id_discipline)
+                .orderBy("endDate ASC")
+                .findList();
+    }
+
+    /**
+     * Etapas não entregues de uma dada disciplina e utilizador
+     * @param emailUser
+     * @param id_discipline
+     * @return Lista de Milestones
+     */
+    public static List<Milestone> notDeliveryByUserDiscipline(String emailUser, Long id_discipline){
+        return find
+                .fetch("project")
+                .fetch("students")
+                .where()
+                .lt("endDate", new Date())
+                .isNull("path")
+                .eq("students.student.email", emailUser)
+                .eq("project.discipline.id",id_discipline)
+                .orderBy("endDate ASC")
+                .findList();
+    }
+
+    /**
+     * Etapas não entregues de uma dada disciplina e utilizador
+     * @param emailUser
+     * @param id_discipline
+     * @return Lista de Milestones
+     */
+    public static List<Milestone> allMilestoneByUserDiscipline(String emailUser, Long id_discipline){
+        return find
+                .fetch("project")
+                .fetch("students")
+                .where()
+                .eq("students.student.email", emailUser)
+                .eq("project.discipline.id",id_discipline)
+                .orderBy("endDate ASC")
+                .findList();
+    }
+
+    /**
+     * Etapas de um projeto
+     * @param emailUser
+     * @param id_discipline
+     * @return Lista de Milestones
+     */
+    public static List<Milestone> allMilestonesByProject(Long id_project){
+        return find
+                .fetch("students")
+                .where()
+                .eq("project.id",id_project)
+                .orderBy("endDate ASC")
+                .findList();
+    }
+
+
 }

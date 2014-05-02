@@ -71,7 +71,6 @@ public class Discipline extends Model {
         return find.all();
     }
 
-    //TODO: duvidas
     public static List<Discipline> allByCourse(Long id_course){
         return find.where()
                 .eq("course.id", id_course)
@@ -91,5 +90,11 @@ public class Discipline extends Model {
 
     public static void delete(Long id){
         find.ref(id).delete();
+    }
+
+    public static Discipline getById(Long id){
+        return find.where()
+                .eq("id", id)
+                .findUnique();
     }
 }
