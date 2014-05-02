@@ -12,6 +12,7 @@ import java.util.List;
  * Created by NRAM on 07/04/14.
  */
 @Entity
+@Table(name="general_user") // Palavra reservada "User"
 public class User extends Model {
 
     public enum UserType{
@@ -66,6 +67,118 @@ public class User extends Model {
 
     //Construtores
     public User() {
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Date getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEncrypted_password() {
+        return encrypted_password;
+    }
+
+    public void setEncrypted_password(String encrypted_password) {
+        this.encrypted_password = encrypted_password;
+    }
+
+    public List<Discipline> getDisciplines() {
+        return disciplines;
+    }
+
+    public void setDisciplines(List<Discipline> disciplines) {
+        this.disciplines = disciplines;
+    }
+
+    public List<StudentProject> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<StudentProject> projects) {
+        this.projects = projects;
+    }
+
+    public List<Group> getGroup() {
+        return group;
+    }
+
+    public void setGroup(List<Group> group) {
+        this.group = group;
+    }
+
+    public List<Shift> getShifts() {
+        return shifts;
+    }
+
+    public void setShifts(List<Shift> shifts) {
+        this.shifts = shifts;
+    }
+
+    public List<StudentMilestone> getMilestones() {
+        return milestones;
+    }
+
+    public void setMilestones(List<StudentMilestone> milestones) {
+        this.milestones = milestones;
+    }
+
+    public Date getDate_sign_up() {
+        return date_sign_up;
+    }
+
+    public void setDate_sign_up(Date date_sign_up) {
+        this.date_sign_up = date_sign_up;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public static Finder<Long, User> getFind() {
+        return find;
+    }
+
+    public static void setFind(Finder<Long, User> find) {
+        User.find = find;
     }
 
     //ToString
