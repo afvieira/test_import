@@ -139,9 +139,38 @@ public class Project extends Model {
      * @return Project
      */
     public static Project getById(Long id_project){
-        return find.
-                where()
+        return find
+                .where()
                 .eq("id", id_project)
                 .findUnique();
     }
+
+    /**
+     * Todos os projetos criado por um dado professor
+     * @param emailUser
+     * @return
+     */
+    public static List<Project> getByTeacher(String emailUser){
+        return find
+                .where()
+                .eq("createdBy.email", emailUser)
+                .orderBy("creationDate desc")
+                .findList();
+    }
+
+    // TODO: TESTAR [BEGIN]
+    /**
+     * Todos os projetos das disciplinas lecionadas por um dado professor
+     * @param emailUser
+     * @return
+     */
+    public static List<Project> getByTeacherDisciplines(String emailUser){
+        return find
+                .fetch("discipline").fetch("discipline")
+                .where()
+                .eq("discipline.users.email", emailUser)
+                .orderBy("creationDate desc")
+                .findList();
+    }
+    // TODO: TESTAR [END]
 }

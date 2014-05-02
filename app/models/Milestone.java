@@ -233,4 +233,113 @@ public class Milestone extends Model {
                 .findUnique();
     }
 
+    /**
+     * Todas as milestones dos projetos de um dado professor
+     * @param emailUser
+     * @return
+     */
+    public static List<Milestone> getAllMilestoneByTeacher(String emailUser){
+        return find
+                .fetch("project")
+                .where()
+                .eq("project.createdBy.email", emailUser)
+                .orderBy("endDate ASC")
+                .findList();
+    }
+
+    /**
+     * Todas as milestones dos projetos de um dado professor numa disciplina
+     * @param emailUser
+     * @return
+     */
+    public static List<Milestone> getAllMilestoneByTeacherDiscipline(String emailUser, Long id_discipline){
+        return find
+                .fetch("project")
+                .where()
+                .eq("project.discipline.id", id_discipline)
+                .eq("project.createdBy.email", emailUser)
+                .orderBy("endDate ASC")
+                .findList();
+    }
+
+    /**
+     * Próximas milestones dos projetos de um dado professor numa disciplina
+     * @param emailUser
+     * @param id_discipline
+     * @return
+     */
+    public static List<Milestone> nextDeliveryMilestoneByTeacherDiscipline(String emailUser, Long id_discipline){
+        return find
+                .fetch("project")
+                .where()
+                .ge("endDate", new Date())
+                .eq("project.discipline.id", id_discipline)
+                .eq("project.createdBy.email", emailUser)
+                .orderBy("endDate ASC")
+                .findList();
+    }
+
+    /**
+     * Próximas milestones dos projetos de uma disciplina
+     * @param id_discipline
+     * @return
+     */
+    public static List<Milestone> nextDeliveryMilestoneByDiscipline(Long id_discipline){
+        return find
+                .fetch("project")
+                .where()
+                .ge("endDate", new Date())
+                .eq("project.discipline.id", id_discipline)
+                .orderBy("endDate ASC")
+                .findList();
+    }
+    /**
+     * Milestones dos projetos de uma disciplina
+     * @param id_discipline
+     * @return
+     */
+    public static List<Milestone> allMilestonesByDiscipline(Long id_discipline){
+        return find
+                .fetch("project")
+                .where()
+                .eq("project.discipline.id", id_discipline)
+                .orderBy("endDate ASC")
+                .findList();
+    }
+
+    // TODO: Verificar se funciona [BEGIN]
+
+    /**
+     * Vai buscar todas as milestones dos projetos de todas as disciplinas que lecciona
+     * @param emailUser
+     * @return List<Milestone>
+     */
+    public static List<Milestone> getAllMilestoneByAllDisciplinesTeacher(String emailUser){
+        return find
+                .fetch("project").fetch("discipline")
+                .where()
+                .eq("project.discipline.users.email", emailUser)
+                .orderBy("endDate ASC")
+                .findList();
+    }
+
+    /**
+     * Vai buscar as próximas milestones a entregar dos projetos de todas as disciplinas que lecciona
+     * @param emailUser
+     * @return List<Milestone>
+     */
+    public static List<Milestone> nextDeliveriesMilestoneByAllDisciplinesTeacher(String emailUser){
+        return find
+                .fetch("project").fetch("discipline")
+                .where()
+                .ge("endDate", new Date())
+                .eq("project.discipline.users.email", emailUser)
+                .orderBy("endDate ASC")
+                .findList();
+    }
+
+
+
+    // TODO: Verificar se funciona [END]
+
 }

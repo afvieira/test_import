@@ -119,4 +119,11 @@ public class StudentMilestone extends Model {
                 .eq("student.email",emailUser)
                 .findUnique();
     }
+
+    public static List<StudentMilestone> getByMilestone(Long id_milestone){
+        return find
+                .where()
+                .eq("milestone.id", id_milestone)
+                .findList();
+    }
 }

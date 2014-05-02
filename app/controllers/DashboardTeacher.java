@@ -16,9 +16,11 @@ public class DashboardTeacher extends Controller {
                 views.html.Dashboard.Teacher.index.render(
                         // TODO: Página do professor
                         User.findByEmail(request().username()),
-                        Discipline.findByUser(request().username()), // Disciplinas Lecionadas
-                        Milestone.findByStudent(request().username()),
-                        Project.getByCreatedDate(request().username()),
+                        Discipline.findByUser(request().username()),                // Disciplinas Lecionadas
+                        Project.getByTeacherDisciplines(request().username()),      // Todos os projetos das disciplinas lecionadas por um dado professor
+                        Milestone.getAllMilestoneByAllDisciplinesTeacher(request().username()), //Todas as etapas de projetos das disciplinas lecionadas por um professor
+                        Project.getByTeacher(request().username()),                 // Todos os projetos criados por um professor
+                        Milestone.getAllMilestoneByTeacher(request().username()),   // Todas as etapas de projetos criados por um professor
                         StudentMilestone.getLastAvaliations(request().username())
                 )
         );
@@ -26,48 +28,55 @@ public class DashboardTeacher extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result disciplines() {
-        /*
-            TODO:
-             - Mostrar todas as diciplinas do Professor
-             - Últimos Projetos adicionados
-             - Prazo de entrega das próximas Milestones
-             - Alunos que não entregaram projetos
-         */
-        return TODO;
+        return ok(
+                views.html.Dashboard.Teacher.disciplines.render(
+                        User.findByEmail(request().username()),
+                        Discipline.findByUser(request().username()), // Disciplinas Lecionadas
+                        Project.getByTeacherDisciplines(request().username()), // Todos os projetos das disciplinas lecionadas por um dado professor
+                        Milestone.getAllMilestoneByAllDisciplinesTeacher(request().username()), // Todas as milestones dos projetos das disciplinas
+                        Milestone.nextDeliveriesMilestoneByAllDisciplinesTeacher(request().username()) // Próximas milestones dos projetos das disciplinas que leciona
+
+                )
+        );
     }
 
     @Security.Authenticated(Secured.class)
     public static Result showDiscipline(Long id) {
-        /*
-            TODO:
-             - Info do da Disciplina
-             - Lista de Projetos
-             - Lista de Milestones
-             - Prazo de entrega das próximas Milestones
-             - Alunos que não entregaram projetos
-         */
-        return TODO;
+        return ok(
+                views.html.Dashboard.Teacher.discipline.render(
+                        User.findByEmail(request().username()),
+                        Discipline.getById(id),                                 // Informação da Disciplina
+                        Project.getAllByDiscipline(id),                         // Todos os projetos da disciplina
+                        Milestone.allMilestonesByDiscipline(id),                // Todas as milestones dos projetos de uma disciplina
+                        Milestone.nextDeliveryMilestoneByDiscipline(id)         // Próximas milestones a entregar dos projetos de uma disciplina
+
+                )
+        );
     }
 
     @Security.Authenticated(Secured.class)
     public static Result projects(Long id_discipline) {
-        /*
-            TODO:
-             - Lista de Projetos
-         */
-        return TODO;
+        return ok(
+                views.html.Dashboard.Teacher.projects.render(
+                        User.findByEmail(request().username()),
+                        Project.getAllByDiscipline(id_discipline),              // Todos os projetos da disciplina
+                        Milestone.allMilestonesByDiscipline(id_discipline),      // Todas as milestones dos projetos da disciplina
+                        Milestone.nextDeliveryMilestoneByDiscipline(id_discipline)         // Próximas milestones a entregar dos projetos de uma disciplina
+                )
+        );
     }
 
     @Security.Authenticated(Secured.class)
     public static Result showProject(Long id_discipline,Long id) {
-        /*
-            TODO:
-             - Informação do Projeto
-             - Lista de Milestones
-             - Próximas entregas
-             - Alunos que não entregaram
-         */
-        return TODO;
+        return ok(
+                views.html.Dashboard.Teacher.project.render(
+                        User.findByEmail(request().username()),
+                        Project.getById(id),                                    // Vai buscar a informação de um projeto
+                        Milestone.allMilestonesByProject(id),                   // Todas as milestones de um projeto
+                        Milestone.nextDeliveriesByProject(id)                   // Próximas milestones a entregar de um projeto
+                        // TODO: Saber os Grupos e alunos que não entregaram etapas
+                )
+        );
     }
 
     @Security.Authenticated(Secured.class)
@@ -76,6 +85,7 @@ public class DashboardTeacher extends Controller {
             TODO:
              - Criar Projeto (Não esquecer de selecionar os alunos ou grupos)
          */
+        // Não sei como é para fazer neste método
         return TODO;
     }
 
@@ -83,20 +93,24 @@ public class DashboardTeacher extends Controller {
     public static Result deleteProject(Long id_discipline,Long id) {
         /*
             TODO:
-             - Apagar Projeto
+             - Criar Projeto (Não esquecer de selecionar os alunos ou grupos)
          */
+        // Não sei como é para fazer neste método
         return TODO;
     }
 
     @Security.Authenticated(Secured.class)
     public static Result milestones(Long id_project) {
-        /*
-            TODO:
-                - Mostrar todas as Milestones do Projeto
-                - Proximas entregas
-                - Notas gerais
-         */
-        return TODO;
+        return ok(
+                views.html.Dashboard.Teacher.milestones.render(
+                        User.findByEmail(request().username()),
+                        Project.getById(id),                                    // Vai buscar a informação de um projeto
+                        Milestone.allMilestonesByProject(id),                   // Todas as milestones de um projeto
+                        Milestone.nextDeliveriesByProject(id)                   // Próximas milestones a entregar de um projeto
+                        // TODO: Saber os Grupos e alunos que não entregaram etapas
+                        // TODO: Notas Gerais
+                )
+        );
     }
 
     @Security.Authenticated(Secured.class)
@@ -107,7 +121,15 @@ public class DashboardTeacher extends Controller {
                 - Alunos/Grupos que já entregaram
                 - Alunos/Grupos que faltam entregar
          */
-        return TODO;
+        return ok(
+                views.html.Dashboard.Teacher.milestones.render(
+                        User.findByEmail(request().username()),
+                        Project.getById(id_project),                                    // Vai buscar a informação de um projeto
+                        Milestone.getById(id_milestone),                                // Informação da milestone
+                        // TODO: Saber os Grupos e alunos que não entregaram esta etapa
+                        // TODO: Notas Gerais
+                )
+        );
     }
 
     @Security.Authenticated(Secured.class)
@@ -116,6 +138,7 @@ public class DashboardTeacher extends Controller {
             TODO:
              - Criar nova Milestone
          */
+        // Não sei como é para fazer neste método
         return TODO;
     }
 
@@ -125,6 +148,7 @@ public class DashboardTeacher extends Controller {
             TODO:
              - Apagar Milestone
          */
+        // Não sei como é para fazer neste método
         return TODO;
     }
 
@@ -136,7 +160,14 @@ public class DashboardTeacher extends Controller {
                 - Mostrar as datas das entregas
 
          */
-        return TODO;
+        return ok(
+                views.html.Dashboard.Teacher.avaliations.render(
+                        User.findByEmail(request().username()),
+                        Project.getById(id_project),                                    // Vai buscar a informação de um projeto
+                        Milestone.getById(id_milestone),                                // Informação da milestone
+                        StudentMilestone.getByMilestone(id_milestone)
+                )
+        );
     }
 
     @Security.Authenticated(Secured.class)
