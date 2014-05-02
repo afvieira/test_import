@@ -40,6 +40,9 @@ public class Project extends Model {
     @Constraints.Required
     public Date creationDate;
 
+    @Constraints.Required
+    public User createdBy;
+
     @OneToMany
     public List<Milestone> milestones;
 
@@ -67,6 +70,7 @@ public class Project extends Model {
         sb.append(", startDate=").append(startDate);
         sb.append(", endDate=").append(endDate);
         sb.append(", creationDate=").append(creationDate);
+        sb.append(", createdBy=").append(createdBy);
         sb.append(", milestones=").append(milestones);
         sb.append(", groups=").append(groups);
         sb.append(", students=").append(students);
