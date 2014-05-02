@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Discipline;
+import models.User;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -10,40 +11,74 @@ import views.html.*;
  * Created by NRAM on 07/04/14.
  */
 public class Disciplines extends Controller {
-    static Form<Discipline> disciplineForm = Form.form(Discipline.class);
+
+    final static Form<Discipline> DisciplineForm = Form.form(Discipline.class);
 
     public static Result index(){
-        return ok(index.render("Your new application Courses is ready."));
+        return ok("Hello Discipline!!!");
     }
 
     public static Result all(){
         return ok(
-                //views.html.Disciplines.index.render(Discipline.all(), disciplineForm)
+                views.html.Disciplines.index.render(
+                        User.findByEmail(request().username()),
+                        Discipline.all()
+                )
         );
+        //return ok(views.html.Disciplines.index.render(User.findByEmail(request().username()), Discipline.all(), DisciplineForm));
     }
 
     public static Result show(Long id){
-        return TODO;
+        return ok(
+                views.html.Disciplines.show.render(
+                        User.findByEmail(request().username()),
+                        Discipline.getById(id)
+                )
+        );
     }
 
     public static Result delete(Long id){
-        return TODO;
+        Discipline.delete(id);
+        return redirect(routes.Disciplines.all());
     }
 
     public static Result create(){
-        return TODO;
+        Form<Discipline> filledForm = DisciplineForm.bindFromRequest();
+        if(filledForm.hasErrors()){
+            return badRequest("BAD");
+        }else{
+            Discipline.create(filledForm.get());
+            return redirect(routes.Disciplines.all());
+        }
     }
 
     public static Result allByCourse(Long id_course){
-        return ok();//ok(views.html.Disciplines.disciplines.render(Discipline.allByCourse(id_course), disciplineForm));
+        return ok(
+                views.html.Disciplines.index.render(
+                    User.findByEmail(request().username()),
+                    Discipline.allByCourse(id_course)
+                )
+        );
     }
 
     public static Result showByCourse(Long id_course, Long id_discipline){
-        return TODO;
+        return ok(
+                views.html.Disciplines.show.render(
+                        User.findByEmail(request().username()),
+                        Discipline.getById(id_discipline)
+                )
+        );
     }
 
+    // Não sei como enviar pelo curso... acho que isso já vem desde o momento que se tenta criar a disciplina
     public static Result createByCourse(Long id_course){
-        return TODO;
+        Form<Discipline> filledForm = DisciplineForm.bindFromRequest();
+        if(filledForm.hasErrors()){
+            return badRequest("BAD");
+        }else{
+            Discipline.create(filledForm.get());
+            return redirect(routes.Disciplines.all());
+        }
     }
 
 

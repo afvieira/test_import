@@ -19,7 +19,7 @@ public class Projects extends Controller{
     }
 
     public static Result all(){
-        return ok(views.html.Projects.projects.render(Project.all(), projectForm));
+        return ok(views.html.Projects.index.render(Project.all(), projectForm));
     }
 
     public static Result show(Long id){

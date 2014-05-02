@@ -54,6 +54,13 @@ public class Course extends Model {
         return find.all();
     }
 
+    public static Course getById(Long id){
+        return find
+                .where()
+                .eq("id", id)
+                .findUnique();
+    }
+
     public static void create(Course course){
         course.save();
     }

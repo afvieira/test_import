@@ -20,11 +20,22 @@ public class Courses extends Controller {
     }
 
     public static Result all(){
-        return ok(views.html.Courses.courses.render(User.findByEmail(request().username()), Course.all(), courseForm));
+        return ok(
+            views.html.Courses.index.render(
+                    User.findByEmail(request().username()),
+                    Course.all()
+            )
+        );
+        //return ok(views.html.Courses.index.render(User.findByEmail(request().username()), Course.all(), courseForm));
     }
 
     public static Result show(Long id){
-        return TODO;
+        return ok(
+                views.html.Courses.show.render(
+                        User.findByEmail(request().username()),
+                        Course.getById(id)
+                )
+        );
     }
 
     public static Result delete(Long id){
