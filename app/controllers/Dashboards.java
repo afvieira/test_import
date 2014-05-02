@@ -190,6 +190,7 @@ public class Dashboards extends Controller {
                 TODO);
     }
 
+    @Security.Authenticated(Secured.class)
     public static Result showAvaliationByStudent(Long id_project, Long id_milestone, Long id_student){
         return routing(
                 DashboardStudent.showAvaliationByStudent(id_project,id_milestone,id_student),
