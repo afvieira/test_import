@@ -164,4 +164,14 @@ public class DashboardStudent extends Controller {
         User u = User.findByEmail(request().username());
         return badRequest(views.html.notFound.render(u));
     }
+
+    @Security.Authenticated(Secured.class)
+    public static Result showAvaliationByGroup(Long id_project, Long id_milestone, Long id_group) {
+        return TODO;
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result showAvaliationByStudent(Long id_project, Long id_milestone, Long id_student) {
+        return TODO;
+    }
 }

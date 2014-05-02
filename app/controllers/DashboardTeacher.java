@@ -188,4 +188,14 @@ public class DashboardTeacher extends Controller {
     public static Result deleteAvaliation(Long id_project,Long id_milestone) {
         return TODO;
     }
+
+    @Security.Authenticated(Secured.class)
+    public static Result showAvaliationByGroup(Long id_project, Long id_milestone, Long id_group) {
+        return TODO;
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result showAvaliationByStudent(Long id_project, Long id_milestone, Long id_student) {
+        return TODO;
+    }
 }

@@ -182,4 +182,19 @@ public class Dashboards extends Controller {
                 TODO);
     }
 
+    @Security.Authenticated(Secured.class)
+    public static Result showAvaliationByGroup(Long id_project, Long id_milestone, Long id_group){
+        return routing(
+                DashboardStudent.showAvaliationByGroup(id_project,id_milestone,id_group),
+                DashboardTeacher.showAvaliationByGroup(id_project,id_milestone,id_group),
+                TODO);
+    }
+
+    public static Result showAvaliationByStudent(Long id_project, Long id_milestone, Long id_student){
+        return routing(
+                DashboardStudent.showAvaliationByStudent(id_project,id_milestone,id_student),
+                DashboardTeacher.showAvaliationByStudent(id_project,id_milestone,id_student),
+                TODO);
+    }
+
 }
