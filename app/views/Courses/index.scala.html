@@ -3,4 +3,60 @@
 @import helper._
 
 @main(user) {
+
+    <div id="example_wrapper" class="dataTables_wrapper" role="grid">
+        <table id="cursos" class="display" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th style="text-align: left; width: 10%">ID</th>
+                    <th style="text-align: left; width: 15%">Código</th>
+                    <th style="text-align: center; width: 74%">Descrição</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th style="text-align: left; width: 10%">ID</th>
+                    <th style="text-align: left; width: 15%">Código</th>
+                    <th style="text-align: center; width: 74%">Descrição</th>
+                    <th></th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <script type="text/javascript" charset="utf-8">
+
+        var cursos = [];
+            @for(c <- courses) {
+                cursos.push({id: "@c.id",
+                code: "@c.code",
+                description: "<a href='/courses/@{c.id}'>@c.description</a>",
+                button: "<input type='submit' id=@{c.id} onclick='removerCurso(@{c.id})' value='Apagar' class='small-centered button radius onTable'>"
+            })
+        };
+
+        $('#cursos').DataTable( {
+            language: {url: "@routes.Assets.at("js/Portuguese.json")"},
+            data: cursos,
+                columns: [
+                    { data: 'id' },
+                    { data: 'code' },
+                    { data: 'description' },
+                    { data: 'button'}
+                ]
+        });
+
+        function removerCurso(id){
+            redirect('/courses/' + id + '/delete', 'post');
+        }
+
+        var redirect = function(url, method) {
+            var form = document.createElement('form');
+            form.method = method;
+            form.action = url;
+            form.submit();
+        };
+
+    </script>
 }

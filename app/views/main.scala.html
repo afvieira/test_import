@@ -37,6 +37,9 @@
         <script src="@routes.Assets.at("js/kendoui/kendo.web.min.js")"></script>
         <!-- FIM Importar KendoUI -->
 
+        <!-- DataTable -->
+        <link rel="stylesheet" href="@routes.Assets.at("stylesheets/jquery.dataTables.css")">
+        <script src="@routes.Assets.at("js/jquery.dataTables.js")"></script>
 
         <!--<script src="js/vendor/modernizr.js"></script>-->
 
@@ -124,7 +127,9 @@
                             </div>
                         </div>
                         <div class="large-9 medium-8 columns">
-                        @content
+                            <br/>
+                            @content
+                            <br/>
                         </div>
                     </div>
 

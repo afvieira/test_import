@@ -1,0 +1,13 @@
+@(user: User, message: String)
+
+@import helper._
+
+@main(user) {
+    <h1>Erro 404</h1>
+    <p>ERRO!</p>
+    <div class="panel">
+        <label>
+            @message
+        </label>
+    </div>
+}

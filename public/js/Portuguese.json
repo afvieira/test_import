@@ -1,0 +1,19 @@
+
+
+{
+	"sProcessing":   "A processar...",
+	"sLengthMenu":   "Nº de registos: _MENU_",
+	"sZeroRecords":  "Não foram encontrados resultados",
+	"sInfo":         "De _START_ até _END_ de _TOTAL_ registos",
+	"sInfoEmpty":    "De 0 até 0 de 0 registos",
+	"sInfoFiltered": "(filtrado de _MAX_ registos no total)",
+	"sInfoPostFix":  "",
+	"sSearch":       "Procurar:",
+	"sUrl":          "",
+	"oPaginate": {
+	    "sFirst":    "Primeiro",
+	    "sPrevious": "Anterior",
+	    "sNext":     "Seguinte",
+	    "sLast":     "Último"
+	}
+}

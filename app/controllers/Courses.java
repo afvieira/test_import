@@ -39,8 +39,22 @@ public class Courses extends Controller {
     }
 
     public static Result delete(Long id){
-        Course.delete(id);
-        return redirect(routes.Courses.all());
+        try{
+            Course.delete(id);
+            return redirect(routes.Courses.all());
+        }catch(Exception e){
+            return badRequest(views.html.error.render(null, e.getMessage()));
+        }
+    }
+
+    public static Result update(Long id){
+        Form<Course> filledForm = courseForm.bindFromRequest();
+        if(filledForm.hasErrors()){
+            return badRequest("BAD");
+        }else{
+            filledForm.get().update(id);
+            return redirect(routes.Courses.all());
+        }
     }
 
     public static Result create(){

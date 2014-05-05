@@ -1,10 +1,11 @@
 package controllers;
 
 import models.Project;
-import play.mvc.Controller;
-import play.mvc.Security;
-import play.mvc.Result;
+import models.User;
 import play.data.Form;
+import play.mvc.Controller;
+import play.mvc.Result;
+import play.mvc.Security;
 
 /**
  * Created by afv on 25/04/14.
@@ -19,7 +20,12 @@ public class Projects extends Controller{
     }
 
     public static Result all(){
-        return ok(views.html.Projects.index.render(Project.all(), projectForm));
+        return ok(
+                views.html.Projects.index.render(
+                        User.findByEmail(request().username()),
+                        Project.all()
+                )
+        );
     }
 
     public static Result show(Long id){
