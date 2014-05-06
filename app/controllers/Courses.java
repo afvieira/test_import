@@ -31,9 +31,18 @@ public class Courses extends Controller {
 
     public static Result show(Long id){
         return ok(
-                views.html.Courses.show.render(
+                views.html.Courses.item.render(
                         User.findByEmail(request().username()),
                         Course.getById(id)
+                )
+        );
+    }
+
+    public static Result create(){
+        return ok(
+                views.html.Courses.item.render(
+                        User.findByEmail(request().username()),
+                        null
                 )
         );
     }
@@ -57,7 +66,7 @@ public class Courses extends Controller {
         }
     }
 
-    public static Result create(){
+    public static Result save(){
         Form<Course> filledForm = courseForm.bindFromRequest();
         if(filledForm.hasErrors()){
             return badRequest("BAD");

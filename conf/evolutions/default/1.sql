@@ -14,6 +14,7 @@ create table discipline (
   id                        bigint not null,
   course_id                 bigint,
   code                      varchar(255),
+  name                      varchar(255),
   course_year               integer,
   year                      integer,
   constraint pk_discipline primary key (id))

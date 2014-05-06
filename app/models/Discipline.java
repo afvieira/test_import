@@ -25,6 +25,9 @@ public class Discipline extends Model {
     public String code;
 
     @Constraints.Required
+    public String name;
+
+    @Constraints.Required
     public Integer course_year;
 
     @Constraints.Required
@@ -54,6 +57,7 @@ public class Discipline extends Model {
                 "id=" + id +
                 ", course=" + course.toString() +
                 ", code='" + code + '\'' +
+                ", name='" + name + '\'' +
                 ", course_year=" + course_year +
                 ", year=" + year +
                 ", disciplines=" + shifts +

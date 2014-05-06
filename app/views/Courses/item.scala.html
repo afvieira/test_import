@@ -1,0 +1,42 @@
+@(user: User, course: Course = null)
+
+@import helper._
+
+@template(update: Boolean) = {
+
+    @if(update){
+        <div>
+            <label>ID: @course.id</label>
+        </div>
+        <br/>
+    }
+
+    <div>
+        <label>Código</label>
+        <input name="code" @if(update){value="@{course.code}"} placeholder="Código" type="text">
+    </div>
+
+    <div>
+        <label>Descrição</label>
+        <input name="description" @if(update){value="@{course.description}"} placeholder="Descrição" type="text">
+    </div>
+}
+
+@main(user) {
+
+    <div class="small-centered columns">
+        <div class="panel radius">
+            @if(course == null){
+                @form(routes.Courses.save()){
+                    @template(false)
+                    <input class="button tiny radius" name="commit" type="submit" value="Guardar">
+                }
+            }else{
+                @form(routes.Courses.update(course.id)){
+                    @template(true)
+                    <input class="button tiny radius" name="commit" type="submit" value="Atualizar">
+                }
+            }
+        </div>
+    </div>
+}

@@ -4,26 +4,28 @@
 
 @main(user) {
 
-    <div id="example_wrapper" class="dataTables_wrapper" role="grid">
-        <table id="cursos" class="display" cellspacing="0" width="100%">
-            <thead>
-                <tr>
-                    <th style="text-align: left; width: 10%">ID</th>
-                    <th style="text-align: left; width: 15%">Código</th>
-                    <th style="text-align: center; width: 74%">Descrição</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tfoot>
-                <tr>
-                    <th style="text-align: left; width: 10%">ID</th>
-                    <th style="text-align: left; width: 15%">Código</th>
-                    <th style="text-align: center; width: 74%">Descrição</th>
-                    <th></th>
-                </tr>
-            </tfoot>
-        </table>
-    </div>
+    <table id="cursos" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th style="text-align: left; width: 10%">ID</th>
+                <th style="text-align: left; width: 50%">Código</th>
+                <th style="text-align: center; width: 50%">Descrição</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th style="text-align: left; width: 10%">ID</th>
+                <th style="text-align: left; width: 15%">Código</th>
+                <th style="text-align: center; width: 74%">Descrição</th>
+                <th></th>
+            </tr>
+        </tfoot>
+    </table>
+
+    <hr/>
+
+    <a href="/course/new" class="small button radius">Novo curso</a>
 
     <script type="text/javascript" charset="utf-8">
 
