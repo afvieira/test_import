@@ -99,4 +99,28 @@ public class Discipline extends Model {
                 .eq("id", id)
                 .findUnique();
     }
+
+    public static void removeShift(Long id_discipline, Long id_shift){
+        Discipline d = Discipline.find.setId(id_discipline).fetch("shifts", "id").findUnique();
+        d.shifts.remove(
+                Shift.find.ref(id_shift)
+        );
+        d.saveManyToManyAssociations("shifts");
+    }
+
+    public static void removeGroup(Long id_discipline, Long id_group){
+        Discipline d = Discipline.find.setId(id_discipline).fetch("groups", "id").findUnique();
+        d.groups.remove(
+                Group.find.ref(id_group)
+        );
+        d.saveManyToManyAssociations("groups");
+    }
+
+    public static void removeProject(Long id_discipline, Long id_project){
+        Discipline d = Discipline.find.setId(id_discipline).fetch("projects", "id").findUnique();
+        d.projects.remove(
+                Project.find.ref(id_project)
+        );
+        d.saveManyToManyAssociations("projects");
+    }
 }
