@@ -52,8 +52,10 @@ public class Shift extends Model {
         return find.all();
     }
 
-    public static void create(Shift shift){
+    public static Shift create(Shift shift, Long id_discipline){
+        shift.discipline = Discipline.find.ref(id_discipline);
         shift.save();
+        return shift;
     }
 
     public static void delete(Long id){
