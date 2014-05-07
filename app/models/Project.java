@@ -87,8 +87,12 @@ public class Project extends Model {
         return find.all();
     }
 
-    public static void create(Project project){
+    public static Project create(Project project, Long id_discipline, String emailUser){
+        project.createdBy = User.findByEmail(emailUser);
+        project.creationDate = new Date();
+        project.discipline = Discipline.find.ref(id_discipline);
         project.save();
+        return project;
     }
 
     public static void delete(Long id){
