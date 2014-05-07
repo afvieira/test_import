@@ -4,69 +4,72 @@
 
 @main(user) {
 
-        <div id="example_wrapper" class="dataTables_wrapper" role="grid">
-            <table id="disciplinas" class="display" cellspacing="0" width="100%">
-                <thead>
-                    <tr>
-                        <th style="text-align: left; width: 5%">ID</th>
-                        <th style="text-align: left; width: 10%">Código</th>
-                        <th style="text-align: left; width: 60%">Curso</th>
-                        <th style="text-align: left; width: 15%">Ano do Curso</th>
-                        <th style="text-align: left; width: 10%">Ano</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tfoot>
-                    <tr>
-                        <th style="text-align: left; width: 5%">ID</th>
-                        <th style="text-align: left; width: 10%">Código</th>
-                        <th style="text-align: left; width: 60%">Curso</th>
-                        <th style="text-align: left; width: 15%">Ano do Curso</th>
-                        <th style="text-align: left; width: 10%">Ano</th>
-                        <th></th>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
+    <h1>@disciplines.size</h1>
+    <table id="disciplinas" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th style="text-align: left; width: 5%">ID</th>
+                <th style="text-align: left; width: 10%">Código</th>
+                <th style="text-align: left; width: 60%">Curso</th>
+                <th style="text-align: left; width: 15%">Ano do Curso</th>
+                <th style="text-align: left; width: 10%">Ano</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th style="text-align: left;">ID</th>
+                <th style="text-align: left;">Código</th>
+                <th style="text-align: left;">Curso</th>
+                <th style="text-align: left;">Ano do Curso</th>
+                <th style="text-align: left;">Ano</th>
+                <th></th>
+            </tr>
+        </tfoot>
+    </table>
 
-        <script type="text/javascript" charset="utf-8">
+    <hr/>
 
-        var disciplinas = [];
-            @for(d <- disciplines) {
-                disciplinas.push({id: "@d.id",
-                    code: "@d.code",
-                    name: "<a href='/discipline/@{d.id}'>@d.name</a>",
-                    course: "@d.course",
-                    courseYear: "@d.course_year",
-                    year: "@d.year",
-                    button: "<input type='submit' id=@{d.id} onclick='removerDisciplina(@{d.id})' value='Apagar' class='small-centered button radius onTable'>"
-                })
-            };
+    <a href="/discipline/new" class="small button radius">Nova disciplina</a>
 
-        $('#disciplinas').DataTable( {
-        language: {url: "@routes.Assets.at("js/Portuguese.json")"},
-        data: cursos,
-        columns: [
-        { data: 'id' },
-        { data: 'code' },
-        { data: 'name' },
-        { data: 'course' },
-        { data: 'courseYear' },
-        { data: 'year' },
-        { data: 'button'}
-        ]
-        });
+    <script type="text/javascript" charset="utf-8">
 
-        function removerDisciplina(id){
-        redirect('/discipline/' + id + '/delete', 'post');
-        }
-
-        var redirect = function(url, method) {
-        var form = document.createElement('form');
-        form.method = method;
-        form.action = url;
-        form.submit();
+    var disciplinas = [];
+        @for(d <- disciplines) {
+            disciplinas.push({id: "@d.id",
+                code: "@d.code",
+                name: "<a href='/discipline/@{d.id}'>@d.name</a>",
+                course: "@d.course.description",
+                courseYear: "@d.course_year",
+                year: "@d.year",
+                button: "<input type='submit' id=@{d.id} onclick='removerDisciplina(@{d.id})' value='Apagar' class='small-centered button radius onTable'>"
+            })
         };
 
-        </script>
+    $('#disciplinas').DataTable( {
+    language: {url: "@routes.Assets.at("js/Portuguese.json")"},
+    data: disciplinas,
+    columns: [
+    { data: 'id' },
+    { data: 'code' },
+    { data: 'name' },
+    { data: 'course' },
+    { data: 'courseYear' },
+    { data: 'year' },
+    { data: 'button'}
+    ]
+    });
+
+    function removerDisciplina(id){
+    redirect('/discipline/' + id + '/delete', 'post');
     }
+
+    var redirect = function(url, method) {
+    var form = document.createElement('form');
+    form.method = method;
+    form.action = url;
+    form.submit();
+    };
+
+    </script>
+}
