@@ -84,8 +84,10 @@ public class Discipline extends Model {
                 .findList();
     }
 
-    public static void create(Discipline discipline){
+    public static Discipline create(Discipline discipline, Long project_id){
+        discipline.course = Course.find.ref(project_id);
         discipline.save();
+        return discipline;
     }
 
     public static void delete(Long id){
