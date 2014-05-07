@@ -85,7 +85,8 @@ public class Milestone extends Model {
         return find.all();
     }
 
-    public static void create(Milestone milestone){
+    public static void create(Milestone milestone, Long id_project){
+        milestone.project = Project.find.ref(id_project);
         milestone.save();
     }
 
@@ -93,6 +94,22 @@ public class Milestone extends Model {
         find.ref(id).delete();
     }
 
+
+    public static void removeGroup(Long id_milestone, Long id_group){
+        Milestone m = Milestone.find.setId(id_milestone).fetch("groups", "id").findUnique();
+        m.groups.remove(
+                GroupMilestone.getByGroupMilestone(id_milestone, id_group)
+        );
+        m.saveManyToManyAssociations("groups");
+    }
+
+    public static void removeStudent(Long id_milestone, Long id_student){
+        Milestone m = Milestone.find.setId(id_milestone).fetch("students", "id").findUnique();
+        m.students.remove(
+                StudentMilestone.getByStudentMilestone(id_milestone, id_student)
+        );
+        m.saveManyToManyAssociations("students");
+    }
 
     /**
      * Próximas etapas a entregar de um dado utilizador
