@@ -15,7 +15,7 @@ GET         /                                                                   
 
 # Cursos
 GET         /courses                                                                                     controllers.Courses.all()
-GET         /course/new                                                                                 controllers.Courses.create()
+GET         /course/new                                                                                  controllers.Courses.create()
 GET         /courses/:id                                                                                 controllers.Courses.show(id: Long)
 POST        /courses                                                                                     controllers.Courses.save()
 POST        /courses/:id/delete                                                                          controllers.Courses.delete(id: Long)
@@ -29,9 +29,12 @@ POST        /projects/:id/delete                                                
 
 # Disciplinas
 GET         /disciplines                                                                                 controllers.Disciplines.all()
-GET         /discipline/:id                                                                              controllers.Disciplines.show(id: Long)
-POST        /discipline                                                                                  controllers.Disciplines.create()
-POST        /discipline/:id/delete                                                                       controllers.Disciplines.delete(id: Long)
+GET         /discipline/new                                                                              controllers.Disciplines.create()
+GET         /disciplines/:id                                                                             controllers.Disciplines.show(id: Long)
+POST        /disciplines                                                                                 controllers.Disciplines.save()
+POST        /disciplines/:id/delete                                                                      controllers.Disciplines.delete(id: Long)
+POST        /disciplines/:id/update                                                                      controllers.Disciplines.update(id: Long)
+
 GET         /course/:id_course/disciplines                                                               controllers.Disciplines.allByCourse(id_course: Long)
 GET         /course/:id_course/discipline/:id_discipline                                                 controllers.Disciplines.showByCourse(id_course: Long, id_discipline: Long)
 POST        /course/:id_course/discipline                                                                controllers.Disciplines.createByCourse(id_course: Long)

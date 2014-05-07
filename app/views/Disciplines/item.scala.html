@@ -1,0 +1,71 @@
+@(user: User, discipline: Discipline, courses: List[Course])
+
+@import helper._
+
+@template(update: Boolean) = {
+
+@if(update){
+    <div>
+        <label>ID: @discipline.id</label>
+    </div>
+    <br/>
+}
+
+    <div>
+        <label>Código
+        <input name="code" @if(update){value="@{discipline.code}"} placeholder="Código" type="text">
+        </label>
+    </div>
+
+    <div>
+        <label>Nome
+        <input name="name" @if(update){value="@{discipline.name}"} placeholder="Nome" type="text">
+        </label>
+    </div>
+
+    <div>
+        <label>Curso
+            <select name="course">
+                @for(c <- courses){
+                    @if(update && (discipline.course.id == c.id)){
+                        <option value="@{c}" selected> @{c.description}</option>
+                    }else{
+                        <option value="@{c}"> @{c.description}</option>
+                    }
+                }
+            </select>
+        </label>
+    </div>
+
+    <div>
+        <label>Ano do curso
+            <input name="course_year" @if(update){value="@{discipline.course_year}"} placeholder="Ano do curso" type="number">
+        </label>
+    </div>
+
+    <div>
+        <label>Ano letivo
+            <input name="year" @if(update){value="@{discipline.year}"} placeholder="Ano letivo" type="number">
+        </label>
+    </div>
+
+}
+
+@main(user) {
+
+    <div class="small-centered columns">
+        <div class="panel radius">
+        @if(discipline == null){
+            @form(routes.Disciplines.save()){
+                @template(false)
+                <input class="button tiny radius" name="commit" type="submit" value="Guardar">
+            }
+        }else{
+            @form(routes.Disciplines.update(discipline.id)){
+                @template(true)
+                <input class="button tiny radius" name="commit" type="submit" value="Atualizar">
+                }
+        }
+        </div>
+    </div>
+}

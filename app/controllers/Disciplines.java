@@ -1,11 +1,11 @@
 package controllers;
 
+import models.Course;
 import models.Discipline;
 import models.User;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.*;
 
 /**
  * Created by NRAM on 07/04/14.
@@ -30,9 +30,20 @@ public class Disciplines extends Controller {
 
     public static Result show(Long id){
         return ok(
-                views.html.Disciplines.show.render(
+                views.html.Disciplines.item.render(
                         User.findByEmail(request().username()),
-                        Discipline.getById(id)
+                        Discipline.getById(id),
+                        Course.all()
+                )
+        );
+    }
+
+    public static Result create(){
+        return ok(
+                views.html.Disciplines.item.render(
+                        User.findByEmail(request().username()),
+                        null,
+                        Course.all()
                 )
         );
     }
@@ -42,12 +53,22 @@ public class Disciplines extends Controller {
         return redirect(routes.Disciplines.all());
     }
 
-    public static Result create(){
+    public static Result save(){
         Form<Discipline> filledForm = DisciplineForm.bindFromRequest();
         if(filledForm.hasErrors()){
             return badRequest("BAD");
         }else{
             Discipline.create(filledForm.get());
+            return redirect(routes.Disciplines.all());
+        }
+    }
+
+    public static Result update(Long id){
+        Form<Discipline> filledForm = DisciplineForm.bindFromRequest();
+        if(filledForm.hasErrors()){
+            return badRequest("BAD");
+        }else{
+            filledForm.get().update(id);
             return redirect(routes.Disciplines.all());
         }
     }
@@ -63,9 +84,10 @@ public class Disciplines extends Controller {
 
     public static Result showByCourse(Long id_course, Long id_discipline){
         return ok(
-                views.html.Disciplines.show.render(
+                views.html.Disciplines.item.render(
                         User.findByEmail(request().username()),
-                        Discipline.getById(id_discipline)
+                        Discipline.getById(id_discipline),
+                        Course.all()
                 )
         );
     }
