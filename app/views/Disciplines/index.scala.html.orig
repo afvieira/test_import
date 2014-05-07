@@ -18,11 +18,19 @@
         </thead>
         <tfoot>
             <tr>
+<<<<<<< HEAD
                 <th style="text-align: left;">ID</th>
                 <th style="text-align: left;">Código</th>
                 <th style="text-align: left;">Curso</th>
                 <th style="text-align: left;">Ano do Curso</th>
                 <th style="text-align: left;">Ano</th>
+=======
+                <th style="text-align: left; width: 5%">ID</th>
+                <th style="text-align: left; width: 10%">Código</th>
+                <th style="text-align: left; width: 60%">Curso</th>
+                <th style="text-align: left; width: 15%">Ano do Curso</th>
+                <th style="text-align: left; width: 10%">Ano</th>
+>>>>>>> af80da42e929a003ed5a8810b14e00d665dc4a5e
                 <th></th>
             </tr>
         </tfoot>
