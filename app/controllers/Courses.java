@@ -15,10 +15,6 @@ public class Courses extends Controller {
 
     final static Form<Course> courseForm = Form.form(Course.class);
 
-    public static Result index(){
-        return ok("Hello Course!!!");
-    }
-
     public static Result all(){
         return ok(
             views.html.Courses.index.render(
@@ -26,7 +22,6 @@ public class Courses extends Controller {
                     Course.all()
             )
         );
-        //return ok(views.html.Courses.index.render(User.findByEmail(request().username()), Course.all(), courseForm));
     }
 
     public static Result show(Long id){

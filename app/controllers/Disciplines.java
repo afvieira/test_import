@@ -14,10 +14,6 @@ public class Disciplines extends Controller {
 
     final static Form<Discipline> DisciplineForm = Form.form(Discipline.class);
 
-    public static Result index(){
-        return ok("Hello Discipline!!!");
-    }
-
     public static Result all(){
         return ok(
                 views.html.Disciplines.index.render(
@@ -25,7 +21,6 @@ public class Disciplines extends Controller {
                         Discipline.all()
                 )
         );
-        //return ok(views.html.Disciplines.index.render(User.findByEmail(request().username()), Discipline.all(), DisciplineForm));
     }
 
     public static Result show(Long id){
