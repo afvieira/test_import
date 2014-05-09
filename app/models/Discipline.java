@@ -88,8 +88,10 @@ public class Discipline extends Model {
                 .findList();
     }
 
-    public static void create(Discipline discipline){
+    public static Discipline create(Discipline discipline, Long project_id){
+        discipline.course = Course.find.ref(project_id);
         discipline.save();
+        return discipline;
     }
 
     public static void delete(Long id){
@@ -100,5 +102,29 @@ public class Discipline extends Model {
         return find.where()
                 .eq("id", id)
                 .findUnique();
+    }
+
+    public static void removeShift(Long id_discipline, Long id_shift){
+        Discipline d = Discipline.find.setId(id_discipline).fetch("shifts", "id").findUnique();
+        d.shifts.remove(
+                Shift.find.ref(id_shift)
+        );
+        d.saveManyToManyAssociations("shifts");
+    }
+
+    public static void removeGroup(Long id_discipline, Long id_group){
+        Discipline d = Discipline.find.setId(id_discipline).fetch("groups", "id").findUnique();
+        d.groups.remove(
+                Group.find.ref(id_group)
+        );
+        d.saveManyToManyAssociations("groups");
+    }
+
+    public static void removeProject(Long id_discipline, Long id_project){
+        Discipline d = Discipline.find.setId(id_discipline).fetch("projects", "id").findUnique();
+        d.projects.remove(
+                Project.find.ref(id_project)
+        );
+        d.saveManyToManyAssociations("projects");
     }
 }
