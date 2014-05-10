@@ -4,6 +4,7 @@ import models.Course;
 import models.Discipline;
 import models.User;
 import play.data.Form;
+import play.data.validation.ValidationError;
 import play.mvc.Controller;
 import play.mvc.Result;
 
@@ -14,10 +15,6 @@ public class Disciplines extends Controller {
 
     final static Form<Discipline> DisciplineForm = Form.form(Discipline.class);
 
-    public static Result index(){
-        return ok("Hello Discipline!!!");
-    }
-
     public static Result all(){
         return ok(
                 views.html.Disciplines.index.render(
@@ -25,7 +22,6 @@ public class Disciplines extends Controller {
                         Discipline.all()
                 )
         );
-        //return ok(views.html.Disciplines.index.render(User.findByEmail(request().username()), Discipline.all(), DisciplineForm));
     }
 
     public static Result show(Long id){
@@ -49,29 +45,61 @@ public class Disciplines extends Controller {
     }
 
     public static Result delete(Long id){
-        Discipline.delete(id);
-        return redirect(routes.Disciplines.all());
-    }
-
-    public static Result save(){
-        Form<Discipline> filledForm = DisciplineForm.bindFromRequest();
-        if(filledForm.hasErrors()){
-            return badRequest("BAD");
-        }else{
-            Discipline.create(filledForm.get());
-            return redirect(routes.Disciplines.all());
+        try{
+            Discipline.delete(id);
+            flash("sucesso","Disciplina removida com sucesso");
+        }catch(Exception e){
+            flash("erro", e.getMessage());
         }
+        return all();
     }
 
     public static Result update(Long id){
         Form<Discipline> filledForm = DisciplineForm.bindFromRequest();
         if(filledForm.hasErrors()){
-            return badRequest("BAD");
+            flash("erro","Ocorreram erros na gravação");
+            return badRequest(views.html.Disciplines.item.render(User.findByEmail(request().username()),Discipline.getById(id),Course.all()));
         }else{
             filledForm.get().update(id);
+            flash("sucesso", "Disciplina gravada com sucesso.");
             return redirect(routes.Disciplines.all());
         }
     }
+
+    public static Result save(){
+        StringBuilder erro = new StringBuilder();
+
+
+        Form<Discipline> filledForm = DisciplineForm.bindFromRequest();
+        if(filledForm.hasErrors()){
+
+            erro.append("DATAAA:");
+
+            for(String s1 : filledForm.data().keySet()){
+                erro.append("\n\n\n\n\n\n" + s1 + " -> " + filledForm.data().get(s1));
+            }
+
+            erro.append("\nname->" + filledForm.name());
+            erro.append("\ntoString->" + filledForm.toString());
+            erro.append("\nerrorsAsJson->" + filledForm.errorsAsJson().asText());
+
+            erro.append("\nglobalErrors");
+            for(ValidationError v : filledForm.globalErrors()){
+                erro.append("\n\tmessage->" + v.message());
+            }
+
+            flash("erro", "Ocorreram erros na gravação" + erro.toString());
+            return badRequest(views.html.Disciplines.item.render(User.findByEmail(request().username()),null,Course.all()));
+        }else{
+            Long cursoID = Long.parseLong(filledForm.data().get("cursoID"));
+
+            System.out.println(Course.getById(cursoID).toString());
+
+            Discipline.create(filledForm.get(), cursoID);
+            return redirect(routes.Disciplines.all());
+        }
+    }
+
 
     public static Result allByCourse(Long id_course){
         return ok(
@@ -98,7 +126,7 @@ public class Disciplines extends Controller {
         if(filledForm.hasErrors()){
             return badRequest("BAD");
         }else{
-            Discipline.create(filledForm.get());
+            //Discipline.create(filledForm.get());
             return redirect(routes.Disciplines.all());
         }
     }

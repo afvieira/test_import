@@ -18,7 +18,6 @@ public class Discipline extends Model {
     public Long id;
 
     @ManyToOne
-    @Constraints.Required
     public Course course;
 
     @Constraints.Required
@@ -88,8 +87,8 @@ public class Discipline extends Model {
                 .findList();
     }
 
-    public static Discipline create(Discipline discipline, Long project_id){
-        discipline.course = Course.find.ref(project_id);
+    public static Discipline create(Discipline discipline, Long curso_id){
+        discipline.course = Course.find.ref(curso_id);
         discipline.save();
         return discipline;
     }

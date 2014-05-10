@@ -25,7 +25,7 @@ public class Global extends GlobalSettings {
                 @SuppressWarnings("unchecked")
                 Map<String,List<Object>> all = (Map<String,List<Object>>) Yaml.load("initial-data.yml");
 
-                //Users
+                /*//Users
                 Ebean.save(all.get("users"));
 
                 //turnos
@@ -55,7 +55,7 @@ public class Global extends GlobalSettings {
 
                 //Student Milestone
                 Ebean.save(all.get("studentmilestones"));
-
+*/
 
             }
         }

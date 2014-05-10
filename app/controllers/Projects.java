@@ -42,7 +42,7 @@ public class Projects extends Controller{
         if(filledForm.hasErrors()){
             return badRequest("BAD");
         }else{
-            Project.create(filledForm.get());
+            //Project.create(filledForm.get());
             return redirect(routes.Projects.all());
         }
     }

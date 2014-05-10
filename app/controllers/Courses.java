@@ -15,10 +15,6 @@ public class Courses extends Controller {
 
     final static Form<Course> courseForm = Form.form(Course.class);
 
-    public static Result index(){
-        return ok("Hello Course!!!");
-    }
-
     public static Result all(){
         return ok(
             views.html.Courses.index.render(
@@ -26,7 +22,6 @@ public class Courses extends Controller {
                     Course.all()
             )
         );
-        //return ok(views.html.Courses.index.render(User.findByEmail(request().username()), Course.all(), courseForm));
     }
 
     public static Result show(Long id){
@@ -50,18 +45,21 @@ public class Courses extends Controller {
     public static Result delete(Long id){
         try{
             Course.delete(id);
-            return redirect(routes.Courses.all());
+            flash("sucesso","Curso removido com sucesso");
         }catch(Exception e){
-            return badRequest(views.html.error.render(null, e.getMessage()));
+            flash("erro", e.getMessage());
         }
+        return all();
     }
 
     public static Result update(Long id){
         Form<Course> filledForm = courseForm.bindFromRequest();
         if(filledForm.hasErrors()){
-            return badRequest("BAD");
+            flash("erro","Ocorreram erros na gravação");
+            return badRequest(views.html.Courses.item.render(User.findByEmail(request().username()),Course.getById(id)));
         }else{
             filledForm.get().update(id);
+            flash("sucesso","Curso gravado com sucesso.");
             return redirect(routes.Courses.all());
         }
     }
@@ -69,9 +67,11 @@ public class Courses extends Controller {
     public static Result save(){
         Form<Course> filledForm = courseForm.bindFromRequest();
         if(filledForm.hasErrors()){
-            return badRequest("BAD");
+            flash("erro","Ocorreram erros na gravação");
+            return badRequest(views.html.Courses.item.render(User.findByEmail(request().username()),null));
         }else{
             Course.create(filledForm.get());
+            flash("sucesso","Curso gravado com sucesso.");
             return redirect(routes.Courses.all());
         }
     }
