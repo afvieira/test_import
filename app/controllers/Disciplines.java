@@ -7,10 +7,12 @@ import play.data.Form;
 import play.data.validation.ValidationError;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 
 /**
  * Created by NRAM on 07/04/14.
  */
+@Security.Authenticated(Secured.class)
 public class Disciplines extends Controller {
 
     final static Form<Discipline> DisciplineForm = Form.form(Discipline.class);
@@ -60,46 +62,26 @@ public class Disciplines extends Controller {
             flash("erro","Ocorreram erros na gravação");
             return badRequest(views.html.Disciplines.item.render(User.findByEmail(request().username()),Discipline.getById(id),Course.all()));
         }else{
-            filledForm.get().update(id);
+            Long cursoID = Long.parseLong(filledForm.data().get("cursoID"));
+            Discipline.update(filledForm.get(), cursoID);
+
             flash("sucesso", "Disciplina gravada com sucesso.");
             return redirect(routes.Disciplines.all());
         }
     }
 
     public static Result save(){
-        StringBuilder erro = new StringBuilder();
-
-
         Form<Discipline> filledForm = DisciplineForm.bindFromRequest();
         if(filledForm.hasErrors()){
-
-            erro.append("DATAAA:");
-
-            for(String s1 : filledForm.data().keySet()){
-                erro.append("\n\n\n\n\n\n" + s1 + " -> " + filledForm.data().get(s1));
-            }
-
-            erro.append("\nname->" + filledForm.name());
-            erro.append("\ntoString->" + filledForm.toString());
-            erro.append("\nerrorsAsJson->" + filledForm.errorsAsJson().asText());
-
-            erro.append("\nglobalErrors");
-            for(ValidationError v : filledForm.globalErrors()){
-                erro.append("\n\tmessage->" + v.message());
-            }
-
-            flash("erro", "Ocorreram erros na gravação" + erro.toString());
+            flash("erro", "Ocorreram erros na gravação");
             return badRequest(views.html.Disciplines.item.render(User.findByEmail(request().username()),null,Course.all()));
         }else{
             Long cursoID = Long.parseLong(filledForm.data().get("cursoID"));
-
-            System.out.println(Course.getById(cursoID).toString());
-
             Discipline.create(filledForm.get(), cursoID);
+            flash("sucesso", "Disciplina gravada com sucesso.");
             return redirect(routes.Disciplines.all());
         }
     }
-
 
     public static Result allByCourse(Long id_course){
         return ok(
@@ -119,17 +101,4 @@ public class Disciplines extends Controller {
                 )
         );
     }
-
-    // Não sei como enviar pelo curso... acho que isso já vem desde o momento que se tenta criar a disciplina
-    public static Result createByCourse(Long id_course){
-        Form<Discipline> filledForm = DisciplineForm.bindFromRequest();
-        if(filledForm.hasErrors()){
-            return badRequest("BAD");
-        }else{
-            //Discipline.create(filledForm.get());
-            return redirect(routes.Disciplines.all());
-        }
-    }
-
-
 }

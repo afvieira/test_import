@@ -12,6 +12,9 @@ import java.util.*;
 @Entity
 public class Discipline extends Model {
 
+    @Version
+    public Date lastUpdate;
+
     //Variaveis
     @Id
     @Constraints.Min(10)
@@ -91,6 +94,11 @@ public class Discipline extends Model {
         discipline.course = Course.find.ref(curso_id);
         discipline.save();
         return discipline;
+    }
+
+    public static void update(Discipline discipline, Long curso_id){
+        discipline.course = Course.find.ref(curso_id);
+        discipline.update();
     }
 
     public static void delete(Long id){

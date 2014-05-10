@@ -37,7 +37,6 @@ POST        /disciplines/:id/update                                             
 
 GET         /course/:id_course/disciplines                                                               controllers.Disciplines.allByCourse(id_course: Long)
 GET         /course/:id_course/discipline/:id_discipline                                                 controllers.Disciplines.showByCourse(id_course: Long, id_discipline: Long)
-POST        /course/:id_course/discipline                                                                controllers.Disciplines.createByCourse(id_course: Long)
 
 # Turnos
 

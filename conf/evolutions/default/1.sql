@@ -7,6 +7,7 @@ create table course (
   id                        bigint not null,
   code                      varchar(255),
   description               varchar(255),
+  last_update               timestamp not null,
   constraint pk_course primary key (id))
 ;
 
@@ -17,6 +18,7 @@ create table discipline (
   name                      varchar(255),
   course_year               integer,
   year                      integer,
+  last_update               timestamp not null,
   constraint pk_discipline primary key (id))
 ;
 
