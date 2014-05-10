@@ -6,7 +6,9 @@
 
 @if(update){
     <div>
-        <label>ID: @discipline.id</label>
+        <label>ID: @discipline.id
+            <input type="hidden" name="id" value="@{discipline.id}"/>
+        </label>
     </div>
     <br/>
 }

@@ -17,7 +17,6 @@ public class Discipline extends Model {
 
     //Variaveis
     @Id
-    @Constraints.Min(10)
     public Long id;
 
     @ManyToOne

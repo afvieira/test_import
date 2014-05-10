@@ -57,9 +57,9 @@ public class Disciplines extends Controller {
     }
 
     public static Result update(Long id){
-        Form<Discipline> filledForm = DisciplineForm.bindFromRequest();
+        Form<Discipline> filledForm = DisciplineForm.fill(Discipline.getById(id)).bindFromRequest();
         if(filledForm.hasErrors()){
-            flash("erro","Ocorreram erros na gravação");
+            flash("erro","Ocorreram erros na gravação" + filledForm.toString());
             return badRequest(views.html.Disciplines.item.render(User.findByEmail(request().username()),Discipline.getById(id),Course.all()));
         }else{
             Long cursoID = Long.parseLong(filledForm.data().get("cursoID"));
