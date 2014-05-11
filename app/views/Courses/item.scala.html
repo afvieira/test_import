@@ -73,7 +73,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                        @if(course.disciplines != null && course.disciplines.size() > 0) {
+                        @if(course != null && course.disciplines != null && course.disciplines.size() > 0) {
                             @for(d <- course.disciplines) {
                                 <tr>
                                     <td>@d.code</td>

@@ -15,10 +15,8 @@ public class Project extends Model {
 
     //Variaveis
     @Id
-    @Constraints.Min(10)
     public Long id;
 
-    @Constraints.Required
     @ManyToOne
     public Discipline discipline;
 
@@ -37,7 +35,6 @@ public class Project extends Model {
     @Constraints.Required
     public Date endDate;
 
-    @Constraints.Required
     public Date creationDate;
 
     @ManyToOne
@@ -97,6 +94,11 @@ public class Project extends Model {
 
     public static void delete(Long id){
         find.ref(id).delete();
+    }
+
+    public static void update(Project project, Long discipline_id){
+        project.discipline = Discipline.find.ref(discipline_id);
+        project.update();
     }
 
     public static List<Project> getByCreatedDate(String emailuser){

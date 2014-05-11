@@ -23,9 +23,11 @@ POST        /courses/:id/update                                                 
 
 # Projetos
 GET         /projects                                                                                    controllers.Projects.all()
+GET         /project/new                                                                                 controllers.Projects.create()
 GET         /projects/:id                                                                                controllers.Projects.show(id: Long)
-POST        /projects                                                                                    controllers.Projects.create()
+POST        /projects                                                                                    controllers.Projects.save()
 POST        /projects/:id/delete                                                                         controllers.Projects.delete(id: Long)
+POST        /projects/:id/update                                                                         controllers.Projects.update(id: Long)
 
 # Disciplinas
 GET         /disciplines                                                                                 controllers.Disciplines.all()
