@@ -4,7 +4,6 @@ import models.Course;
 import models.Discipline;
 import models.User;
 import play.data.Form;
-import play.data.validation.ValidationError;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;

@@ -141,9 +141,9 @@ create table general_user_general_group (
 ;
 
 create table general_user_shift (
-  general_user_id                bigint not null,
   shift_id                       bigint not null,
-  constraint pk_general_user_shift primary key (general_user_id, shift_id))
+  general_user_id                bigint not null,
+  constraint pk_general_user_shift primary key (shift_id, general_user_id))
 ;
 create sequence course_seq;
 
@@ -206,9 +206,9 @@ alter table general_user_general_group add constraint fk_general_user_general_gr
 
 alter table general_user_general_group add constraint fk_general_user_general_group_02 foreign key (general_user_id) references general_user (id);
 
-alter table general_user_shift add constraint fk_general_user_shift_general_01 foreign key (general_user_id) references general_user (id);
+alter table general_user_shift add constraint fk_general_user_shift_shift_01 foreign key (shift_id) references shift (id);
 
-alter table general_user_shift add constraint fk_general_user_shift_shift_02 foreign key (shift_id) references shift (id);
+alter table general_user_shift add constraint fk_general_user_shift_general_02 foreign key (general_user_id) references general_user (id);
 
 # --- !Downs
 
@@ -232,13 +232,13 @@ drop table if exists project cascade;
 
 drop table if exists shift cascade;
 
+drop table if exists general_user_shift cascade;
+
 drop table if exists student_milestone cascade;
 
 drop table if exists student_project cascade;
 
 drop table if exists general_user cascade;
-
-drop table if exists general_user_shift cascade;
 
 drop sequence if exists course_seq;
 

@@ -35,15 +35,23 @@ POST        /disciplines                                                        
 POST        /disciplines/:id/delete                                                                      controllers.Disciplines.delete(id: Long)
 POST        /disciplines/:id/update                                                                      controllers.Disciplines.update(id: Long)
 
+# Turnos
+GET         /shifts                                                                                      controllers.Shifts.all()
+GET         /shift/new                                                                                   controllers.Shifts.create()
+GET         /shifts/:id                                                                                  controllers.Shifts.show(id: Long)
+POST        /shifts                                                                                      controllers.Shifts.save()
+POST        /shifts/:id/delete                                                                           controllers.Shifts.delete(id: Long)
+POST        /shifts/:id/update                                                                           controllers.Shifts.update(id: Long)
+
 GET         /course/:id_course/disciplines                                                               controllers.Disciplines.allByCourse(id_course: Long)
 GET         /course/:id_course/discipline/:id_discipline                                                 controllers.Disciplines.showByCourse(id_course: Long, id_discipline: Long)
 
 # Turnos
 
-GET         /course/:id_course/discipline/:id_discipline/shifts                                          controllers.Shifts.all(id_course: Long, id_discipline: Long)
-GET         /course/:id_course/discipline/:id_discipline/shift/:id                                       controllers.Shifts.show(id_course: Long, id_discipline: Long, id: Long)
-POST        /course/:id_course/discipline/:id_discipline/shift                                           controllers.Shifts.create(id_course: Long, id_discipline: Long)
-POST        /course/:id_course/discipline/:id_discipline/shift/:id/delete                                controllers.Shifts.delete(id_course: Long, id_discipline: Long, id: Long)
+#GET         /course/:id_course/discipline/:id_discipline/shifts                                          controllers.Shifts.all(id_course: Long, id_discipline: Long)
+#GET         /course/:id_course/discipline/:id_discipline/shift/:id                                       controllers.Shifts.show(id_course: Long, id_discipline: Long, id: Long)
+#POST        /course/:id_course/discipline/:id_discipline/shift                                           controllers.Shifts.create(id_course: Long, id_discipline: Long)
+#POST        /course/:id_course/discipline/:id_discipline/shift/:id/delete                                controllers.Shifts.delete(id_course: Long, id_discipline: Long, id: Long)
 
 # Dashboard
 GET         /dashboard                                                                                   controllers.Dashboards.index()

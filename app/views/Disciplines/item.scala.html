@@ -61,18 +61,156 @@
 @main(user) {
 
     <div class="small-centered columns">
-        <div class="panel radius">
-        @if(discipline == null){
-            @form(routes.Disciplines.save()){
-                @template(false)
-                <input class="button tiny radius" name="commit" type="submit" value="Guardar">
-            }
-        }else{
-            @form(routes.Disciplines.update(discipline.id)){
-                @template(true)
-                <input class="button tiny radius" name="commit" type="submit" value="Atualizar">
+
+
+        <dl class="tabs" data-tab>
+            <dd class="active"><a href="#ident">Identificação</a></dd>
+            <dd><a href="#turnos">Turnos</a></dd>
+            <dd><a href="#trabPraticos">Trab. Práticos</a></dd>
+            <dd><a href="#grupos">Grupos</a></dd>
+            <dd><a href="#docentes">Docentes</a></dd>
+        </dl>
+        <div class="tabs-content">
+            <div class="content active" id="ident">
+                <div class="panel radius">
+                @if(discipline == null){
+                    @form(routes.Disciplines.save()){
+                        @template(false)
+                        <input class="button tiny radius" name="commit" type="submit" value="Guardar">
+                    }
+                }else{
+                    @form(routes.Disciplines.update(discipline.id)){
+                        @template(true)
+                        <input class="button tiny radius" name="commit" type="submit" value="Atualizar">
+                        }
                 }
-        }
+                </div>
+            </div>
+            <div class="content" id="turnos">
+                <div class="panel radius">
+
+                    <h4>Turnos</h4>
+
+                    <hr/>
+
+                    <table cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th style="text-align : left ; width : 30 %">Código</th>
+                                <th style="text-align : left ; width : 70 %">Descrição</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @if(discipline != null && discipline.shifts != null && discipline.shifts.size() > 0) {
+                            @for(s <- discipline.shifts) {
+                                <tr>
+                                    <td>@s.code</td>
+                                    <td><a href='/shifts/@{s.id}'>@s.description</a></td>
+                                </tr>
+                            }
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="content" id="trabPraticos">
+                <div class="panel radius">
+
+                    <h4>Trabalhos Práticos</h4>
+
+                    <hr/>
+
+                    <table cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th style="text-align : left ; width : 10 %">Código</th>
+                                <th style="text-align : left ; width : 30 %">Título</th>
+                                <th style="text-align : left ; width : 20 %">Data de criação</th>
+                                <th style="text-align : left ; width : 20 %">Data de início</th>
+                                <th style="text-align : left ; width : 20 %">Data de fim</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @if(discipline != null && discipline.projects != null && discipline.projects.size() > 0) {
+                            @for(p <- discipline.projects) {
+                                <tr>
+                                    <td>@p.code</td>
+                                    <td><a href='/projects/@{p.id}'>@p.title</a></td>
+                                    <td>@p.creationDate.format("dd-MM-yyyy")</td>
+                                    <td>@p.startDate.format("dd-MM-yyyy")</td>
+                                    <td>@p.endDate.format("dd-MM-yyyy")</td>
+                                </tr>
+                            }
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="content" id="grupos">
+                <div class="panel radius">
+
+                    <h4>Grupos</h4>
+
+                    <hr/>
+
+                    <table cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th style="text-align : left ; width : 20 %">Código</th>
+                                <th style="text-align : left ; width : 60 %">Descrição</th>
+                                <th style="text-align : left ; width : 20 %">Fechado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @if(discipline != null && discipline.groups != null && discipline.groups.size() > 0) {
+                            @for(g <- discipline.groups) {
+                                <tr>
+                                    <td>@g.code</td>
+                                    <td>@g.description</td>
+                                    @if(g.closed){
+                                        <td>Sim</td>
+                                    }else{
+                                        <td>Não</td>
+                                    }
+                                </tr>
+                            }
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="content" id="docentes">
+                <div class="panel radius">
+
+                    <h4>Docentes</h4>
+
+                    <hr/>
+
+                    <table cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th style="text-align : left ; width : 20 %">Código</th>
+                                <th style="text-align : left ; width : 30 %">Email</th>
+                                <th style="text-align : left ; width : 50 %">Nome</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @if(discipline != null && discipline.users != null && discipline.users.size() > 0) {
+                            @for(u <- discipline.users) {
+                                @if(u.userType == User.UserType.Teacher.toString()){
+                                    <tr>
+                                        <td>@u.code</td>
+                                        <td>@u.email</td>
+                                        <td>@u.name</td>
+                                    </tr>
+                                }
+                            }
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
     </div>
 }

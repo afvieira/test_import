@@ -3,9 +3,7 @@ package models;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -27,6 +25,10 @@ public class Shift extends Model {
 
     @Constraints.Required
     public String description;
+
+    @ManyToMany
+    @JoinTable(name = "general_user_shift")
+    public List<User> students;
 
     //Construtor
     public Shift() {
@@ -58,7 +60,18 @@ public class Shift extends Model {
         return shift;
     }
 
+    public static Shift getById(Long id){
+        return find.where()
+                .eq("id", id)
+                .findUnique();
+    }
+
     public static void delete(Long id){
         find.ref(id).delete();
+    }
+
+    public static void update(Shift shift, Long discipline_id){
+        shift.discipline = Discipline.find.ref(discipline_id);
+        shift.update();
     }
 }

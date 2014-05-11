@@ -1,6 +1,7 @@
 package controllers;
 
 import models.Course;
+import models.Discipline;
 import models.User;
 import play.data.Form;
 import play.mvc.Controller;
@@ -56,10 +57,13 @@ public class Courses extends Controller {
         Form<Course> filledForm = courseForm.bindFromRequest();
         if(filledForm.hasErrors()){
             flash("erro","Ocorreram erros na gravação");
-            return badRequest(views.html.Courses.item.render(User.findByEmail(request().username()),Course.getById(id)));
+            return badRequest(views.html.Courses.item.render(
+                    User.findByEmail(request().username()),
+                    Course.getById(id)
+            ));
         }else{
             filledForm.get().update(id);
-            flash("sucesso","Curso gravado com sucesso.");
+            flash("sucesso", "Curso gravado com sucesso.");
             return redirect(routes.Courses.all());
         }
     }
