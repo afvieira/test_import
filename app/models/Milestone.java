@@ -347,7 +347,7 @@ public class Milestone extends Model {
      */
     public static List<Milestone> nextDeliveriesMilestoneByAllDisciplinesTeacher(String emailUser){
         return find
-                .fetch("project").fetch("discipline")
+                .fetch("project")
                 .where()
                 .ge("endDate", new Date())
                 .eq("project.discipline.users.email", emailUser)

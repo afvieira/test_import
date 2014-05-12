@@ -4,58 +4,59 @@
 
 @template(update: Boolean) = {
 
-@if(update){
-    <div>
-        <label>ID: @discipline.id
-            <input type="hidden" name="id" value="@{discipline.id}"/>
-        </label>
-    </div>
-    <br/>
-}
 
-    <div class="row">
-        <div class="large-4 columns">
-            <label>Código
-                <input name="code" @if(update){value="@{discipline.code}"} placeholder="Código" type="text">
+    @if(update){
+        <div>
+            <label>ID: @discipline.id
+                <input type="hidden" name="id" value="@{discipline.id}"/>
             </label>
         </div>
+        <br/>
+    }
 
-        <div class="large-8 columns">
-            <label>Nome
-                <input name="name" @if(update){value="@{discipline.name}"} placeholder="Nome" type="text">
-            </label>
+        <div class="row">
+            <div class="large-4 columns">
+                <label>Código
+                    <input name="code" @if(update){value="@{discipline.code}"} placeholder="Código" type="text">
+                </label>
+            </div>
+
+            <div class="large-8 columns">
+                <label>Nome
+                    <input name="name" @if(update){value="@{discipline.name}"} placeholder="Nome" type="text">
+                </label>
+            </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="large-12 columns">
-            <label>Curso
-                <select name="cursoID">
-                @for(c <- courses.sortBy(c=>c.description)){
-                    @if(update && (discipline.course.id == c.id)){
-                        <option value="@{c.id}" selected> @{c.description}</option>
-                    }else{
-                        <option value="@{c.id}"> @{c.description}</option>
+        <div class="row">
+            <div class="large-12 columns">
+                <label>Curso
+                    <select name="cursoID">
+                    @for(c <- courses.sortBy(c=>c.description)){
+                        @if(update && (discipline.course.id == c.id)){
+                            <option value="@{c.id}" selected> @{c.description}</option>
+                        }else{
+                            <option value="@{c.id}"> @{c.description}</option>
+                        }
                     }
-                }
-                </select>
-            </label>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="large-6 columns">
-            <label>Ano do curso
-                <input name="course_year" @if(update){value="@{discipline.course_year}"} placeholder="Ano do curso" type="number">
-            </label>
+                    </select>
+                </label>
+            </div>
         </div>
 
-        <div class="large-6 columns">
-            <label>Ano letivo
-                <input name="year" @if(update){value="@{discipline.year}"} placeholder="Ano letivo" type="number">
-            </label>
+        <div class="row">
+            <div class="large-6 columns">
+                <label>Ano do curso
+                    <input name="course_year" @if(update){value="@{discipline.course_year}"} placeholder="Ano do curso" type="number">
+                </label>
+            </div>
+
+            <div class="large-6 columns">
+                <label>Ano letivo
+                    <input name="year" @if(update){value="@{discipline.year}"} placeholder="Ano letivo" type="number">
+                </label>
+            </div>
         </div>
-    </div>
 }
 
 @main(user) {
