@@ -1,0 +1,72 @@
+@(user: User, groups: List[Group])
+
+@import helper._
+
+@main(user) {
+
+    <table id="grupos" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th style="text-align: left; width: 10%">ID</th>
+                <th style="text-align: left; width: 35%">Código</th>
+                <th style="text-align: left; width: 35%">Disciplina</th>
+                <th style="text-align: left; width: 10%">Nº limite</th>
+                <th style="text-align: left; width: 10%">Fechado</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th style="text-align: left;">ID</th>
+                <th style="text-align: left;">Código</th>
+                <th style="text-align: left;">Disciplina</th>
+                <th style="text-align: left;">Nº limite</th>
+                <th style="text-align: left;">Fechado</th>
+                <th></th>
+            </tr>
+        </tfoot>
+    </table>
+
+    <hr/>
+
+    <a href="/group/new" class="small button radius">Novo grupo</a>
+
+    <script type="text/javascript" charset="utf-8">
+
+    var grupos = [];
+        @for(g <- groups) {
+            grupos.push({id: "@g.id",
+                code: "<a href='/groups/@{g.id}'>@{g.code}</a>",
+                discipline: "<a href='/disciplines/@{g.discipline.id}'>@g.discipline.name</a>",
+                limiteNumber: "@g.limitNumber",
+                closed: "@g.closed",
+                button: "<input type='submit' id=@{g.id} onclick='removerGrupo(@{g.id})' value='Apagar' class='small-centered button radius onTable'>"
+            })
+        };
+
+    $('#grupos').DataTable( {
+    language: {url: "@routes.Assets.at("js/Portuguese.json")"},
+    data: grupos,
+    columns: [
+    { data: 'id' },
+    { data: 'code' },
+    { data: 'discipline' },
+    { data: 'limiteNumber' },
+    { data: 'closed' },
+    { data: 'button'}
+    ]
+    });
+
+    function removerGrupo(id){
+    redirect('/groups/' + id + '/delete', 'post');
+    }
+
+    var redirect = function(url, method) {
+    var form = document.createElement('form');
+    form.method = method;
+    form.action = url;
+    form.submit();
+    };
+
+    </script>
+}

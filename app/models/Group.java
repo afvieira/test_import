@@ -15,11 +15,9 @@ public class Group extends Model {
 
     //Variaveis
     @Id
-    @Constraints.Min(10)
     public Long id;
 
     @ManyToOne
-    @Constraints.Required
     public Discipline discipline;
 
     @Constraints.Required
@@ -164,11 +162,24 @@ public class Group extends Model {
         return find.all();
     }
 
-    public static void create(Group group){
+    public static Group create(Group group, Long id_discipline){
+        group.discipline = Discipline.find.ref(id_discipline);
         group.save();
+        return group;
     }
 
     public static void delete(Long id){
         find.ref(id).delete();
+    }
+
+    public static Group getById(Long id){
+        return find.where()
+                .eq("id", id)
+                .findUnique();
+    }
+
+    public static void update(Group group, Long discipline_id){
+        group.discipline = Discipline.find.ref(discipline_id);
+        group.update();
     }
 }

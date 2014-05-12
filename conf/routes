@@ -45,6 +45,14 @@ POST        /shifts                                                             
 POST        /shifts/:id/delete                                                                           controllers.Shifts.delete(id: Long)
 POST        /shifts/:id/update                                                                           controllers.Shifts.update(id: Long)
 
+# Grupos
+GET         /groups                                                                                      controllers.Groups.all()
+GET         /group/new                                                                                   controllers.Groups.create()
+GET         /groups/:id                                                                                  controllers.Groups.show(id: Long)
+POST        /groups                                                                                      controllers.Groups.save()
+POST        /groups/:id/delete                                                                           controllers.Groups.delete(id: Long)
+POST        /groups/:id/update                                                                           controllers.Groups.update(id: Long)
+
 GET         /course/:id_course/disciplines                                                               controllers.Disciplines.allByCourse(id_course: Long)
 GET         /course/:id_course/discipline/:id_discipline                                                 controllers.Disciplines.showByCourse(id_course: Long, id_discipline: Long)
 
