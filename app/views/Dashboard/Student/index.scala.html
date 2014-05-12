@@ -41,18 +41,22 @@
     var disciplines = [];
     @for(discipline <- disciplines) {
         disciplines.push({
-            discipline: "@discipline.code",
-            year: "@discipline.year"
+            discipline: "@discipline.name",
+            year: "@discipline.year",
+            id: "@discipline.id"
         });
     };
 
 
     $("#disciplines").kendoGrid({
         columns: [
-            { title: "Disciplina", field: "discipline" },
+            { title: "Disciplina", field: "discipline", template: "<a href='/dashboard/discipline/${id}'>${discipline}</a>" },
             { title: "Ano",         field: "year"}
         ],
-        dataSource: disciplines,
+        dataSource: {
+            data:disciplines,
+            pageSize:5
+        },
         sortable: true,
         pageable: {
             refresh: true,
@@ -68,19 +72,26 @@
     var milestones = [];
     @for(milestone <- milestones) {
         milestones.push({
+            id_milestone: "@milestone.id",
+            id_project: "@milestone.project.id",
+            id_discipline: "@milestone.project.discipline.id",
             projectname: "@milestone.project.code",
             milestone: "@milestone.code",
-            endDate: "@milestone.endDate"
+            endDate: "@milestone.endDate.format("Y-M-d")"
         });
     };
 
     $("#milestones").kendoGrid({
         columns: [
-            { title: "Projecto", field: "projectname" },
-            { title: "Etapa",    field: "milestone"},
+            { title: "Projecto", field: "projectname", template: "<a href='/dashboard/discipline/${id_discipline}/project/${id_project}'>${projectname}</a>" },
+            { title: "Etapa",    field: "milestone", template: "<a href='/dashboard/project/${id_project}/milestone/${id_milestone}'>${milestone}</a>" },
             { title: "Entrega",  field: "endDate"}
         ],
-        dataSource: milestones,
+
+        dataSource: {
+        data:milestones,
+        pageSize:5
+        },
         sortable: true,
         pageable: {
             refresh: true,
@@ -98,8 +109,8 @@
     @for(lastProject <- lastProjects) {
         lastProjects.push({
             projectname: "@lastProject.code",
-            startDate: "@lastProject.startDate",
-            endDate: "@lastProject.endDate"
+            startDate: "@lastProject.startDate.format("Y-M-d")",
+            endDate: "@lastProject.endDate.format("Y-M-d")"
         });
     };
 
@@ -109,7 +120,11 @@
             { title: "Início",    field: "startDate"},
             { title: "Entrega",  field: "endDate"}
         ],
-        dataSource: lastProjects,
+
+        dataSource: {
+        data:lastProjects,
+        pageSize:5
+        },
         sortable: true,
         pageable: {
             refresh: true,
@@ -139,7 +154,10 @@
             { title: "Milestone",    field: "codemilestone"},
             { title: "Nota",  field: "avaliation"}
         ],
-        dataSource: lastAvaliations,
+        dataSource: {
+        data:lastAvaliations,
+        pageSize:5
+        },
         sortable: true,
         pageable: {
             refresh: true,
