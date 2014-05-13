@@ -4,6 +4,7 @@ import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -355,6 +356,15 @@ public class Milestone extends Model {
                 .findList();
     }
 
+
+    public static List<Milestone> nextDeliveriesMilestonesByProjectsId(Collection<Long> project_id){
+        return find
+                .where()
+                .ge("endDate", new Date())
+                .in("project.id", project_id)
+                .orderBy("endDate ASC")
+                .findList();
+    }
 
 
     // TODO: Verificar se funciona [END]

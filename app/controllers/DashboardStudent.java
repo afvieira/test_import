@@ -5,6 +5,8 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -59,10 +61,17 @@ public class DashboardStudent extends Controller {
     @Security.Authenticated(Secured.class)
     public static Result projects(Long id_discipline) {
         // Julgo que a partir do projeto seja possível ir-se buscar todas as milestones e outras informações.
+        List<Project> p = Project.getAllByUserDiscipline(request().username(), id_discipline);
+        Collection<Long> cps = new ArrayList<Long>();
+        for(Project proj : p){
+            cps.add(proj.id);
+        }
         return ok(
                 views.html.Dashboard.Student.projects.render(
                         User.findByEmail(request().username()),
-                        Project.getAllByUserDiscipline(request().username(), id_discipline)     // Lista de todos os projetos da discipline para o estudante
+                        Discipline.getById(id_discipline),
+                        p,     // Lista de todos os projetos da discipline para o estudante
+                        Milestone.nextDeliveriesMilestonesByProjectsId(cps)
                 )
         );
     }
