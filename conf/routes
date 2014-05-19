@@ -69,7 +69,7 @@ POST        /dashboard/discipline/:id_discipline/project                        
 POST        /dashboard/discipline/:id_discipline/project/:id/delete                                      controllers.Dashboards.deleteProject(id_discipline: Long, id: Long)
 
 # Dashboard Milestones
-GET         /dashboard/project/:id_project/milestones                                                    controllers.Dashboards.milestones(id_project: Long)
+#GET         /dashboard/project/:id_project/milestones                                                    controllers.Dashboards.milestones(id_project: Long)
 GET         /dashboard/project/:id_project/milestone/:id_milestone                                       controllers.Dashboards.showMilestone(id_project: Long, id_milestone: Long)
 POST        /dashboard/project/:id_project/milestone                                                     controllers.Dashboards.createMilestone(id_project: Long)
 POST        /dashboard/project/:id_project/milestone/:id_milestone/delete                                controllers.Dashboards.deleteMilestone(id_project: Long, id_milestone: Long)
