@@ -6,6 +6,7 @@ import play.db.ebean.Model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -221,5 +222,16 @@ public class StudentMilestone extends Model {
                 .eq("milestone.id", id_milestone)
                 .eq("student.id", id_student)
                 .findUnique();
+    }
+
+    public static List<StudentMilestone> getLastAvaliationsByDiscipline(String emailUser, Collection<Long> project_id){
+        return find
+                .fetch("milestone")
+                .where()
+                .eq("student.email", emailUser)
+                .in("milestone.project.id", project_id)
+                .isNotNull("avaliation")
+                .orderBy("lastUpdate desc")
+                .findList();
     }
 }

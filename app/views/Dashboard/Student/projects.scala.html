@@ -1,89 +1,120 @@
-@(user: User, discipline: Discipline, projects: List[Project], nextMilestones: List[Milestone])
+@(user: User, discipline: Discipline, projects: List[Project], nextMilestones: List[Milestone], lastAvaliations: List[StudentMilestone])
 
-    @import helper._
+@import helper._
 
-    @main(user) {
-        <h1>Projetos da disciplina: <b>@discipline.name</b></h1>
+@main(user) {
+    <h1>Projetos da disciplina: <b>@discipline.name</b></h1>
 
-        <div class="row">
-            <div class="large-12 columns">
-                <div id="projects"></div>
-            </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <div id="projects"></div>
         </div>
-        <div class="row">
+    </div>
+    <div class="row">
+        <div class="large-6 columns">
             <h3>Próximas Milestones</h3>
-            <div class="large-6 columns">
-                <div id="nextMilestones"></div>
-            </div>
+            <div id="nextMilestones"></div>
         </div>
+        <div class="large-6 columns">
+            <h3>Últimas Avaliações</h3>
+            <div id="lastAvaliations"></div>
+        </div>
+    </div>
 
-        <script>
-        var projects =[ ] ;
-            @for(lastProject <- projects) {
-                projects.push ( {
-                projectname : "@lastProject.code",
-                startDate : "@lastProject.startDate.format("Y-M-d")",
-                endDate : "@lastProject.endDate.format("Y-M-d")",
-                id_project : "@lastProject.id",
-                id_discipline : "@lastProject.discipline.id"
-                });
-            } ;
+    <script>
+    var projects =[ ] ;
+        @for(lastProject <- projects) {
+            projects.push ( {
+            projectname : " @lastProject.code ",
+            startDate : " @lastProject.startDate.format("Y-M-d") ",
+            endDate : " @lastProject.endDate.format("Y-M-d") ",
+            id_project : " @lastProject.id ",
+            id_discipline : " @lastProject.discipline.id "
+            } ) ;
+        } ;
 
-        $ ( "#projects" ).kendoGrid ( {
-        columns :[ { title : "Projecto", field : "projectname", template : "<a href='/dashboard/discipline/${id_discipline}/project/${id_project}'>${projectname}</a>" }, { title : "Início", field : "startDate" }, { title : "Entrega", field : "endDate" }
-        ],
+    $ ( "#projects" ).kendoGrid ( {
+    columns :[ { title : "Projecto", field : "projectname", template : "<a href='/dashboard/discipline/${id_discipline}/project/${id_project}'>${projectname}</a>" }, { title : "Início", field : "startDate" }, { title : "Entrega", field : "endDate" }
+    ],
 
-        dataSource : {
-        data : projects,
-        pageSize : 5
-        },
-        sortable : true,
-        pageable : {
-        refresh : true,
-        pageSizes : true,
-        buttonCount : 5,
-        messages : {
-        itemsPerPage : "projectos por página",
-        empty : "Sem Informação"
-        }
-        }
-        } ) ;
-
-
-        var nextMilestones = [];
-            @for(milestone <- nextMilestones) {
-                nextMilestones.push({
-                id_milestone: "@milestone.id",
-                id_project: "@milestone.project.id",
-                id_discipline: "@milestone.project.discipline.id",
-                projectname: "@milestone.project.code",
-                milestone: "@milestone.code",
-                endDate: "@milestone.endDate.format("Y-M-d")"
-                });
-            };
-
-        $("#nextMilestones").kendoGrid({
-        columns: [
-        { title: "Projecto", field: "projectname", template: "<a href='/dashboard/discipline/${id_discipline}/project/${id_project}'>${projectname}</a>" },
-        { title: "Etapa",    field: "milestone", template: "<a href='/dashboard/project/${id_project}/milestone/${id_milestone}'>${milestone}</a>" },
-        { title: "Entrega",  field: "endDate"}
-        ],
-
-        dataSource: {
-        data:nextMilestones,
-        pageSize:5
-        },
-        sortable: true,
-        pageable: {
-        refresh: true,
-        pageSizes: true,
-        buttonCount: 5,
-        messages: {
-        itemsPerPage: "etapas por página",
-        empty: "Sem Informação"
-        }
-        }
-        });
-
-        </script>
+    dataSource : {
+    data : projects,
+    pageSize : 5
+    },
+    sortable : true,
+    pageable : {
+    refresh : true,
+    pageSizes : true,
+    buttonCount : 5,
+    messages : {
+    itemsPerPage : "projectos por página",
+    empty : "Sem Informação"
     }
+    }
+    } ) ;
+
+
+    var nextMilestones =[ ] ;
+        @for(milestone <- nextMilestones) {
+            nextMilestones.push ( {
+            id_milestone : " @milestone.id ",
+            id_project : " @milestone.project.id ",
+            id_discipline : " @milestone.project.discipline.id ",
+            projectname : " @milestone.project.code ",
+            milestone : " @milestone.code ",
+            endDate : " @milestone.endDate.format("Y-M-d") "
+            } ) ;
+        } ;
+
+    $ ( "#nextMilestones" ).kendoGrid ( {
+    columns :[ { title : "Projecto", field : "projectname", template : "<a href='/dashboard/discipline/${id_discipline}/project/${id_project}'>${projectname}</a>" }, { title : "Etapa", field : "milestone", template : "<a href='/dashboard/project/${id_project}/milestone/${id_milestone}'>${milestone}</a>" }, { title : "Entrega", field : "endDate" }
+    ],
+
+    dataSource : {
+    data : nextMilestones,
+    pageSize : 5
+    },
+    sortable : true,
+    pageable : {
+    refresh : true,
+    pageSizes : true,
+    buttonCount : 5,
+    messages : {
+    itemsPerPage : "etapas por página",
+    empty : "Sem Informação"
+    }
+    }
+    } ) ;
+
+
+    var lastAvaliations =[ ] ;
+        @for(lastAvaliation <- lastAvaliations) {
+            lastAvaliations.push ( {
+            projectname : " @lastAvaliation.milestone.project.code ",
+            codemilestone : " @lastAvaliation.milestone.code ",
+            avaliation : " @lastAvaliation.avaliation "
+            } ) ;
+        } ;
+
+
+    $ ( "#lastAvaliations" ).kendoGrid ( {
+    columns :[ { title : "Projecto", field : "projectname" }, { title : "Milestone", field : "codemilestone" }, { title : "Nota", field : "avaliation" }
+    ],
+    dataSource : {
+    data : lastAvaliations,
+    pageSize : 5
+    },
+    sortable : true,
+    pageable : {
+    refresh : true,
+    pageSizes : true,
+    buttonCount : 5,
+    messages : {
+    itemsPerPage : "avaliações por página",
+    empty : "Sem Informação"
+    }
+    }
+    } ) ;
+
+    </script>
+}

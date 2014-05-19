@@ -71,7 +71,8 @@ public class DashboardStudent extends Controller {
                         User.findByEmail(request().username()),
                         Discipline.getById(id_discipline),
                         p,     // Lista de todos os projetos da discipline para o estudante
-                        Milestone.nextDeliveriesMilestonesByProjectsId(cps)
+                        Milestone.nextDeliveriesMilestonesByProjectsId(cps),
+                        StudentMilestone.getLastAvaliationsByDiscipline(request().username(), cps)   // Últimas Avaliações adicionadas aos projetos frequentados
                 )
         );
     }
