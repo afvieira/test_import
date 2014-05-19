@@ -53,12 +53,12 @@
                     <a href="#milestone-@{milestone.id}"><b>Milestone:</b> @{milestone.code}</a>
                     <div id="milestone-@{milestone.id}" class="content @if(milestone.startDate.before(new Date()) && milestone.endDate.after(new Date())){ active }">
                         <div class="row panel">
-                            <div class="large-6 columns">
+                            <div class="large-6 columns text-center">
                                 <label><b>Data de início</b>:
                                     @milestone.startDate.format("Y-M-d")
                                 </label>
                             </div>
-                            <div class="large-6 columns">
+                            <div class="large-6 columns text-center">
                                 <label><b>Data de fim</b>:
                                     @milestone.endDate.format("Y-M-d")
                                 </label>
@@ -68,19 +68,20 @@
                                     <p class="panel callout radius">@milestone.description</p>
                                 </label>
                             </div>
-                            <div class="large-12 columns">
+                            <div class="large-6 columns text-center">
+                                <p><b>Enunciado</b>:</p>
                                 @if(milestone.path.equals("")){
                                     <div data-alert class="alert-box warning radius">Nenhum ficheiro submetido pelo professor.</div>
                                 }else{
                                         <a href="@{milestone.path}">Descarregar ficheiro da etapa, adicionado pelo professor.</a> <br />
                                 }
                             </div>
-                            <div class="large-6 left columns">
-                                <b>Avaliação</b>:
+                            <div class="large-6 left columns text-center">
+                                <p><b>Avaliação</b>:</p>
                                 @if(avaliations.get(milestone.id) != null && avaliations.get(milestone.id).avaliation != null){
-                                    @{avaliations.get(milestone.id).avaliation}
+                                    <p>@{avaliations.get(milestone.id).avaliation}</p>
                                 }else{
-                                    Ainda não foi adicionada a avaliação.
+                                    <div data-alert class="alert-box warning radius">Ainda não foi adicionada a avaliação.</div>
                                 }
                             </div>
                             <div class="large-6 right columns">

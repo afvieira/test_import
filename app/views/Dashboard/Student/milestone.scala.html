@@ -11,17 +11,17 @@
         <div class="large-12 columns">
             <h3>Informação:</h3>
             <div class="row panel">
-                <div class="large-4 medium-6 columns">
+                <div class="large-4 medium-4 columns text-center">
                     <label>Data de início:
                         <p>@milestone.startDate.format("Y-M-d")</p>
                     </label>
                 </div>
-                <div class="large-4 medium-6 columns">
+                <div class="large-4 medium-4 columns text-center">
                     <label>Data de fim:
                         <p>@milestone.endDate.format("Y-M-d")</p>
                     </label>
                 </div>
-                <div class="large-4 medium-6 columns">
+                <div class="large-4 medium-4 columns text-center">
                     <label>Avaliação Geral:
                         <p>@{milestone.percentage}%</p>
                     </label>
@@ -37,23 +37,24 @@
                         </p>
                     </label>
                 </div>
-                <div class="large-6 columns">
+                <div class="large-6 columns text-center">
+                    <p><b>Enunciado</b>:</p>
                 @if(milestone.path.equals("")){
                     <div data-alert class="alert-box warning radius">Nenhum ficheiro submetido pelo professor.</div>
                 }else{
                     <p><a href="@{milestone.path}">Descarregar ficheiro da etapa, adicionado pelo professor.</a></p>
                 }
                 </div>
-                <div class="large-6 left columns">
-                    <p><b>Avaliação</b>:
+                <div class="large-6 left columns text-center">
+                    <p><b>Avaliação</b>:</p>
                     @if(avaliation != null && avaliation.avaliation != null){
-                        @{avaliation.avaliation}
+                        <p>@{avaliation.avaliation}</p>
                     }else{
-                        Ainda não foi adicionada a avaliação.
-                    }</p>
+                        <div data-alert class="alert-box warning radius">Ainda não foi adicionada a avaliação.</div>
+                    }
                 </div>
 
-                @if(milestone.endDate.before(new Date())){
+                @if(milestone.endDate.after(new Date())){
                     <div class="large-12 left columns">
                         <h3>Enviar versão para a etapa:</h3>
                         // TODO: Formulário de submissão
