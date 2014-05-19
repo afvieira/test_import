@@ -5,9 +5,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by NRAM on 26/04/14.
@@ -72,7 +70,7 @@ public class DashboardStudent extends Controller {
                         Discipline.getById(id_discipline),
                         p,     // Lista de todos os projetos da discipline para o estudante
                         Milestone.nextDeliveriesMilestonesByProjectsId(cps),
-                        StudentMilestone.getLastAvaliationsByDiscipline(request().username(), cps)   // Últimas Avaliações adicionadas aos projetos frequentados
+                        StudentMilestone.getLastAvaliationsByDiscipline(request().username(), cps)   // Últimas Avaliações adicionadas
                 )
         );
     }
@@ -81,13 +79,28 @@ public class DashboardStudent extends Controller {
     public static Result showProject(Long id_discipline, Long id_project) {
         // Até que faça sentido, o ID da disciplina não será usado
         // Se calhar não é preciso fazer 2 queries para ir buscar praticamente a mesma informação, mas sim filtrar no controlador as próximas milestones da lista total de milestones
+
+        List<Milestone> lMilestone = Milestone.allMilestonesByProject(id_project);
+        Collection<Long> cMilestone = new ArrayList<Long>();
+        for(Milestone m : lMilestone){
+           cMilestone.add(m.id);
+        }
+
+        // Passar a lista para um hashmap -> Facilidade em dar as notas!!!
+        List<StudentMilestone> ssm = StudentMilestone.getAvaliationsByMilestones(request().username(), cMilestone);
+        Map<Long, StudentMilestone> mssm = new HashMap<>();
+        for(StudentMilestone sm : ssm){
+            mssm.put(sm.getMilestone().getId(), sm);
+        }
+
         return ok(
                 views.html.Dashboard.Student.project.render(
                         User.findByEmail(request().username()),
                         Project.getById(id_project),                                            // Informação do Projeto
-                        Milestone.allMilestonesByProject(id_project),                           // Lista de Milestones do Projeto
+                        lMilestone,                                                             // Lista de Milestones do Projeto
                         Milestone.nextDeliveriesByProject(id_project),                          // Próximas Milestones
-                        Milestone.notDeliveriesByUserProject(request().username(), id_project)  // Milestones não entregues
+                        Milestone.notDeliveriesByUserProject(request().username(), id_project),  // Milestones não entregues
+                        mssm
                 )
         );
     }
@@ -125,7 +138,8 @@ public class DashboardStudent extends Controller {
         return ok(
                 views.html.Dashboard.Student.milestone.render(
                         User.findByEmail(request().username()),
-                        Milestone.getById(id_milestone) //Dados da Milestone
+                        Milestone.getById(id_milestone), //Dados da Milestone
+                        StudentMilestone.getByUserMilestone(request().username(), id_milestone)
                 )
         );
     }

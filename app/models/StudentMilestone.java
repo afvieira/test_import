@@ -6,9 +6,7 @@ import play.db.ebean.Model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by NRAM on 23/04/14.
@@ -232,6 +230,14 @@ public class StudentMilestone extends Model {
                 .in("milestone.project.id", project_id)
                 .isNotNull("avaliation")
                 .orderBy("lastUpdate desc")
+                .findList();
+    }
+
+    public static List<StudentMilestone> getAvaliationsByMilestones(String emailUser, Collection<Long> milestone_id){
+        return find
+                .where()
+                .eq("student.email", emailUser)
+                .in("milestone.id", milestone_id)
                 .findList();
     }
 }

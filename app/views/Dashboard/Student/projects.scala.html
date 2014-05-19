@@ -25,11 +25,11 @@
     var projects =[ ] ;
         @for(lastProject <- projects) {
             projects.push ( {
-            projectname : " @lastProject.code ",
-            startDate : " @lastProject.startDate.format("Y-M-d") ",
-            endDate : " @lastProject.endDate.format("Y-M-d") ",
-            id_project : " @lastProject.id ",
-            id_discipline : " @lastProject.discipline.id "
+            projectname : "@lastProject.code",
+            startDate : "@lastProject.startDate.format("Y-M-d")",
+            endDate : "@lastProject.endDate.format("Y-M-d")",
+            id_project : "@lastProject.id",
+            id_discipline : "@lastProject.discipline.id"
             } ) ;
         } ;
 
@@ -57,12 +57,12 @@
     var nextMilestones =[ ] ;
         @for(milestone <- nextMilestones) {
             nextMilestones.push ( {
-            id_milestone : " @milestone.id ",
-            id_project : " @milestone.project.id ",
-            id_discipline : " @milestone.project.discipline.id ",
-            projectname : " @milestone.project.code ",
-            milestone : " @milestone.code ",
-            endDate : " @milestone.endDate.format("Y-M-d") "
+            id_milestone : "@milestone.id",
+            id_project : "@milestone.project.id",
+            id_discipline : "@milestone.project.discipline.id",
+            projectname : "@milestone.project.code",
+            milestone : "@milestone.code",
+            endDate : "@milestone.endDate.format("Y-M-d")"
             } ) ;
         } ;
 
@@ -90,9 +90,9 @@
     var lastAvaliations =[ ] ;
         @for(lastAvaliation <- lastAvaliations) {
             lastAvaliations.push ( {
-            projectname : " @lastAvaliation.milestone.project.code ",
-            codemilestone : " @lastAvaliation.milestone.code ",
-            avaliation : " @lastAvaliation.avaliation "
+            projectname : "@lastAvaliation.milestone.project.code",
+            codemilestone : "@lastAvaliation.milestone.code",
+            avaliation : "@lastAvaliation.avaliation"
             } ) ;
         } ;
 

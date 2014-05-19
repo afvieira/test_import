@@ -53,6 +53,102 @@ public class Milestone extends Model {
     public Milestone() {
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public Integer getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage(Integer percentage) {
+        this.percentage = percentage;
+    }
+
+    public List<GroupMilestone> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<GroupMilestone> groups) {
+        this.groups = groups;
+    }
+
+    public List<StudentMilestone> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<StudentMilestone> students) {
+        this.students = students;
+    }
+
+    public static Finder<Long, Milestone> getFind() {
+        return find;
+    }
+
+    public static void setFind(Finder<Long, Milestone> find) {
+        Milestone.find = find;
+    }
+
     //ToString
     @Override
     public String toString() {
