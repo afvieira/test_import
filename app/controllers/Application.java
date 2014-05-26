@@ -11,7 +11,11 @@ import static play.data.Form.form;
 public class Application extends Controller {
 
     public static Result index() {
-        return ok(views.html.index.render("Your new application is ready."));
+        User u = null;
+        if (session("email") != null){
+            u = User.findByEmail(session("email"));
+        }
+        return ok(views.html.index.render(u));
     }
 
     final static Form<User> userForm = Form.form(User.class);
@@ -48,7 +52,7 @@ public class Application extends Controller {
         } else {
             session().clear();
             session("email", loginForm.get().email);
-            return redirect(routes.Courses.all());
+            return index();
         }
     }
 
