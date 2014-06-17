@@ -1,0 +1,315 @@
+
+# Users
+users:
+
+    - !!models.User
+            code:               pg2001
+            name:               Nome_estudante_1
+            birthdate:          1989-11-15 13:51:52
+            contact :           919876543
+            email:              1@sapum.com
+            encrypted_password: asd
+            date_sign_up:       2011-11-15 13:51:52
+            userType:           Student
+
+    - !!models.User
+            code:               pg2002
+            name:               Nome_estudante_2
+            birthdate:          1989-11-15 13:51:52
+            contact :           919876543
+            email:              2@sapum.com
+            encrypted_password: asd
+            date_sign_up:       2011-11-15 13:51:52
+            userType:           Student
+
+    - !!models.User
+            code:               pg2003
+            name:               Nome_estudante_3
+            birthdate:          1989-11-15 13:51:52
+            contact :           919876543
+            email:              3@sapum.com
+            encrypted_password: asd
+            date_sign_up:       2011-11-15 13:51:52
+            userType:           Teacher
+
+    - !!models.User
+            code:               pg2004
+            name:               Nome_estudante_4
+            birthdate:          1989-11-15 13:51:52
+            contact :           919876543
+            email:              4@sapum.com
+            encrypted_password: asd
+            date_sign_up:       2011-11-15 13:51:52
+            userType:           Teacher
+
+    - !!models.User
+            code:               pg2005
+            name:               Nome_estudante_5
+            birthdate:          1989-11-15 13:51:52
+            contact :           919876543
+            email:              5@sapum.com
+            encrypted_password: asd
+            date_sign_up:       2011-11-15 13:51:52
+            userType:           Administrator
+
+    - !!models.User
+            code:               pg2006
+            name:               Nome_estudante_6
+            birthdate:          1989-11-15 13:51:52
+            contact :           919876543
+            email:              6@sapum.com
+            encrypted_password: asd
+            date_sign_up:       2011-11-15 13:51:52
+            userType:           Administrator
+
+#Turnos
+shifts:
+
+    - !!models.Shift
+            id: 1
+            code: turno_1
+            description: Descricao_Turno1
+            discipline:
+
+    - !!models.Shift
+            id: 2
+            code: turno_2
+            description: Descricao_Turno2
+            discipline:
+
+    - !!models.Shift
+            id: 3
+            code: turno_3
+            description: Descricao_Turno3
+            discipline:
+
+    - !!models.Shift
+            id: 4
+            code: turno_4
+            description: Descricao_Turno4
+            discipline:
+
+# Disciplinas
+disciplines:
+
+    - !!models.Discipline
+            id:            1
+            code:         CodDisc_1
+            course_year:  1
+            year:         2014
+            shifts:
+              - !!models.Shift
+                id: 1
+              - !!models.Shift
+                id: 2
+            users:
+              - !!models.User
+                id: 1
+
+    - !!models.Discipline
+            id:           2
+            code:         CodDisc_2
+            course_year:  2
+            year:         2014
+            shifts:
+              - !!models.Shift
+                id: 3
+            users:
+              - !!models.User
+                id: 1
+
+    - !!models.Discipline
+            id:           3
+            code:         CodDisc_3
+            course_year:  3
+            year:         2014
+            shifts:
+              - !!models.Shift
+                id: 4
+
+    - !!models.Discipline
+            id:           4
+            code:         CodDisc_4
+            course_year:  4
+            year:         2014
+            shifts:
+              - !!models.Shift
+                id: 2
+              - !!models.Shift
+                id: 4
+
+
+#Cursos
+courses:
+
+    - !!models.Course
+        #id:           1
+        code:         CODE_LEI_1
+        description:  LEI_1
+        disciplines:
+            - !!models.Discipline
+                id: 1
+            - !!models.Discipline
+                id: 2
+            - !!models.Discipline
+                id: 3
+            - !!models.Discipline
+                id: 4
+
+    - !!models.Course
+        #id:           2
+        code:         CODE_LEI_2
+        description:  LEI_2
+        disciplines:
+            - !!models.Discipline
+                id: 1
+            - !!models.Discipline
+                id: 2
+            - !!models.Discipline
+                id: 3
+
+    - !!models.Course
+        #id:           3
+        code:         CODE_LEI_3
+        description:  LEI_3
+        disciplines:
+            - !!models.Discipline
+                id: 1
+            - !!models.Discipline
+                id: 2
+
+    - !!models.Course
+        #id:           4
+        code:         CODE_LEI_4
+        description:  LEI_4
+        disciplines:
+            - !!models.Discipline
+                id: 4
+
+
+
+# Projects
+projects:
+
+    - !!models.Project
+      id:             1
+      discipline: !!models.Discipline
+                      id: 1
+      code:           PROJECT 1
+      title:          Projeto 1 TESTE Title
+      description:    Descrição do primeiro projeto
+      startDate:      2014-01-01
+      endDate:        2014-02-27
+      creationDate:   2014-01-01
+      milestones:
+      groups:
+      students:
+
+    - !!models.Project
+          id:             2
+          discipline: !!models.Discipline
+                          id: 1
+          code:           PROJECT 2
+          title:          Projeto 2 TESTE Title
+          description:    Descrição do segund projeto
+          startDate:      2014-05-01
+          endDate:        2014-07-27
+          creationDate:   2014-01-05
+          milestones:
+          groups:
+          students:
+
+    - !!models.Project
+          id:             3
+          discipline: !!models.Discipline
+                          id: 1
+          code:           PROJECT 3
+          title:          Projeto 3 TESTE Title
+          description:    Descrição do terceiro projeto
+          startDate:      2014-05-01
+          endDate:        2014-07-27
+          creationDate:   2014-02-05
+          milestones:
+          groups:
+          students:
+
+
+
+
+# StudentProject
+studentprojects:
+
+    - !!models.StudentProject
+      id:               1
+      student: !!models.User
+                  id: 1
+      project: !!models.Project
+                  id: 1
+
+    - !!models.StudentProject
+      id:               2
+      student: !!models.User
+                        id: 1
+      project: !!models.Project
+                  id: 2
+
+    - !!models.StudentProject
+      id:               3
+      student: !!models.User
+                        id: 2
+      project: !!models.Project
+                  id: 1
+
+    - !!models.StudentProject
+      id:               4
+      student: !!models.User
+                        id: 2
+
+# Milestone
+milestones:
+  - !!models.Milestone
+    id: 1
+    project: !!models.Project
+      id: 1
+    code: Mil1_Proj_1
+    description: DESC_MIL1_PRJ_1
+    number: 1
+    startDate:    2014-02-01
+    endDate:      2014-03-01
+    path:
+    percentage: 10
+    groups:
+    students:
+
+  - !!models.Milestone
+    id: 2
+    project: !!models.Project
+      id: 1
+    code: Mil2_Proj_1
+    description: DESC_MIL2_PRJ_1
+    number: 2
+    startDate:    2014-05-01
+    endDate:      2014-06-01
+    path:
+    percentage: 10
+    groups:
+    students:
+
+
+# StudentMilestone
+studentmilestones:
+
+    - !!models.StudentMilestone
+          id:               1
+          student: !!models.User
+                   id: 1
+          milestone: !!models.Milestone
+            id: 1
+          avaliation: 10
+
+    - !!models.StudentMilestone
+          id:               2
+          student: !!models.User
+                   id: 1
+          milestone: !!models.Milestone
+            id: 2

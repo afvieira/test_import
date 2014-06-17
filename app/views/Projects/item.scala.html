@@ -1,0 +1,216 @@
+@(user: User, project: Project, disciplinas: List[Discipline])
+
+@import helper._
+
+@template(update: Boolean) = {
+
+@if(update){
+    <div>
+        <label>ID: @project.id
+            <input type="hidden" name="id" value="@{project.id}"/>
+        </label>
+    </div>
+    <br/>
+}
+
+    <div class="row">
+        <div class="large-4 columns">
+            <label>Código
+                <input name="code" @if(update){value="@{project.code}"} placeholder="Código" type="text">
+            </label>
+        </div>
+
+        <div class="large-8 columns">
+            <label>Título
+                <input name="title" @if(update){value="@{project.title}"} placeholder="Título" type="text">
+            </label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="large-12 columns">
+            <label>Descrição
+                <textarea rows="5" name="description" placeholder="Descrição" type="text">@if(update){@{project.description}}</textarea>
+            </label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="large-6 columns">
+            <label>Data de início
+            <input name="startDate" @if(update){value="@{project.startDate.format("yyyy-MM-dd")}"} placeholder="Data de início" type="date">
+            </label>
+        </div>
+        <div class="large-6 columns">
+            <label>Data de fim
+            <input name="endDate" @if(update){value="@{project.endDate.format("yyyy-MM-dd")}"} placeholder="Data de fim" type="date">
+            </label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="large-12 columns">
+            <label>Disciplina
+                <select name="disciplinaID">
+                @for(d <- disciplinas.sortBy(d=>d.name)){
+                    @if(update && (project.discipline.id == d.id)){
+                        <option value="@{d.id}" selected> @{d.name}</option>
+                    }else{
+                        <option value="@{d.id}"> @{d.name}</option>
+                    }
+                }
+                </select>
+            </label>
+        </div>
+    </div>
+}
+
+@main(user) {
+
+<div class="small-centered columns">
+
+    <dl class="tabs" data-tab>
+        <dd class="active"><a href="#ident">Identificação</a></dd>
+        <dd><a href="#anexos">Anexos</a></dd>
+        <dd><a href="#etapas">Etapas</a></dd>
+        <dd><a href="#grupos">Grupos</a></dd>
+        <dd><a href="#alunos">Alunos</a></dd>
+    </dl>
+    <div class="tabs-content">
+        <div class="content active" id="ident">
+            <div class="panel radius">
+            @if(project == null){
+                @form(routes.Projects.save()){
+                    @template(false)
+                    <input class="button tiny radius" name="commit" type="submit" value="Guardar">
+                }
+            }else{
+                @form(routes.Projects.update(project.id)){
+                    @template(true)
+                    <input class="button tiny radius" name="commit" type="submit" value="Atualizar">
+                    }
+            }
+            </div>
+        </div>
+        <div class="content" id="anexos">
+            <div class="panel radius">
+
+                <h4>Anexos</h4>
+
+                <hr/>
+
+                <table cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th style="text-align : left ; width : 10 %">Ficheiro</th>
+                            <th style="text-align : left ; width : 30 %">Tipo</th>
+                            <th style="text-align : left ; width : 25 %">Data</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="content" id="etapas">
+            <div class="panel radius">
+
+                <h4>Etapas</h4>
+
+                <hr/>
+
+                <table cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th style="text-align : left ; width : 10 %">Número</th>
+                            <th style="text-align : left ; width : 30 %">Código</th>
+                            <th style="text-align : left ; width : 25 %">Data de início</th>
+                            <th style="text-align : left ; width : 25 %">Data de fim</th>
+                            <th style="text-align : left ; width : 10 %">Percentagem</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @if(project != null && project.milestones != null && project.milestones.size() > 0) {
+                        @for(m <- project.milestones) {
+                            <tr>
+                                <td>@m.number</td>
+                                <td>@m.code</td>
+                                <td>@m.startDate.format("dd-MM-yyyy")</td>
+                                <td>@m.endDate.format("dd-MM-yyyy")</td>
+                                <td>@m.percentage %</td>
+                            </tr>
+                        }
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="content" id="grupos">
+            <div class="panel radius">
+
+                <h4>Grupos</h4>
+
+                <hr/>
+
+                <table cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th style="text-align : left ; width : 20 %">Código</th>
+                            <th style="text-align : left ; width : 60 %">Descrição</th>
+                            <th style="text-align : left ; width : 20 %">Fechado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @if(project != null && project.groups != null && project.groups.size() > 0) {
+                        @for(g <- project.groups) {
+                            <tr>
+                                <td>@g.group.code</td>
+                                <td>@g.group.description</td>
+                                @if(g.group.closed){
+                                    <td>Sim</td>
+                                }else{
+                                    <td>Não</td>
+                                }
+                            </tr>
+                        }
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="content" id="alunos">
+            <div class="panel radius">
+
+                <h4>Alunos</h4>
+
+                <hr/>
+
+                <table cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th style="text-align : left ; width : 20 %">Código</th>
+                            <th style="text-align : left ; width : 30 %">Email</th>
+                            <th style="text-align : left ; width : 50 %">Nome</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @if(project != null && project.students != null && project.students.size() > 0) {
+                        @for(u <- project.students) {
+                            @if(u.student.userType == User.UserType.Teacher.toString()){
+                                <tr>
+                                    <td>@u.student.code</td>
+                                    <td>@u.student.email</td>
+                                    <td>@u.student.name</td>
+                                </tr>
+                            }
+                        }
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+}

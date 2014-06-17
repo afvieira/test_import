@@ -1,15 +1,180 @@
-@(title: String)(content: Html)
+@(user: User = null, title: String = "SAPUM - Sistema de Apoio a Projetos da Universidade do Minho")(content: Html)
 
 <!DOCTYPE html>
 
+<!-- MENUs -->
+@Menu() = {
+    <li><a href="/dashboard" class="">DashBoard</a></li>
+    <li><a href="/courses" class="">Cursos</a></li>
+    <li><a href="/disciplines" class="">Disciplinas</a></li>
+    <li><a href="/shifts" class="">Turnos</a></li>
+    <li><a href="/projects" class="">Trabalhos Práticos</a></li>
+}
+
+<!-- ############################## -->
+
 <html>
     <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
         <title>@title</title>
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/icon.png")">
+
+        <meta name="description" content="SAPUM - Plataforma para apoiar alunos e professores em trabalhos práticos.">
+        <meta name="author" content="afvieira e nram">
+        <meta name="copyright" content="AFV_NRAM, inc. Copyright (c) 2014">
+
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
-        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-        <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
+        <link rel="stylesheet" href="@routes.Assets.at("stylesheets/normalize.css")">
+        <link rel="stylesheet" href="@routes.Assets.at("stylesheets/foundation.css")">
+
+        <!-- Importar KendoUI -->
+        <link rel="stylesheet" href="@routes.Assets.at("stylesheets/kendoui/kendo.common.min.css")">
+        <link rel="stylesheet" href="@routes.Assets.at("stylesheets/kendoui/kendo.default.min.css")">
+        <link rel="stylesheet" href="@routes.Assets.at("stylesheets/custom_kendoui.css")">
+
+
+        <script src="@routes.Assets.at("js/kendoui/jquery.min.js")" ></script>
+        <script src="@routes.Assets.at("js/kendoui/kendo.web.min.js")"></script>
+        <!-- FIM Importar KendoUI -->
+
+        <!-- DataTable -->
+        <link rel="stylesheet" href="@routes.Assets.at("stylesheets/jquery.dataTables.css")">
+        <script src="@routes.Assets.at("js/jquery.dataTables.js")"></script>
+
+        <script src="@routes.Assets.at("js/dropzone/dropzone.js")" ></script>
+        <!--<script src="js/vendor/modernizr.js"></script>-->
+
+
+
     </head>
-    <body>
-        @content
+    <body class="antialiased hide-extras">
+        <div class="off-canvas-wrap">
+            <div class="inner-wrap">
+
+                <nav class="top-bar hide-for-small" data-offcanvas>
+                    <ul class="title-area">
+                        <li class="name">
+                            <h1><a href="http://localhost:9000/">SAPUM</a></h1>
+                        </li>
+                    </ul>
+
+                    <section class="top-bar-section">
+                        <ul class="right">
+
+                            @if(user == null) {
+                                <li class="has-form">
+                                    <a href="/login" class="small button radius">Iniciar sessão</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li class="has-form">
+                                    <a href="/register" class="small button radius">Registar</a>
+                                </li>
+                            }else{
+                                <ul class="title-area">
+                                    <li class="name">
+                                        <h1><a> @user.name (@user.userType)</a></h1>
+                                    </li>
+                                </ul>
+
+                                <li class="divider"></li>
+                                <li class="has-form">
+                                    <a href="/logout" class="small button alert radius">Terminar sessão</a>
+                                </li>
+                            }
+
+                        </ul>
+                    </section>
+                </nav>
+                <nav class="tab-bar show-for-small">
+                    <a class="left-off-canvas-toggle menu-icon">
+                        <span>SAPUM</span>
+                    </a>
+                </nav>
+
+                <aside class="left-off-canvas-menu">
+                    <ul class="off-canvas-list">
+                        <li><label class="first">SAPUM</label></li>
+                    </ul>
+                    <div>
+                        <h5>Gestão de projetos</h5>
+
+                        <form>
+                            <input tabindex="1" id="autocomplete" type="search" placeholder="Procurar courses, disciplinas, ...">
+                        </form>
+                    </div>
+                    <ul class="off-canvas-list">
+                        <li><a href="/">Início</a></li>
+                        @Menu()
+                    </ul>
+                </aside>
+
+                <section role="main" class="scroll-container">
+                    <div class="row">
+                        <div class="large-3 medium-4 columns">
+                            <div class="hide-for-small">
+                                <div class="sidebar">
+                                    <br/>
+                                    <h5>Gestão de projetos</h5>
+                                    <form>
+                                        <input tabindex="1" id="autocomplete" type="search" placeholder="Procurar courses, disciplinas, ...">
+                                    </form>
+
+                                    <nav>
+                                        <ul class="side-nav">
+                                            @Menu()
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="large-9 medium-8 columns">
+                            <br/>
+                            @if(flash.containsKey("sucesso")) {
+                                <div data-alert class="alert-box success radius">
+                                    @flash.get("sucesso")
+                                    <a href="#" class="close">&times;</a>
+                                </div>
+                            }
+
+                            @if(flash.containsKey("erro")) {
+                                <div data-alert class="alert-box alert radius">
+                                    @flash.get("erro")
+                                    <a href="#" class="close">&times;</a>
+                                </div>
+                            }
+
+                            @content
+                            <br/>
+                        </div>
+                    </div>
+
+                    <div class="zurb-footer-bottom">
+                        <div class="row">
+                            <div class="medium-4 medium-4 push-8 columns">
+                                <p class="copyright" style="text-align: right">Universidade do Minho</p>
+                            </div>
+                            <div class="medium-8 medium-8 pull-4 columns">
+                                <p class="copyright">&copy; 2014 AFV-NRAM. Todos os direitos reservados.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <a class="exit-off-canvas" href="#"></a>
+
+            </div>
+        </div>
+
+        <script src="@routes.Assets.at("js/vendor/jquery.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("js/foundation.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("js/vendor/modernizr.js")" type="text/javascript"></script>
+
+        <script>
+        $(document).foundation ( ) ;
+        $(document).foundation('alerts', {animation: "slideUp"});
+        </script>
+
     </body>
 </html>

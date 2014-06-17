@@ -1,0 +1,108 @@
+@(user: User, shift: Shift, disciplines: List[Discipline])
+
+@import helper._
+
+@template(update: Boolean) = {
+
+@if(update){
+    <div>
+        <label>ID: @shift.id
+            <input type="hidden" name="id" value="@{shift.id}"/>
+        </label>
+    </div>
+    <br/>
+}
+
+    <div class="row">
+        <div class="large-4 columns">
+            <label>Código
+                <input name="code" @if(update){value="@{shift.code}"} placeholder="Código" type="text">
+            </label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="large-12 columns">
+            <label>Nome
+                <input name="description" @if(update){value="@{shift.description}"} placeholder="Descrição" type="text">
+            </label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="large-12 columns">
+            <label>Disciplina
+                <select name="disciplinaID">
+                @for(d <- disciplines.sortBy(d=>d.name)){
+                    @if(update && (shift.discipline.id == d.id)){
+                        <option value="@{d.id}" selected> @{d.name}</option>
+                    }else{
+                        <option value="@{d.id}"> @{d.name}</option>
+                    }
+                }
+                </select>
+            </label>
+        </div>
+    </div>
+}
+
+@main(user) {
+
+<div class="small-centered columns">
+
+
+    <dl class="tabs" data-tab>
+        <dd class="active"><a href="#ident">Identificação</a></dd>
+        <dd><a href="#alunos">Alunos</a></dd>
+    </dl>
+    <div class="tabs-content">
+        <div class="content active" id="ident">
+            <div class="panel radius">
+            @if(shift == null){
+                @form(routes.Shifts.save()){
+                    @template(false)
+                    <input class="button tiny radius" name="commit" type="submit" value="Guardar">
+                }
+            }else{
+                @form(routes.Shifts.update(shift.id)){
+                    @template(true)
+                    <input class="button tiny radius" name="commit" type="submit" value="Atualizar">
+                    }
+            }
+            </div>
+        </div>
+        <div class="content" id="alunos">
+            <div class="panel radius">
+
+                <h4>Alunos</h4>
+
+                <hr/>
+
+                <table cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th style="text-align : left ; width : 20 %">Código</th>
+                            <th style="text-align : left ; width : 30 %">Email</th>
+                            <th style="text-align : left ; width : 50 %">Nome</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @if(shift != null && shift.students != null && shift.students.size() > 0) {
+                        @for(s <- shift.students) {
+                            @if(s.userType == User.UserType.Student.toString()){
+                                <tr>
+                                    <td>@s.code</td>
+                                    <td>@s.email</td>
+                                    <td>@s.name</td>
+                                </tr>
+                            }
+                        }
+                    }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+}

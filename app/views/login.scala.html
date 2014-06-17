@@ -1,0 +1,51 @@
+@(form: play.data.Form[Application.Login])
+
+@main(){
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+        <div class="large-6 medium-8 small-12 small-centered columns">
+            <div class="panel radius">
+                <h2>Iniciar sessão</h2>
+                <hr>
+
+                @if(form.hasGlobalErrors) {
+                    <p class="error">
+                    @form.globalError.message
+                    </p>
+                }
+
+                @helper.form(routes.Application.authenticate) {
+
+                    <div>
+                        <label>Email</label>
+                        <input autofocus="autofocus" id="user_email" name="email" placeholder="Email" type="email" value="@form("email").value">
+                    </div>
+
+                    <div>
+                        <label>Password</label>
+                        <input id="user_password" name="password" placeholder="Password" type="password">
+                    </div>
+
+                    <div>
+                        <input class="button tiny radius" name="commit" type="submit" value="Iniciar sessão">
+                        <ul class="right">
+                            <a href="/register">Registar</a><br>
+                        </ul>
+                    </div>
+                }
+
+            </div>
+        </div>
+
+    <br>
+    <br>
+    <br>
+}
+@*
+
+    </body>
+</html>*@

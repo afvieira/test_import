@@ -2,34 +2,90 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+# Authentication
+GET         /login                                                                                       controllers.Application.login()
+POST        /login                                                                                       controllers.Application.authenticate()
+GET         /logout                                                                                      controllers.Application.logout()
+GET         /register                                                                                    controllers.Application.register()
+POST        /register                                                                                    controllers.Application.createUser()
+POST        /register/:id/delete                                                                         controllers.Application.deleteUser(id: Long)
+
 # Home page
-GET     /                                                               controllers.Application.index()
+GET         /                                                                                            controllers.Application.index()
 
 # Cursos
-GET     /courses                                                        controllers.Courses.all()
-GET     /course/:id                                                     controllers.Courses.show(id: Long)
-POST    /course                                                         controllers.Courses.create()
-POST    /course/:id/delete                                              controllers.Courses.delete(id: Long)
+GET         /courses                                                                                     controllers.Courses.all()
+GET         /course/new                                                                                  controllers.Courses.create()
+GET         /courses/:id                                                                                 controllers.Courses.show(id: Long)
+POST        /courses                                                                                     controllers.Courses.save()
+POST        /courses/:id/delete                                                                          controllers.Courses.delete(id: Long)
+POST        /courses/:id/update                                                                          controllers.Courses.update(id: Long)
 
+# Projetos
+GET         /projects                                                                                    controllers.Projects.all()
+GET         /project/new                                                                                 controllers.Projects.create()
+GET         /projects/:id                                                                                controllers.Projects.show(id: Long)
+POST        /projects                                                                                    controllers.Projects.save()
+POST        /projects/:id/delete                                                                         controllers.Projects.delete(id: Long)
+POST        /projects/:id/update                                                                         controllers.Projects.update(id: Long)
 
 # Disciplinas
-GET     /disciplines                                                    controllers.Disciplines.all()
-GET     /discipline/:id                                                 controllers.Disciplines.show(id: Long)
-POST    /discipline                                                     controllers.Disciplines.create()
-POST    /discipline/:id/delete                                          controllers.Disciplines.delete(id: Long)
-GET     /course/:id_course/disciplines                                  controllers.Disciplines.allByCourse(id_course: Long)
-GET     /course/:id_course/discipline/:id_discipline                    controllers.Disciplines.showByCourse(id_course: Long, id_discipline: Long)
-POST    /course/:id_course/discipline                                   controllers.Disciplines.createByCourse(id_course: Long)
+GET         /disciplines                                                                                 controllers.Disciplines.all()
+GET         /discipline/new                                                                              controllers.Disciplines.create()
+GET         /disciplines/:id                                                                             controllers.Disciplines.show(id: Long)
+POST        /disciplines                                                                                 controllers.Disciplines.save()
+POST        /disciplines/:id/delete                                                                      controllers.Disciplines.delete(id: Long)
+POST        /disciplines/:id/update                                                                      controllers.Disciplines.update(id: Long)
+
+# Turnos
+GET         /shifts                                                                                      controllers.Shifts.all()
+GET         /shift/new                                                                                   controllers.Shifts.create()
+GET         /shifts/:id                                                                                  controllers.Shifts.show(id: Long)
+POST        /shifts                                                                                      controllers.Shifts.save()
+POST        /shifts/:id/delete                                                                           controllers.Shifts.delete(id: Long)
+POST        /shifts/:id/update                                                                           controllers.Shifts.update(id: Long)
+
+GET         /course/:id_course/disciplines                                                               controllers.Disciplines.allByCourse(id_course: Long)
+GET         /course/:id_course/discipline/:id_discipline                                                 controllers.Disciplines.showByCourse(id_course: Long, id_discipline: Long)
 
 # Turnos
 
-GET     /course/:id_course/discipline/:id_discipline/shifts             controllers.Shifts.all(id_course: Long, id_discipline: Long)
-GET     /course/:id_course/discipline/:id_discipline/shift/:id          controllers.Shifts.show(id_course: Long, id_discipline: Long, id: Long)
-POST    /course/:id_course/discipline/:id_discipline/shift              controllers.Shifts.create(id_course: Long, id_discipline: Long)
-POST    /course/:id_course/discipline/:id_discipline/shift/:id/delete   controllers.Shifts.delete(id_course: Long, id_discipline: Long, id: Long)
+#GET         /course/:id_course/discipline/:id_discipline/shifts                                          controllers.Shifts.all(id_course: Long, id_discipline: Long)
+#GET         /course/:id_course/discipline/:id_discipline/shift/:id                                       controllers.Shifts.show(id_course: Long, id_discipline: Long, id: Long)
+#POST        /course/:id_course/discipline/:id_discipline/shift                                           controllers.Shifts.create(id_course: Long, id_discipline: Long)
+#POST        /course/:id_course/discipline/:id_discipline/shift/:id/delete                                controllers.Shifts.delete(id_course: Long, id_discipline: Long, id: Long)
+
+# Dashboard
+GET         /dashboard                                                                                   controllers.Dashboards.index()
+
+# Dashboard Disciplines
+GET         /dashboard/disciplines                                                                       controllers.Dashboards.disciplines()
+GET         /dashboard/discipline/:id                                                                    controllers.Dashboards.showDiscipline(id: Long)
+
+# Dashboard Projects
+GET         /dashboard/discipline/:id_discipline/projects                                                controllers.Dashboards.projects(id_discipline: Long)
+GET         /dashboard/discipline/:id_discipline/project/:id                                             controllers.Dashboards.showProject(id_discipline: Long, id: Long)
+POST        /dashboard/discipline/:id_discipline/project                                                 controllers.Dashboards.createProject(id_discipline: Long)
+POST        /dashboard/discipline/:id_discipline/project/:id/delete                                      controllers.Dashboards.deleteProject(id_discipline: Long, id: Long)
+
+# Dashboard Milestones
+#GET         /dashboard/project/:id_project/milestones                                                    controllers.Dashboards.milestones(id_project: Long)
+GET         /dashboard/project/:id_project/milestone/:id_milestone                                       controllers.Dashboards.showMilestone(id_project: Long, id_milestone: Long)
+POST        /dashboard/project/:id_project/milestone                                                     controllers.Dashboards.createMilestone(id_project: Long)
+POST        /dashboard/project/:id_project/milestone/:id_milestone/delete                                controllers.Dashboards.deleteMilestone(id_project: Long, id_milestone: Long)
+POST        /dashboard/project/:id_project/milestone/:id_milestone/upload                                controllers.Dashboards.uploadFileMilestone(id_project: Long, id_milestone: Long)
+
+
+# Dashboard Avaliations
+GET         /dashboard/project/:id_project/milestone/:id_milestone/avaliations                           controllers.Dashboards.avaliations(id_project: Long, id_milestone: Long)
+GET         /dashboard/project/:id_project/milestone/:id_milestone/avaliation/group/:id_group            controllers.Dashboards.showAvaliationByGroup(id_project: Long, id_milestone: Long, id_group: Long)
+GET         /dashboard/project/:id_project/milestone/:id_milestone/avaliation/student/:id_student        controllers.Dashboards.showAvaliationByStudent(id_project: Long, id_milestone: Long, id_student: Long)
+POST        /dashboard/project/:id_project/milestone/:id_milestone/avaliation                            controllers.Dashboards.createAvaliation(id_project: Long, id_milestone: Long)
+POST        /dashboard/project/:id_project/milestone/:id_milestone/avaliation/delete                     controllers.Dashboards.deleteAvaliation(id_project: Long, id_milestone: Long)
 
 # Perfil
-# Ainda não sei como vou implementar
+GET         /profile                                                                                     controllers.Profiles.index()
+GET         /profile/:id                                                                                 controllers.Profiles.showProfile(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+GET         /assets/*file                                                                                controllers.Assets.at(path="/public", file)

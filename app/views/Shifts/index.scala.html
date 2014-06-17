@@ -1,0 +1,68 @@
+@(user: User, shifts: List[Shift])
+
+@import helper._
+
+@main(user) {
+
+    <table id="turnos" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th style="text-align: left; width: 5%">ID</th>
+                <th style="text-align: left; width: 10%">Código</th>
+                <th style="text-align: left; width: 45%">Descrição</th>
+                <th style="text-align: left; width: 40%">Disciplina</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th style="text-align: left;">ID</th>
+                <th style="text-align: left;">Código</th>
+                <th style="text-align: left;">Descrição</th>
+                <th style="text-align: left;">Disciplina</th>
+                <th></th>
+            </tr>
+        </tfoot>
+    </table>
+
+    <hr/>
+
+    <a href="/shift/new" class="small button radius">Novo turno</a>
+
+    <script type="text/javascript" charset="utf-8">
+
+    var turnos = [];
+        @for(s <- shifts) {
+            turnos.push({id: "@s.id",
+            code: "@s.code",
+            description: "<a href='/shifts/@{s.id}'>@s.description</a>",
+            discipline: "<a href='/disciplines/@{s.discipline.id}'>@s.discipline.name</a>",
+            button: "<input type='submit' id=@{s.id} onclick='removerTurno(@{s.id})' value='Apagar' class='small-centered button radius onTable'>"
+            })
+        };
+
+    $('#turnos').DataTable( {
+    language: {url: "@routes.Assets.at("js/Portuguese.json")"},
+    data: turnos,
+    columns: [
+    { data: 'id' },
+    { data: 'code' },
+    { data: 'description' },
+    { data: 'discipline' },
+    { data: 'button'}
+    ]
+    });
+
+    function removerTurno(id){
+    redirect('/shifts/' + id + '/delete', 'post');
+    }
+
+    var redirect = function(url, method) {
+    var form = document.createElement('form');
+    form.method = method;
+    form.action = url;
+    form.submit();
+    };
+
+    </script>
+}

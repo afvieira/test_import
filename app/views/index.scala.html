@@ -1,7 +1,72 @@
-@(message: String)
+@(user: User = null)
 
-@main("Welcome to Play") {
+@import helper._
 
-    @play20.welcome(message, style = "Java")
+    @main(user) {
 
-}
+        <hr>
+
+        <div class="orbit-container">
+            <ul data-orbit>
+                <li>
+                    <img src="@routes.Assets.at("images/orbit_1.jpg")" alt="slide 1">
+                </li>
+                <li>
+                    <img src="@routes.Assets.at("images/orbit_2.jpg")" alt="slide 1">
+                </li>
+                <li>
+                    <img src="@routes.Assets.at("images/orbit_3.jpg")" alt="slide 1">
+                </li>
+                <li>
+                    <img src="@routes.Assets.at("images/orbit_4.jpg")" alt="slide 1">
+                </li>
+            </ul>
+        </div>
+
+        <section class="info-all">
+            <div class="row">
+                <div class="panel">
+                        <br/><br/>
+                        <h2 align="center">Serviço de Apoio a Projetos</h2>
+                        <h3 align="center">Universidade do Minho</h3>
+                        <br/>
+                        <p align="center">O Lorem Ipsum é um texto modelo da indústria tipográfica e de impressão. O Lorem Ipsum tem vindo a ser o texto
+                            padrão usado por estas indústrias desde o ano de 1500, quando uma misturou os caracteres de um texto para criar
+                            um espécime de livro.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="main-content">
+            <div class="row centered-text">
+                <div class="large-12 text-center columns">
+                    <h2>Porquê usar o SAPUM?</h2>
+                    <h4>Funcionalidades poderosas para gestão de projetos Universitários!</h4>
+
+                </div>
+            </div>
+            <div class="row centered-text">
+                <hr>
+                <div class="large-4 small-12 text-center columns">
+                    <h3>Fácil de Usar</h3>
+                    <p><br />É um facto estabelecido de que um leitor é distraído pelo conteúdo legível de uma página quando analisa a sua mancha gráfica.</p>
+                </div>
+                <div class="large-4 small-12 text-center columns">
+                    <h3>Progresso dos Projetos</h3>
+                    <p><br />Logo, o uso de Lorem Ipsum leva a uma distribuição mais ou menos normal de letras, ao contrário do uso...</p>
+                </div>
+                <div class="large-4 small-12 text-center columns">
+                    <h3>Partilha de Projetos</h3>
+                    <p><br />Ao contrário da crença popular, o Lorem Ipsum não é simplesmente texto aleatório, ao contrário do uso..</p>
+                </div>
+                <div class="row centered-text">
+                    <div class="large-12 text-center columns">
+                        <a href="#">Saiba mais sobre o SAPUM →</a>
+                    </div>
+                </div>
+                <hr>
+            </div>
+        </section>
+
+
+    }

@@ -1,0 +1,93 @@
+@(user: User, course: Course = null)
+
+@import helper._
+
+    @template(update: Boolean) = {
+
+    @if(update) {
+        <div>
+            <label>ID: @course.id</label>
+        </div>
+        <br/>
+    }
+
+        <div>
+            <label>Código
+                <input name="code" @if(update) {
+                    value="@{
+                        course.code
+                    }"
+                } placeholder="Código" type="text">
+            </label>
+        </div>
+
+        <div>
+            <label>Descrição
+                <input name="description" @if(update) {
+                    value="@{
+                        course.description
+                    }"
+                } placeholder="Descrição" type="text">
+            </label>
+        </div>
+    }
+
+@main(user) {
+
+    <div class="small-centered columns">
+
+        <dl class="tabs" data-tab>
+            <dd class="active"><a href="#ident">Identificação</a></dd>
+            <dd><a href="#disc">Disciplinas</a></dd>
+        </dl>
+        <div class="tabs-content">
+            <div class="content active" id="ident">
+                <div class="panel radius">
+                @if(course == null) {
+                    @form(routes.Courses.save()) {
+                        @template(false)
+                        <input class="button tiny radius" name="commit" type="submit" value="Guardar">
+                    }
+                } else {
+                    @form(routes.Courses.update(course.id)) {
+                        @template(true)
+                        <input class="button tiny radius" name="commit" type="submit" value="Atualizar">
+                        }
+                }
+                </div>
+            </div>
+            <div class="content" id="disc">
+                <div class="panel radius">
+
+                    <h4>Disciplinas</h4>
+
+                    <hr/>
+
+                    <table cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th style="text-align : left ; width : 10 %">Código</th>
+                                <th style="text-align : left ; width : 55 %">Nome</th>
+                                <th style="text-align : left ; width : 20 %">Ano do curso</th>
+                                <th style="text-align : left ; width : 15 %">Ano letivo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @if(course != null && course.disciplines != null && course.disciplines.size() > 0) {
+                            @for(d <- course.disciplines) {
+                                <tr>
+                                    <td>@d.code</td>
+                                    <td><a href='/disciplines/@{d.id}'>@d.name</a></td>
+                                    <td>@d.course_year</td>
+                                    <td>@d.year</td>
+                                </tr>
+                            }
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
