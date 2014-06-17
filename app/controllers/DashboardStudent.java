@@ -158,6 +158,23 @@ public class DashboardStudent extends Controller {
         return badRequest(views.html.notFound.render(u));
     }
 
+    @Security.Authenticated(Secured.class)
+    public static Result uploadFileMilestone(Long id_project, Long id_milestone) {
+        System.out.println("Vai tentar guardar a imagem");
+        String pathFile = Application.uploadToPath("UploadFiles/");
+        if (pathFile != null){
+            System.out.println("Ficheiro Guardado.");
+            StudentMilestone sm = StudentMilestone.getByUserMilestone(request().username(), id_milestone);
+            sm.setPath(pathFile);
+            System.out.println("Guardou o caminho do ficheiro na BD."); // Poderá abrir-se outro campo na base de dados para saber quantas versões estão lá e apenas guardamos o caminho da última, p.e.
+            sm.save();
+            // TODO: Será necessário também alterar o GroupMilestone
+            return ok();
+        } else {
+            return badRequest();
+        }
+    }
+
     // Não faz sentido o aluno ver as notas da milestone dos restantes alunos?
     @Security.Authenticated(Secured.class)
     public static Result avaliations(Long id_project,Long id_milestone) {

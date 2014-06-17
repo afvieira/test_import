@@ -152,6 +152,13 @@ public class DashboardTeacher extends Controller {
         return TODO;
     }
 
+
+    @Security.Authenticated(Secured.class)
+    public static Result uploadFileMilestone(Long id_project, Long id_milestone) {
+        return TODO;
+    }
+
+
     @Security.Authenticated(Secured.class)
     public static Result avaliations(Long id_project,Long id_milestone) {
         /*

@@ -143,6 +143,14 @@ public class Dashboards extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
+    public static Result uploadFileMilestone(Long id_project, Long id_milestone) {
+        return routing(
+                DashboardStudent.uploadFileMilestone(id_project, id_milestone),
+                DashboardTeacher.uploadFileMilestone(id_project, id_milestone),
+                TODO);
+    }
+
+    @Security.Authenticated(Secured.class)
     public static Result deleteMilestone(Long id_project, Long id_milestone) {
         return routing(
                 DashboardStudent.deleteMilestone(id_project,id_milestone),

@@ -73,6 +73,8 @@ POST        /dashboard/discipline/:id_discipline/project/:id/delete             
 GET         /dashboard/project/:id_project/milestone/:id_milestone                                       controllers.Dashboards.showMilestone(id_project: Long, id_milestone: Long)
 POST        /dashboard/project/:id_project/milestone                                                     controllers.Dashboards.createMilestone(id_project: Long)
 POST        /dashboard/project/:id_project/milestone/:id_milestone/delete                                controllers.Dashboards.deleteMilestone(id_project: Long, id_milestone: Long)
+POST        /dashboard/project/:id_project/milestone/:id_milestone/upload                                controllers.Dashboards.uploadFileMilestone(id_project: Long, id_milestone: Long)
+
 
 # Dashboard Avaliations
 GET         /dashboard/project/:id_project/milestone/:id_milestone/avaliations                           controllers.Dashboards.avaliations(id_project: Long, id_milestone: Long)

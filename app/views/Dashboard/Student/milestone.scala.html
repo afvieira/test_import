@@ -54,12 +54,46 @@
                     }
                 </div>
 
-                @if(milestone.endDate.after(new Date())){
-                    <div class="large-12 left columns">
-                        <h3>Enviar versão para a etapa:</h3>
-                        // TODO: Formulário de submissão
+                <div class="large-12 left columns">
+                    <h3>Entrega do trabalho:</h3>
+                    @if(avaliation.path == null || (avaliation.path != null && avaliation.path.equals("")) ){
+                        <div data-alert class="alert-box warning radius">Ainda não tem nenhuma versão adicionada</div>
+                    }else{
+                        <!-- Depois é necessário libertar esta pasta mas o nosso servidor ter uma espécie de protecção porque
+                        podem estar a aceder a ficheiros que não são deles -->
+                        <p><a href="/@{avaliation.path}">Descarregar versão atual</a></p>
+                    }
+
+                    <h3>Nova submissão:</h3>
+                    <div id="file-uploader">
+                        <noscript>
+                            <p>Please enable JavaScript to use file uploader.</p>
+                                <!-- or put a simple form for upload here -->
+                        </noscript>
+
+                        @form(
+                                action = routes.Dashboards.uploadFileMilestone(milestone.getProject().id, milestone.getId),
+                                'enctype -> "multipart/form-data", 'class -> "dropzone dz-clickable",
+                                'id -> "version-milestone") {
+                            <div class="dz-default dz-message">
+                                <span></span>
+                            </div>
+
+                        <script>
+                            Dropzone.options.versionMilestone = {
+                                paramName: "file", // The name that will be used to transfer the file
+                                maxFilesize: 100, // MB
+                                accept: function(file, done) {
+                                    console.log(file);
+                                    console.log(done);
+                                    done();
+                                }
+                            };
+                        </script>
+                        }
                     </div>
-                }
+                </div>
+
             </div>
         </div>
     </div>
