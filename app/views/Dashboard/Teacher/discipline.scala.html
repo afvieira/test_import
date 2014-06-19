@@ -4,4 +4,159 @@
 
 @main(user) {
 
+    <h1>Disciplina: <b>@discipline.name</b></h1>
+
+    <div class="row">
+        <div class="large-12 columns panel">
+            <h3>Informação</h3>
+            <div class="row">
+                <div class="large-2 columns">
+                    <label>Código da Disciplina:
+                        <p>@discipline.code</p>
+                    </label>
+                </div>
+                <div class="large-4 columns">
+                    <label>Nome da Disciplina
+                        <p>@discipline.name</p>
+                    </label>
+                </div>
+                <div class="large-4 columns">
+                    <label>Curso da Disciplina
+                        <p>@discipline.course.description</p>
+                    </label>
+                </div>
+                <div class="large-2 columns">
+                    <label>Ano Lectivo:
+                        <p>@discipline.year</p>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="large-12 columns">
+            <h3>Últimos Trabalhos</h3>
+            <div id="projects"></div>
+        </div>
+        <div class="large-6 columns">
+            <h3>Todas as Etapas</h3>
+            <div id="milestones"></div>
+        </div>
+        <div class="large-6 columns">
+            <h3>Próximas entregas</h3>
+            <div id="nextMilestones"></div>
+        </div>
+    </div>
+    <script>
+
+
+    var projects = [];
+        @for(lastProject <- projectsDiscipline) {
+            projects.push({
+            projectname: "@lastProject.code",
+            startDate: "@lastProject.startDate.format("Y-M-d")",
+            endDate: "@lastProject.endDate.format("Y-M-d")",
+            id_project: "@lastProject.id",
+            id_discipline: "@discipline.id"
+            });
+        };
+
+    $("#projects").kendoGrid({
+    columns: [
+    { title: "Projecto", field: "projectname", template: "<a href='/dashboard/discipline/${id_discipline}/project/${id_project}'>${projectname}</a>" },
+    { title: "Início",    field: "startDate"},
+    { title: "Entrega",  field: "endDate"}
+    ],
+
+    dataSource: {
+    data:projects,
+    pageSize:5
+    },
+    sortable: true,
+    pageable: {
+    refresh: true,
+    pageSizes: true,
+    buttonCount: 5,
+    messages: {
+    itemsPerPage: "projectos por página",
+    empty: "Sem Informação"
+    }
+    }
+    });
+
+
+    var milestones = [];
+        @for(milestone <- milestonesDiscipline) {
+            milestones.push({
+            id_milestone: "@milestone.id",
+            id_project: "@milestone.project.id",
+            id_discipline: "@milestone.project.discipline.id",
+            projectname: "@milestone.project.code",
+            milestone: "@milestone.code",
+            endDate: "@milestone.endDate.format("Y-M-d")"
+            });
+        };
+
+    $("#milestones").kendoGrid({
+    columns: [
+    { title: "Projecto", field: "projectname", template: "<a href='/dashboard/discipline/${id_discipline}/project/${id_project}'>${projectname}</a>" },
+    { title: "Etapa",    field: "milestone", template: "<a href='/dashboard/project/${id_project}/milestone/${id_milestone}'>${milestone}</a>" },
+    { title: "Entrega",  field: "endDate"}
+    ],
+
+    dataSource: {
+    data:milestones,
+    pageSize:5
+    },
+    sortable: true,
+    pageable: {
+    refresh: true,
+    pageSizes: true,
+    buttonCount: 5,
+    messages: {
+    itemsPerPage: "etapas por página",
+    empty: "Sem Informação"
+    }
+    }
+    });
+
+
+
+    var nextMilestones = [];
+        @for(milestone <- nextDeliveryMilestones) {
+            nextMilestones.push({
+            id_milestone: "@milestone.id",
+            id_project: "@milestone.project.id",
+            id_discipline: "@milestone.project.discipline.id",
+            projectname: "@milestone.project.code",
+            milestone: "@milestone.code",
+            endDate: "@milestone.endDate.format("Y-M-d")"
+            });
+        };
+
+    $("#nextMilestones").kendoGrid({
+    columns: [
+    { title: "Projecto", field: "projectname", template: "<a href='/dashboard/discipline/${id_discipline}/project/${id_project}'>${projectname}</a>" },
+    { title: "Etapa",    field: "milestone", template: "<a href='/dashboard/project/${id_project}/milestone/${id_milestone}'>${milestone}</a>" },
+    { title: "Entrega",  field: "endDate"}
+    ],
+
+    dataSource: {
+    data:nextMilestones,
+    pageSize:5
+    },
+    sortable: true,
+    pageable: {
+    refresh: true,
+    pageSizes: true,
+    buttonCount: 5,
+    messages: {
+    itemsPerPage: "etapas por página",
+    empty: "Sem Informação"
+    }
+    }
+    });
+
+    </script>
 }
