@@ -59,6 +59,7 @@ public class DashboardTeacher extends Controller {
         return ok(
                 views.html.Dashboard.Teacher.projects.render(
                         User.findByEmail(request().username()),
+                        Discipline.getById(id_discipline),
                         Project.getAllByDiscipline(id_discipline),              // Todos os projetos da disciplina
                         Milestone.allMilestonesByDiscipline(id_discipline),      // Todas as milestones dos projetos da disciplina
                         Milestone.nextDeliveryMilestoneByDiscipline(id_discipline)         // Próximas milestones a entregar dos projetos de uma disciplina
