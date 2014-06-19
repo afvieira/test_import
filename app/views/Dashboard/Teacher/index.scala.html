@@ -4,4 +4,173 @@
 
 @main(user) {
 
+    <h1>Dashboard</h1>
+
+    <div class="row">
+        <div class="large-6 columns">
+            <h3>Disciplinas Leccionadas</h3>
+            <div id="disciplines"></div>
+        </div>
+        <div class="large-6 columns">
+            <h3>Próximas Étapas para Entrega</h3>
+            <div id="milestones"></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="large-6 columns">
+            <h3>Últimos Trabalhos Criados</h3>
+            <div id="lastProjects"></div>
+        </div>
+        <div class="large-6 columns">
+            <h3>Últimas Notas e Comentários</h3>
+            <div id="lastAvaliations"></div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="large-12 columns">
+            <h3>Estatísticas</h3>
+            // Todo: Fazer gráfico
+        </div>
+    </div>
+
+
+    <script>
+
+    var disciplines = [];
+        @for(discipline <- allDisciplines) {
+            disciplines.push({
+            discipline: "@discipline.name",
+            year: "@discipline.year",
+            id: "@discipline.id"
+            });
+        };
+
+
+    $("#disciplines").kendoGrid({
+    columns: [
+    { title: "Disciplina", field: "discipline", template: "<a href='/dashboard/discipline/${id}'>${discipline}</a>" },
+    { title: "Ano",         field: "year"}
+    ],
+    dataSource: {
+    data:disciplines,
+    pageSize:5
+    },
+    sortable: true,
+    pageable: {
+    refresh: true,
+    pageSizes: true,
+    buttonCount: 5,
+    messages: {
+    itemsPerPage: "disciplinas por página",
+    empty: "Sem Informação"
+    }
+    }
+    });
+
+    var milestones = [];
+        @for(milestone <- allMilestones) {
+            milestones.push({
+            id_milestone: "@milestone.id",
+            id_project: "@milestone.project.id",
+            id_discipline: "@milestone.project.discipline.id",
+            projectname: "@milestone.project.code",
+            milestone: "@milestone.code",
+            endDate: "@milestone.endDate.format("Y-M-d")"
+            });
+        };
+
+    $("#milestones").kendoGrid({
+    columns: [
+    { title: "Projecto", field: "projectname", template: "<a href='/dashboard/discipline/${id_discipline}/project/${id_project}'>${projectname}</a>" },
+    { title: "Etapa",    field: "milestone", template: "<a href='/dashboard/project/${id_project}/milestone/${id_milestone}'>${milestone}</a>" },
+    { title: "Entrega",  field: "endDate"}
+    ],
+
+    dataSource: {
+    data:milestones,
+    pageSize:5
+    },
+    sortable: true,
+    pageable: {
+    refresh: true,
+    pageSizes: true,
+    buttonCount: 5,
+    messages: {
+    itemsPerPage: "etapas por página",
+    empty: "Sem Informação"
+    }
+    }
+    });
+
+
+    var lastProjects = [];
+        @for(lastProject <- projectsTeacher) {
+            lastProjects.push({
+            projectname: "@lastProject.code",
+            startDate: "@lastProject.startDate.format("Y-M-d")",
+            endDate: "@lastProject.endDate.format("Y-M-d")"
+            });
+        };
+
+    $("#lastProjects").kendoGrid({
+    columns: [
+    { title: "Projecto", field: "projectname" },
+    { title: "Início",    field: "startDate"},
+    { title: "Entrega",  field: "endDate"}
+    ],
+
+    dataSource: {
+    data:lastProjects,
+    pageSize:5
+    },
+    sortable: true,
+    pageable: {
+    refresh: true,
+    pageSizes: true,
+    buttonCount: 5,
+    messages: {
+    itemsPerPage: "projectos por página",
+    empty: "Sem Informação"
+    }
+    }
+    });
+
+
+    var lastAvaliations = [];
+        @for(lastAvaliation <- lastAvaliations) {
+            lastAvaliations.push({
+            projectname: "@lastAvaliation.milestone.project.code",
+            codemilestone: "@lastAvaliation.milestone.code",
+            avaliation: "@lastAvaliation.avaliation"
+            });
+        };
+
+
+    $("#lastAvaliations").kendoGrid({
+    columns: [
+    { title: "Projecto", field: "projectname" },
+    { title: "Milestone",    field: "codemilestone"},
+    { title: "Nota",  field: "avaliation"}
+    ],
+    dataSource: {
+    data:lastAvaliations,
+    pageSize:5
+    },
+    sortable: true,
+    pageable: {
+    refresh: true,
+    pageSizes: true,
+    buttonCount: 5,
+    messages: {
+    itemsPerPage: "avaliações por página",
+    empty: "Sem Informação"
+    }
+    }
+    });
+
+    </script>
+
 }

@@ -4,4 +4,60 @@
 
 @main(user) {
 
+    <h1>Projeto: <b>@milestone.project.title</b></h1>
+    <h3>Etapa: <b>@milestone.code</b></h3>
+
+    <div class="row">
+        <div class="large-12 columns">
+            <h3>Informação:</h3>
+            <div class="row panel">
+                <div class="large-4 medium-4 columns text-center">
+                    <label>Data de início:
+                        <p>@milestone.startDate.format("Y-M-d")</p>
+                    </label>
+                </div>
+                <div class="large-4 medium-4 columns text-center">
+                    <label>Data de fim:
+                        <p>@milestone.endDate.format("Y-M-d")</p>
+                    </label>
+                </div>
+                <div class="large-4 medium-4 columns text-center">
+                    <label>Avaliação Geral:
+                        <p>@{milestone.percentage}%</p>
+                    </label>
+                </div>
+                <div class="large-12 columns">
+                    <label><b>Descrição</b>
+                        <p class="panel callout radius">
+                        @if(milestone.description == null || milestone.description.equals("")){
+                            Nenhuma descrição acerca do projeto.
+                        }else{
+                            @milestone.description
+                        }
+                        </p>
+                    </label>
+                </div>
+                <div class="large-12 columns text-center">
+                    <p><b>Enunciado</b>:</p>
+                    @if(milestone.path.equals("")){
+                        <div data-alert class="alert-box warning radius">Nenhum enunciado submetido.</div>
+                    }else{
+                        <p><a href="@{milestone.path}">Descarregar ficheiro da etapa</a></p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="large-12 left columns text-center">
+            <h3>Avaliar etapa</h3>
+            TODO
+        </div>
+        <div class="large-12 left columns text-center">
+            <h3>Grupos ou Alunos que não submeteram etapa</h3>
+            TODO
+        </div>
+    </div>
+
 }
