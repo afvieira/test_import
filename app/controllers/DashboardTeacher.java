@@ -5,6 +5,11 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
 /**
  * Created by NRAM on 28/04/14.
  */
@@ -68,7 +73,7 @@ public class DashboardTeacher extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result showProject(Long id_discipline,Long id) {
+    public static Result showProject(Long id_discipline, Long id) {
         return ok(
                 views.html.Dashboard.Teacher.project.render(
                         User.findByEmail(request().username()),
@@ -82,16 +87,82 @@ public class DashboardTeacher extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result createProject(Long id_discipline) {
-        /*
-            TODO:
-             - Criar Projeto (Não esquecer de selecionar os alunos ou grupos)
-         */
-        // Não sei como é para fazer neste método
-        return TODO;
+        User u = User.findByEmail(request().username());
+        List<Discipline> lDiscipline = new ArrayList<>();
+        lDiscipline.add(Discipline.getById(id_discipline));
+        return ok(
+                views.html.Dashboard.Teacher.new_project.render(
+                        u,
+                        null,
+                        lDiscipline
+                )
+        );
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result deleteProject(Long id_discipline,Long id) {
+    public static Result updatingProject(Long id){
+        User u = User.findByEmail(request().username());
+        List<Discipline> lDisciplines = new ArrayList<>();
+        Project project = Project.getById(id);
+        lDisciplines.add(project.discipline);
+        if (lDisciplines.size() > 0) {
+            return ok(
+                    views.html.Dashboard.Teacher.new_project.render(
+                            u,
+                            project,
+                            lDisciplines
+                    )
+            );
+        } else {
+            return badRequest(
+                    views.html.error.render(u,
+                            "Não foi encontrada nenhuma disciplina que lecione no corrente ano."
+                    )
+            );
+        }
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result updateProject(Long id) {
+        Project nProject = Projects.updateHandler(id);
+        return redirect(routes.Dashboards.showProject(nProject.discipline.id, nProject.id));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result newProject() {
+        User u = User.findByEmail(request().username());
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        List<Discipline> lDisciplines = Discipline.allByUserYear(u.getEmail(), year);
+        if (lDisciplines.size() > 0) {
+            return ok(
+                    views.html.Dashboard.Teacher.new_project.render(
+                            u,
+                            null,
+                            lDisciplines
+                    )
+            );
+        } else {
+            return badRequest(
+                    views.html.error.render(u,
+                            "Não foi encontrada nenhuma disciplina que lecione no corrente ano."
+                    )
+            );
+        }
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result saveProject() {
+        Project nProject = Projects.saveHandler();
+        if (nProject == null) {
+            return DashboardTeacher.newProject();
+        } else {
+            return redirect(routes.Dashboards.showProject(nProject.discipline.id, nProject.id));
+        }
+    }
+
+
+    @Security.Authenticated(Secured.class)
+    public static Result deleteProject(Long id_discipline, Long id) {
         /*
             TODO:
              - Criar Projeto (Não esquecer de selecionar os alunos ou grupos)
@@ -161,7 +232,7 @@ public class DashboardTeacher extends Controller {
 
 
     @Security.Authenticated(Secured.class)
-    public static Result avaliations(Long id_project,Long id_milestone) {
+    public static Result avaliations(Long id_project, Long id_milestone) {
         /*
             TODO:
                 - Mostrar notas da milestone por grupo e aluno
@@ -188,12 +259,12 @@ public class DashboardTeacher extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result createAvaliation(Long id_project,Long id_milestone) {
+    public static Result createAvaliation(Long id_project, Long id_milestone) {
         return TODO;
     }
 
     @Security.Authenticated(Secured.class)
-    public static Result deleteAvaliation(Long id_project,Long id_milestone) {
+    public static Result deleteAvaliation(Long id_project, Long id_milestone) {
         return TODO;
     }
 
@@ -202,7 +273,7 @@ public class DashboardTeacher extends Controller {
         // Verificar se pertence à milestone
         GroupMilestone gm = GroupMilestone.getByGroupMilestone(id_milestone, id_group);
         User u = User.findByEmail(request().username());
-        if(gm != null){
+        if (gm != null) {
             // TODO: Se calhar é melhor criar outra VIEW
             return ok(
                     views.html.Dashboard.Teacher.avaliation.render(
@@ -222,7 +293,7 @@ public class DashboardTeacher extends Controller {
         // Verificar se pertence à milestone
         StudentMilestone sm = StudentMilestone.getByStudentMilestone(id_milestone, id_student);
         User u = User.findByEmail(request().username());
-        if(sm != null){
+        if (sm != null) {
             // TODO: Se calhar é melhor criar outra VIEW
             return ok(
                     views.html.Dashboard.Teacher.avaliation.render(
