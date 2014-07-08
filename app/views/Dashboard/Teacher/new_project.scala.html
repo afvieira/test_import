@@ -111,6 +111,53 @@
 
                     </tbody>
                 </table>
+
+                <hr/>
+
+                <h3>Adicionar novo anexo:</h3>
+                <div id="file-uploader">
+                    <noscript>
+                        <p>Please enable JavaScript to use file uploader.</p>
+                            <!-- or put a simple form for upload here -->
+                    </noscript>
+
+                    @form(
+                        action = if(project == null)  {
+                        routes.DashboardTeacher.uploadTempFile()
+                        } else {
+                        routes.Dashboards.uploadFileMilestone(project.id, 0)
+                        },
+                        'enctype -> "multipart/form-data", 'class -> "dropzone dz-clickable",
+                        'id -> "version-milestone") {
+                        <div class="dz-default dz-message">
+                        <span></span>
+                        </div>
+
+                        <script>
+
+                            var allFiles = [];
+
+
+                        Dropzone.options.versionMilestone = {
+                            paramName: "file", // The name that will be used to transfer the file
+                            maxFilesize: 100, // MB
+                            //accept: function(file, done) {
+                            //    done();
+                            //},
+                            complete: function(file, done){
+                                tempFile = {
+                                    'name': file.name,
+                                    'type': 'temp file',
+                                    'date': 'temp date'
+                                }
+                                allFiles.push(tempFile);
+                                console.log(file.xhr.response);
+                            }
+                        };
+                        </script>
+                    }
+                </div>
+
             </div>
         </div>
         <div class="content" id="etapas">
@@ -210,7 +257,17 @@
                 </table>
             </div>
         </div>
-
+<script>
+$('#anexos').DataTable( {
+language: {url: "@routes.Assets.at("js/Portuguese.json")"},
+data: allFiles,
+columns: [
+{ data: 'name' },
+{ data: 'type' },
+{ data: 'date' }
+]
+});
+</script>
     </div>
 </div>
 }

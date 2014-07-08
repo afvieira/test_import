@@ -109,10 +109,23 @@ public class Application extends Controller {
         Http.MultipartFormData body = request().body().asMultipartFormData();
         Http.MultipartFormData.FilePart milestoneFile = body.getFile("file");
         if (milestoneFile != null) {
+            // Vai buscar o nome do ficheiro
             String fileName = milestoneFile.getFilename();
+
+            // Tipo de conteúdo
             String contentType = milestoneFile.getContentType();
+
+            // Ficheiro
             File file = milestoneFile.getFile();
+
+            // Cria as directorias se necessário
+            File createDirectories = new File(relativePath);
+            createDirectories.mkdirs();
+
+            // Move o ficheiro para a nova directoria
             File newFile = new File(relativePath + fileName);
+
+            // Renomeia
             file.renameTo(newFile);
             return newFile.getPath();
         } else {
