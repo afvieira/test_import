@@ -96,9 +96,10 @@ public class Project extends Model {
         find.ref(id).delete();
     }
 
-    public static void update(Project project, Long discipline_id){
+    public static Project update(Project project, Long discipline_id){
         project.discipline = Discipline.find.ref(discipline_id);
         project.update();
+        return project;
     }
 
     public static List<Project> getByCreatedDate(String emailuser){

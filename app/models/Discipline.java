@@ -133,4 +133,17 @@ public class Discipline extends Model {
         );
         d.saveManyToManyAssociations("projects");
     }
+
+    public static List<Discipline> allByUserYear(String emailUser, int year){
+        int actualMonth = Calendar.getInstance().get(Calendar.MONTH);
+        if (actualMonth < 8){ // Ano lectivo é o anterior ao atual
+            year--;
+        }
+
+        return find.where()
+                .eq("users.email", emailUser)
+                .eq("year", year)
+                .findList();
+    }
+
 }

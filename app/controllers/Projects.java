@@ -55,30 +55,45 @@ public class Projects extends Controller{
         return all();
     }
 
-    public static Result update(Long id){
+    public static Project updateHandler(Long id) {
         Form<Project> filledForm = projectForm.fill(Project.getById(id)).bindFromRequest();
-        if(filledForm.hasErrors()){
-            flash("erro","Ocorreram erros na gravação" + filledForm.toString());
+        if (filledForm.hasErrors()){
+            flash("erro", "Ocorreram erros na gravação: " + filledForm.toString());
+            return null;
+        } else {
+            Long disciplinaID = Long.parseLong(filledForm.data().get("disciplinaID"));
+            Project saveProject = Project.update(filledForm.get(), disciplinaID);
+            flash("sucesso", "Projeto gravado com sucesso.");
+            return saveProject;
+        }
+    }
+
+    public static Result update(Long id){
+
+        if(Projects.updateHandler(id) == null){
             return badRequest(views.html.Projects.item.render(User.findByEmail(request().username()),Project.getById(id),Discipline.all()));
         }else{
-            Long disciplinaID = Long.parseLong(filledForm.data().get("disciplinaID"));
-            Project.update(filledForm.get(), disciplinaID);
-
-            flash("sucesso", "Projeto gravado com sucesso.");
             return redirect(routes.Projects.all());
         }
     }
 
-    public static Result save(){
+    public static Project saveHandler() {
         Form<Project> filledForm = projectForm.bindFromRequest();
-        if(filledForm.hasErrors()){
-            flash("erro", "Ocorreram erros na gravação" + filledForm.toString());
+        if (filledForm.hasErrors()){
+            flash("erro", "Ocorreram erros na gravação: " + filledForm.toString());
+            return null;
+        } else {
+            Long disciplinaID = Long.parseLong(filledForm.data().get("disciplinaID"));
+            Project saveProject = Project.create(filledForm.get(), disciplinaID, User.findByEmail(request().username()).email);
+            flash("sucesso", "Projeto gravado com sucesso.");
+            return saveProject;
+        }
+    }
+
+    public static Result save(){
+        if(Projects.saveHandler() == null){
             return badRequest(views.html.Projects.item.render(User.findByEmail(request().username()),null,Discipline.all()));
         }else{
-            Long disciplinaID = Long.parseLong(filledForm.data().get("disciplinaID"));
-            Project.create(filledForm.get(), disciplinaID, User.findByEmail(request().username()).email);
-
-            flash("sucesso", "Projeto gravado com sucesso.");
             return redirect(routes.Projects.all());
         }
     }
