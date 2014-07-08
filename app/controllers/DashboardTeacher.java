@@ -224,6 +224,15 @@ public class DashboardTeacher extends Controller {
         return TODO;
     }
 
+    @Security.Authenticated(Secured.class)
+    public static Result uploadTempFile(){
+        String pathFile = Application.uploadToPath("UploadFiles/temp/");
+        if (pathFile != null){
+            return ok(pathFile);
+        } else {
+            return badRequest();
+        }
+    }
 
     @Security.Authenticated(Secured.class)
     public static Result uploadFileMilestone(Long id_project, Long id_milestone) {

@@ -111,13 +111,15 @@
             lastProjects.push({
             projectname: "@lastProject.code",
             startDate: "@lastProject.startDate.format("Y-M-d")",
-            endDate: "@lastProject.endDate.format("Y-M-d")"
+            endDate: "@lastProject.endDate.format("Y-M-d")",
+            id_discipline: "@lastProject.discipline.id",
+            id_project: "@lastProject.id"
             });
         };
 
     $("#lastProjects").kendoGrid({
     columns: [
-    { title: "Projecto", field: "projectname" },
+    { title: "Projecto", field: "projectname", template: "<a href='/dashboard/discipline/${id_discipline}/project/${id_project}'>${projectname}</a>" },
     { title: "Início",    field: "startDate"},
     { title: "Entrega",  field: "endDate"}
     ],
