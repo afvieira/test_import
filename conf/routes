@@ -93,3 +93,10 @@ GET         /profile/:id                                                        
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                                                                                controllers.Assets.at(path="/public", file)
+
+# StaticPages
+GET         /API_help                                                                                    controllers.Application.API_Help()
+
+# API
+GET         /API/V1/:entity.json                                                                         controllers.API.JSON.GetEntities(entity: String)
+GET         /API/V1/:entity/:id.json                                                                     controllers.API.JSON.GetEntity(entity: String, id: Long)

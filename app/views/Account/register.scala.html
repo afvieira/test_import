@@ -1,41 +1,8 @@
-@(users: java.util.List[User], _form: play.data.Form[models.User])
+@(_form: play.data.Form[models.User])
 
 @import helper._
 
-
 @main() {
-
-@*
-    <h1>so para testes: lista de users</h1>
-    <table width="100%">
-        <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Email</th>
-            <th>Data Nascimento</th>
-            <th>Codigo</th>
-            <th>Password</th>
-            <th>Tipo Utilizador</th>
-            <th></th>
-        </tr>
-        @for(u <- users) {
-            <tr>
-                <td align="center">@u.id</td>
-                <td align="center">@u.name</td>
-                <td align="center">@u.email</td>
-                <td align="center">@u.birthdate.format("dd-MM-yyyy")</td>
-                <td align="center">@u.code</td>
-                <td align="center">@u.encrypted_password</td>
-                <td align="center">@u.userType</td>
-                <td align="center">
-                @form(routes.Application.deleteUser(u.id)) {
-                    <input type="submit" value="Remover" class="small-centered button radius">
-                    }
-                </td>
-            </tr>
-        }
-    </table>
-*@
 
     <br>
     <br>
@@ -87,18 +54,6 @@
 
                 @inputRadioGroup(_form("userType"), options(User.UserType.Student.toString() -> "Estudante", User.UserType.Teacher.toString() -> "Docente", User.UserType.Administrator.toString() -> "Administrador"),
                     '_label -> "Tipo de utilizador", '_error -> "")
-
-
-                @*
-                @inputText(_form("email"), '_label -> "Email", '_help -> "", '_autofocus -> "autofocus")
-                @inputPassword(_form("encrypted_password"), '_label -> "Password", '_help -> "")
-                @inputText(_form("code"), '_label -> "Código", '_help -> "")
-                @inputText(_form("name"), '_label -> "Nome", '_help -> "")
-                @inputDate(_form("birthdate"), '_label -> "Data nascimento", '_help -> "")
-                @inputText(_form("contact"), '_label -> "Contacto", '_help -> "")
-                @inputRadioGroup(_form("userType"), options(User.UserType.Student.toString() -> "Estudante", User.UserType.Teacher.toString() -> "Docente", User.UserType.Administrator.toString() -> "Administrador"),
-                    '_label -> "Tipo de utilizador", '_error -> "")
-                *@
 
                 <input class="button tiny radius" name="commit" type="submit" value="Registar">
             }
