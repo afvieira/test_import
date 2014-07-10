@@ -118,20 +118,22 @@
                             <!-- or put a simple form for upload here -->
                     </noscript>
 
-                    @form(
-                        action = if(project == null)  {
-                            routes.DashboardTeacher.uploadTempFile()
-                        } else {
-                            routes.Dashboards.uploadFileMilestone(project.id, 0)
-                        },
-                        'enctype -> "multipart/form-data", 'class -> "dropzone dz-clickable",
-                        'id -> "version-milestone") {
-                        <div class="dz-default dz-message">
-                        <span></span>
-                        </div>
+                    @if(project == null){
+                        <ul>
+                            <li>Por favor, guarde o projeto antes de anexar qualquer ficheiro.</li>
+                        </ul>
+                    }else{
+                        @form(action = routes.DashboardTeacher.uploadFileToProject(project.discipline.id, project.id),
+                              'enctype -> "multipart/form-data",
+                              'class -> "dropzone dz-clickable",
+                              'id -> "version-milestone") {
+
+                            <div class="dz-default dz-message">
+                                <span></span>
+                            </div>
+                        }
                     }
                 </div>
-
             </div>
         </div>
         <div class="content" id="etapas">
@@ -157,8 +159,8 @@
                             <tr>
                                 <td>@m.number</td>
                                 <td>@m.code</td>
-                                <td>@m.startDate.format("dd-MM-yyyy")</td>
-                                <td>@m.endDate.format("dd-MM-yyyy")</td>
+                                <td>@m.startDate.format("YYYY-MM-dd")</td>
+                                <td>@m.endDate.format("YYYY-MM-dd")</td>
                                 <td>@m.percentage %</td>
                             </tr>
                         }

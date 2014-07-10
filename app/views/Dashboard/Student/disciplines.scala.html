@@ -66,8 +66,8 @@
         @for(lastProject <- projects) {
             projects.push({
             projectname: "@lastProject.code",
-            startDate: "@lastProject.startDate.format("Y-M-d")",
-            endDate: "@lastProject.endDate.format("Y-M-d")",
+            startDate: "@lastProject.startDate.format("YYYY-MM-dd")",
+            endDate: "@lastProject.endDate.format("YYYY-MM-dd")",
             id_project: "@lastProject.id",
             id_discipline: "@lastProject.discipline.id"
             });
@@ -105,7 +105,7 @@
             id_discipline: "@milestone.project.discipline.id",
             projectname: "@milestone.project.code",
             milestone: "@milestone.code",
-            endDate: "@milestone.endDate.format("Y-M-d")"
+            endDate: "@milestone.endDate.format("YYYY-MM-dd")"
             });
         };
 
@@ -142,7 +142,7 @@
             id_discipline: "@milestone.project.discipline.id",
             projectname: "@milestone.project.code",
             milestone: "@milestone.code",
-            endDate: "@milestone.endDate.format("Y-M-d")"
+            endDate: "@milestone.endDate.format("YYYY-MM-dd")"
             });
         };
 

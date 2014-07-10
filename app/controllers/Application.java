@@ -5,9 +5,7 @@ import play.data.Form;
 import play.mvc.*;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.GregorianCalendar;
 
 import static play.data.Form.form;
 
@@ -75,7 +73,7 @@ public class Application extends Controller {
     }
 
     public static Result register() {
-        return ok(views.html.Account.register.render(User.findAll(), form(User.class)));
+        return ok(views.html.Account.register.render(form(User.class)));
     }
 
     public static Result createUser() {
@@ -83,7 +81,7 @@ public class Application extends Controller {
         Form<User> filledForm = userForm.bindFromRequest();
         if (filledForm.hasErrors()) {
             return badRequest(
-                    views.html.Account.register.render(User.findAll(), filledForm)
+                    views.html.Account.register.render(filledForm)
             );
         } else {
             User.create(filledForm.get());
@@ -119,11 +117,11 @@ public class Application extends Controller {
             File file = milestoneFile.getFile();
 
             // Cria as directorias se necessário
-            File createDirectories = new File(relativePath);
+            File createDirectories = new File("Archive/" + relativePath);
             createDirectories.mkdirs();
 
             // Move o ficheiro para a nova directoria
-            File newFile = new File(relativePath + fileName);
+            File newFile = new File("Archive/" + relativePath + "/" + new GregorianCalendar().getTimeInMillis() + "_" + fileName);
 
             // Renomeia
             file.renameTo(newFile);
@@ -131,6 +129,15 @@ public class Application extends Controller {
         } else {
             return null;
         }
+    }
+
+    public static Result API_Help() {
+        User u = null;
+        if (session("email") != null) {
+            u = User.findByEmail(session("email"));
+        }
+
+        return ok(views.html.StaticPages.API_help.render(u));
     }
 
 }

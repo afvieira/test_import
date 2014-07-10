@@ -160,6 +160,12 @@ public class Group extends Model {
             Long.class, Group.class
     );
 
+    public static Group getById(Long id){
+        return find.where()
+                .eq("id", id)
+                .findUnique();
+    }
+
     public static List<Group> all() {
         return find.all();
     }

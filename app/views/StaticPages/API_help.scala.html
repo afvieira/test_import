@@ -1,0 +1,31 @@
+@(user: User = null)
+
+@main(user) {
+    <h1>Disponibilização de API</h1>
+
+    <p>A API foi desenvolvida para facilitar o acesso aos dados disponíveis
+        em várias tabelas, como cursos, disciplinas, grupos, projetos e utilizadores.</p>
+
+    <h2>Como Utilizar</h2>
+
+    <p>A API disponibiliza os dados de busca no formato JSON. Confira as URL base de acesso a API:</p>
+    <div class="panel radius">
+        <ul>
+            <li style="word-wrap: break-word"><code>http://localhost:9000/API/V1/<b>[entidades]</b>.json</code></li>
+            <li style="word-wrap: break-word"><code>http://localhost:9000/API/V1/<b>[entidades]</b>/<b>[entidadeID]</b>.json</code></li>
+        </ul>
+
+        <div class="panel radius">
+            <p>O parâmetro <b>[entidades]</b> aceita cinco possíveis valores:</p>
+            <ul>
+                <li>courses</li>
+                <li>disciplines</li>
+                <li>groups</li>
+                <li>projects</li>
+                <li>users</li>
+            </ul>
+            <p>O parametro <b>[entidadeID]</b> está relacionado com o id da entidade que você deseja obter.</p>
+            <p style="word-wrap: break-word"><b>Exemplo: </b><a href="http://localhost:9000/API/V1/disciplines.json">http://localhost:9000/API/V1/disciplines.json</a></p>
+        </div>
+    </div>
+}

@@ -218,6 +218,13 @@ public class User extends Model {
         user.save();
     }
 
+    public static User getById(Long userID){
+        return find
+                .where()
+                .eq("id", userID)
+                .findUnique();
+    }
+
     public static void delete(Long id){
         find.ref(id).delete();
     }
