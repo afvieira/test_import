@@ -1,98 +1,97 @@
 @(user: User, project: Project, allMilestonesProject: List[Milestone], nextDeliveryMilestonesProject: List[Milestone], notDeliveryMilestonesProject: List[Milestone], avaliations: Map[Long, StudentMilestone])
 
-@import helper._
-@import util._
-
 @main(user) {
-    <h1>Projeto: <b>@project.title</b></h1>
+    <h2>Projeto: <b>@project.title</b></h2>
 
     <div class="row">
-        <div class="large-12 columns panel">
-            <h3>Informação</h3>
-            <div class="row">
-                <div class="large-2 medium-6 columns">
-                    <label>Projeto da disciplina:
-                        <p>@project.discipline.name</p>
-                    </label>
-                </div>
-                <div class="large-4 medium-6 columns">
-                    <label>Número de etapas
-                        <p>@project.milestones.size()</p>
-                    </label>
-                </div>
-                <div class="large-4 medium-6 columns">
-                    <label>Curso
-                        <p>@project.discipline.course.description</p>
-                    </label>
-                </div>
-                <div class="large-2 medium-6 columns">
-                    <label>Ano Lectivo:
-                        <p>@project.discipline.year</p>
-                    </label>
-                </div>
-                <div class="large-12 columns">
-                    <label><b>Descrição</b>
-                        <p class="panel callout radius">
-                            @if(project.description == null || project.description.equals("")){
-                                Nenhuma descrição acerca do projeto.
-                            }else{
-                                @project.description
-                            }
-                        </p>
-                    </label>
+        <div class="large-12 columns">
+            <div class="panel radius">
+                <h3>Informação</h3>
+                <div class="row">
+                    <div class="large-2 medium-6 columns">
+                        <label>Projeto da disciplina:
+                            <p>@project.discipline.name</p>
+                        </label>
+                    </div>
+                    <div class="large-4 medium-6 columns">
+                        <label>Número de etapas
+                            <p>@project.milestones.size()</p>
+                        </label>
+                    </div>
+                    <div class="large-4 medium-6 columns">
+                        <label>Curso
+                            <p>@project.discipline.course.description</p>
+                        </label>
+                    </div>
+                    <div class="large-2 medium-6 columns">
+                        <label>Ano Lectivo:
+                            <p>@project.discipline.year</p>
+                        </label>
+                    </div>
+                    <div class="large-12 columns">
+                        <label><b>Descrição</b>
+                            <p class="panel callout radius">
+                                @if(project.description == null || project.description.equals("")){
+                                    Nenhuma descrição acerca do projeto.
+                                }else{
+                                    @project.description
+                                }
+                            </p>
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <h3>Milestones</h3>
     <div class="row">
-        <h3>Milestones</h3>
-        <dl class="accordion" data-accordion>
-            @for(milestone <- allMilestonesProject){
-                <dd>
-                    <a href="#milestone-@{milestone.id}"><b>Milestone:</b> @{milestone.code}</a>
-                    <div id="milestone-@{milestone.id}" class="content @if(milestone.startDate.before(new Date()) && milestone.endDate.after(new Date())){ active }">
-                        <div class="row panel">
-                            <div class="large-6 columns text-center">
-                                <label><b>Data de início</b>:
-                                    @milestone.startDate.format("Y-M-d")
-                                </label>
-                            </div>
-                            <div class="large-6 columns text-center">
-                                <label><b>Data de fim</b>:
-                                    @milestone.endDate.format("Y-M-d")
-                                </label>
-                            </div>
-                            <div class="large-12 columns">
-                                <label><b>Descrição</b>:
-                                    <p class="panel callout radius">@milestone.description</p>
-                                </label>
-                            </div>
-                            <div class="large-6 columns text-center">
-                                <p><b>Enunciado</b>:</p>
-                                @if(milestone.path.equals("")){
-                                    <div data-alert class="alert-box warning radius">Nenhum enunciado submetido pelo professor.</div>
-                                }else{
-                                        <a href="@{milestone.path}">Descarregar ficheiro da etapa, adicionado pelo professor.</a> <br />
-                                }
-                            </div>
-                            <div class="large-6 left columns text-center">
-                                <p><b>Avaliação</b>:</p>
-                                @if(avaliations.get(milestone.id) != null && avaliations.get(milestone.id).avaliation != null){
-                                    <p>@{avaliations.get(milestone.id).avaliation}</p>
-                                }else{
-                                    <div data-alert class="alert-box warning radius">Ainda não foi adicionada a avaliação.</div>
-                                }
-                            </div>
-                            <div class="large-6 right columns">
-                                <p class="right">
-                                    <a href="/dashboard/project/@{milestone.project.id}/milestone/@{milestone.id}" class="button tiny radius">Ver toda a Etapa</a></a>
-                                </p>
+        <div class="large-12 columns">
+            <dl class="accordion" data-accordion>
+                @for(milestone <- allMilestonesProject){
+                    <dd>
+                        <a href="#milestone-@{milestone.id}"><b>Milestone:</b> @{milestone.code} ( De <b>@{milestone.getStartDate().format("YYYY-MM-dd")}</b> até <b>@{milestone.getEndDate().format("YYYY-MM-dd")}</b> )</a>
+                        <div id="milestone-@{milestone.id}" class="content @if(milestone.startDate.before(new Date()) && milestone.endDate.after(new Date())){ active }">
+                            <div class="row panel radius">
+                                <div class="large-6 columns text-center">
+                                    <label><b>Data de início</b>: @milestone.startDate.format("YYYY-MM-dd")</label>
+                                </div>
+                                <div class="large-6 columns text-center">
+                                    <label><b>Data de fim</b>: @milestone.endDate.format("YYYY-MM-dd")</label>
+                                </div>
+                                <br/>
+                                <hr/>
+                                <div class="large-12 columns">
+                                    <label><b>Descrição</b>:
+                                        <p class="panel callout radius">@milestone.description</p>
+                                    </label>
+                                </div>
+                                <div class="large-6 columns text-center">
+                                    <p><b>Enunciado</b>:</p>
+                                    @if(milestone.path.equals("")){
+                                        <div data-alert class="alert-box warning radius">Nenhum enunciado submetido pelo professor.</div>
+                                    }else{
+                                            <a href="@{milestone.path}">Descarregar ficheiro da etapa, adicionado pelo professor.</a> <br />
+                                    }
+                                </div>
+                                <div class="large-6 left columns text-center">
+                                    <p><b>Avaliação</b>:</p>
+                                    @if(avaliations.get(milestone.id) != null && avaliations.get(milestone.id).avaliation != null){
+                                        <p>@{avaliations.get(milestone.id).avaliation}</p>
+                                    }else{
+                                        <div data-alert class="alert-box warning radius">Ainda não foi adicionada a avaliação.</div>
+                                    }
+                                </div>
+                                <div class="large-6 right columns">
+                                    <p class="right">
+                                        <a href="/dashboard/project/@{milestone.project.id}/milestone/@{milestone.id}" class="button tiny radius">Ver toda a Etapa</a></a>
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </dd>
-            }
-        </dl>
+                    </dd>
+                }
+            </dl>
+        </div>
     </div>
 }

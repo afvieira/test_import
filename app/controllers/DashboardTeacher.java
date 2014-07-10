@@ -235,8 +235,41 @@ public class DashboardTeacher extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
+    public static Result uploadFileToProject(Long id_discipline, Long id_project) {
+        Project p = Project.getById(id_project);
+        String pathResult;
+
+        String pathToSave = p.discipline.code + "_" + p.discipline.year + "_" + p.discipline.id.toString() +
+                            "/TrabPraticos/" + p.code + "_" + p.id.toString();
+
+        pathResult = Application.uploadToPath(pathToSave);
+
+        System.out.println(pathResult);
+
+        if (pathResult == null || pathResult.isEmpty()){
+            return null;
+        }else{
+            return controllers.DashboardTeacher.updatingProject(p.id);
+        }
+    }
+
+    @Security.Authenticated(Secured.class)
     public static Result uploadFileMilestone(Long id_project, Long id_milestone) {
-        return TODO;
+        Milestone milestone = Milestone.getById(id_milestone);
+        String pathResult;
+
+        pathResult = Application.uploadToPath(milestone.getProject().discipline.code + "/TrabPraticos/" +
+                                              milestone.getProject().code + "/" +
+                                              milestone.code);
+
+        System.out.println(pathResult);
+
+        if (pathResult == null || pathResult.isEmpty()){
+            return null;
+        }else{
+            return controllers.Dashboards.showProject(milestone.getProject().discipline.id,
+                                                      milestone.getProject().id);
+        }
     }
 
 

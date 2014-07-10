@@ -4,11 +4,16 @@
 
 <!-- MENUs -->
 @Menu() = {
+
     <li><a href="/dashboard" class="">DashBoard</a></li>
-    <li><a href="/courses" class="">Cursos</a></li>
-    <li><a href="/disciplines" class="">Disciplinas</a></li>
-    <li><a href="/shifts" class="">Turnos</a></li>
-    <li><a href="/projects" class="">Trabalhos Práticos</a></li>
+
+    @if(user != null && user.getUserType() == User.UserType.Administrator.toString()) {
+        <li><a href="/courses" class="">Cursos</a></li>
+        <li><a href="/disciplines" class="">Disciplinas</a></li>
+        <li><a href="/shifts" class="">Turnos</a></li>
+        <li><a href="/projects" class="">Trabalhos Práticos</a></li>
+    }
+
     <li><a href="/API_help" class="">Ajuda API</a></li>
 }
 
@@ -32,9 +37,8 @@
 
         <!-- Importar KendoUI -->
         <link rel="stylesheet" href="@routes.Assets.at("stylesheets/kendoui/kendo.common.min.css")">
-        <link rel="stylesheet" href="@routes.Assets.at("stylesheets/kendoui/kendo.default.min.css")">
+        <link rel="stylesheet" href="@routes.Assets.at("stylesheets/kendoui/kendo.bootstrap.min.css")">
         <link rel="stylesheet" href="@routes.Assets.at("stylesheets/custom_kendoui.css")">
-
 
         <script src="@routes.Assets.at("js/kendoui/jquery.min.js")" ></script>
         <script src="@routes.Assets.at("js/kendoui/kendo.web.min.js")"></script>
@@ -171,10 +175,15 @@
         <script src="@routes.Assets.at("js/vendor/jquery.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("js/foundation.min.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("js/vendor/modernizr.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("js/kendoui/cultures/kendo.culture.pt-PT.min.js")" type="text/javascript"></script>
 
         <script>
         $(document).foundation ( ) ;
         $(document).foundation('alerts', {animation: "slideUp"});
+        </script>
+
+        <script type="text/javascript">
+            $(document).kendo.culture("pt-PT");
         </script>
 
     </body>

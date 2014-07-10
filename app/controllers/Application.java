@@ -5,9 +5,7 @@ import play.data.Form;
 import play.mvc.*;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.GregorianCalendar;
 
 import static play.data.Form.form;
 
@@ -119,11 +117,11 @@ public class Application extends Controller {
             File file = milestoneFile.getFile();
 
             // Cria as directorias se necessário
-            File createDirectories = new File(relativePath);
+            File createDirectories = new File("Archive/" + relativePath);
             createDirectories.mkdirs();
 
             // Move o ficheiro para a nova directoria
-            File newFile = new File(relativePath + fileName);
+            File newFile = new File("Archive/" + relativePath + "/" + new GregorianCalendar().getTimeInMillis() + "_" + fileName);
 
             // Renomeia
             file.renameTo(newFile);
