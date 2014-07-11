@@ -37,7 +37,6 @@ public class Milestone extends Model {
     @Constraints.Required
     public Date endDate;
 
-    @Constraints.Required
     public String path;
 
     @Constraints.Required
@@ -182,13 +181,20 @@ public class Milestone extends Model {
         return find.all();
     }
 
-    public static void create(Milestone milestone, Long id_project){
+    public static Milestone create(Milestone milestone, Long id_project){
         milestone.project = Project.find.ref(id_project);
         milestone.save();
+        return milestone;
     }
 
     public static void delete(Long id){
         find.ref(id).delete();
+    }
+
+    public static Milestone update(Milestone milestone, Long project_id){
+        milestone.project = Project.find.ref(project_id);
+        milestone.update();
+        return milestone;
     }
 
 
