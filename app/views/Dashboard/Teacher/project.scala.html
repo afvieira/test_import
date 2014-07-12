@@ -74,7 +74,6 @@
     </div>
     <div class="row">
         <div class="large-12 columns">
-
             <a href="@{routes.DashboardTeacher.updatingProject(project.id)}" class="button tiny radius">Editar Projeto</a>
             <a href="@{routes.DashboardTeacher.updatingProject(project.discipline.id)}" class="button tiny radius">Voltar à Disciplina</a>
         </div>
@@ -156,6 +155,58 @@
     data:milestones
     },
     height:250,
+    sortable: true,
+    filterable: true
+    });
+
+    var allStudents = [];
+        @for(student <- project.students){
+            allStudents.push({
+                photo: "",
+                code: "@{student.student.code}",
+                name: "@{student.student.name}",
+                avaliation: "@{student.avaliation}"
+            });
+        };
+
+    $("#all_students").kendoGrid({
+    columns: [
+    {width:50,  title: "Foto", field: "photo" },
+    {width:35,  title: "Código",    field: "code", style: "text-align: center; font-size: 14px"},
+    {width:35,  title: "Nome",  field: "name", attributes: {"class": "table-cell", style: "text-align: center; font-size: 14px"}},
+    {width:35,  title: "Avaliação",  field: "avaliation", attributes: {"class": "table-cell", style: "text-align: center; font-size: 14px"}}
+    ],
+    dataSource: {
+    data: allStudents
+    },
+
+    height: 250,
+    sortable: true,
+    filterable: true
+    });
+
+    var allGroups = [];
+        @for(student <- project.groups){
+            var namesGroups = "";
+                @for(groupStudent <- student.group.students){
+                    namesGroups += @groupStudent.name + ", "
+                }
+            allStudents.push({
+            code: "@{student.group.code}",
+            name: namesGroups
+            });
+        };
+
+    $("#all_groups").kendoGrid({
+    columns: [
+        {width:35,  title: "Código",    field: "code", style: "text-align: center; font-size: 14px"},
+        {width:35,  title: "Nomes",  field: "name", attributes: {"class": "table-cell", style: "text-align: center; font-size: 14px"}},
+    ],
+    dataSource: {
+    data: allGroups
+    },
+
+    height: 250,
     sortable: true,
     filterable: true
     });
