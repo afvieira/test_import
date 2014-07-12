@@ -1,0 +1,140 @@
+@(user: User, actualUser: User)
+
+@import helper._
+
+@template(update: Boolean) = {
+
+@if(update){
+    <div>
+        <label>ID: @actualUser.id
+            <input type="hidden" name="id" value="@{actualUser.id}"/>
+        </label>
+    </div>
+    <br/>
+}
+
+    <div class="row">
+        <div class="large-4 columns">
+            <label>Código
+                <input name="code" @if(update){value="@{actualUser.code}"} placeholder="Código" type="text">
+            </label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="large-12 columns">
+            <label>Nome
+                <input name="name" @if(update){value="@{actualUser.name}"} placeholder="Nome" type="text">
+            </label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="large-12 columns">
+            <label>Email
+                <input name="email" @if(update){value="@{actualUser.email}"} placeholder="Email" type="text">
+            </label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="large-12 columns">
+            <label>Tipo de utilizador
+                <select name="userType">
+                @for(d <- User.UserType.values()){
+                    @if(update && (actualUser.userType.equals(d.toString()))){
+                        <option value="@{d.toString}" selected> @{d.toString}</option>
+                    }else{
+                        <option value="@{d.toString}"> @{d.toString}</option>
+                    }
+                }
+                </select>
+            </label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="large-12 columns">
+            <label>Data de Nascimento
+                <input name="birthdate" @if(update){value="@{actualUser.birthdate.format("YYYY-MM-dd")}"} placeholder="Data de nascimento" type="date">
+            </label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="large-12 columns">
+            <label>Contacto
+                <input name="contacto" @if(update){value="@{actualUser.contact}"} placeholder="Contacto" type="text">
+            </label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="large-12 columns">
+            <label>Password
+                <input name="encrypted_password" @if(update){value="@{actualUser.encrypted_password}"} placeholder="Contacto" type="text">
+            </label>
+        </div>
+    </div>
+}
+
+@main(user) {
+
+<div class="small-centered columns">
+
+
+    <dl class="tabs" data-tab>
+        <dd class="active"><a href="#ident">Identificação</a></dd>
+        <dd><a href="#disciplinas">Disciplinas</a></dd>
+    </dl>
+    <div class="tabs-content">
+        <div class="content active" id="ident">
+            <div class="panel radius">
+            @if(actualUser == null){
+                @form(routes.Users.save()){
+                    @template(false)
+                    <input class="button tiny radius" name="commit" type="submit" value="Guardar">
+                }
+            }else{
+                @form(routes.Users.update(actualUser.id)){
+                    @template(true)
+                    <input class="button tiny radius" name="commit" type="submit" value="Atualizar">
+                    }
+            }
+            </div>
+        </div>
+        <div class="content" id="disciplinas">
+            <div class="panel radius">
+
+                <h4>Disciplinas</h4>
+
+                <hr/>
+
+                <table cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th style="text-align : left ; width : 20 %">Id</th>
+                            <th style="text-align : left ; width : 30 %">Código</th>
+                            <th style="text-align : left ; width : 50 %">Nome da Disciplina</th>
+                            <th style="text-align : left ; width : 50 %">Ano</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @if(actualUser != null && actualUser.disciplines != null && actualUser.disciplines.size() > 0) {
+                        @for(s <- actualUser.disciplines) {
+                            <tr>
+                                <td>@s.id</td>
+                                <td>@s.code</td>
+                                <td>@s.name</td>
+                                <td>@s.year</td>
+                            </tr>
+                        }
+                    }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+}

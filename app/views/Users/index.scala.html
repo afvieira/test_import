@@ -1,0 +1,68 @@
+@(user: User, students: List[User])
+
+@import helper._
+
+@main(user) {
+
+    <table id="users" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th style="text-align: left; width: 5%">ID</th>
+                <th style="text-align: left; width: 10%">Código</th>
+                <th style="text-align: left; width: 45%">Nome</th>
+                <th style="text-align: left; width: 40%">Email</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th style="text-align: left;">ID</th>
+                <th style="text-align: left;">Código</th>
+                <th style="text-align: left;">Nome</th>
+                <th style="text-align: left;">Email</th>
+                <th></th>
+            </tr>
+        </tfoot>
+    </table>
+
+    <hr/>
+
+    <a href="/user/new" class="small button radius">Novo Utilizador</a>
+
+    <script type="text/javascript" charset="utf-8">
+
+    var alunos = [];
+        @for(s <- students) {
+        alunos.push({id: "@{s.id}",
+            code: "@{s.code}",
+            name: "<a href='/users/@{s.id}'>@{s.name}</a>",
+            email: "@{s.email}'>@{s.email}",
+            button: "<input type='submit' id=@{s.id} onclick='removerAlunos(@{s.id})' value='Apagar' class='small-centered button radius onTable'>"
+            })
+        };
+
+    $('#users').DataTable( {
+    language: {url: "@routes.Assets.at("js/Portuguese.json")"},
+    data: alunos,
+    columns: [
+    { data: 'id' },
+    { data: 'code' },
+    { data: 'name' },
+    { data: 'email' },
+    { data: 'button'}
+    ]
+    });
+
+    function removerAlunos(id){
+    redirect('/users/' + id + '/delete', 'post');
+    }
+
+    var redirect = function(url, method) {
+    var form = document.createElement('form');
+    form.method = method;
+    form.action = url;
+    form.submit();
+    };
+
+    </script>
+}

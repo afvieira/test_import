@@ -213,9 +213,14 @@ public class User extends Model {
     //DataBase
     public static Finder<Long, User> find = new Finder( Long.class, User.class );
 
-    public static void create(User user){
+    public static List<User> all() {
+        return find.all();
+    }
+
+    public static User create(User user){
         user.date_sign_up = new Date();
         user.save();
+        return user;
     }
 
     public static User getById(Long userID){
@@ -251,5 +256,10 @@ public class User extends Model {
                 .eq("email", email)
                 .eq("encrypted_password", password)
                 .findUnique();
+    }
+
+    public static User update(User user){
+        user.update();
+        return user;
     }
 }
