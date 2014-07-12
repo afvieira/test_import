@@ -4,38 +4,60 @@
 
     <h2>Disciplina: <b>@discipline.name</b></h2>
 
-    <div class="row">
-        <div class="large-12 columns">
-            <div class="panel radius">
-                <h3>Informação</h3>
-                <div class="row">
-                    <div class="large-2 columns">
-                        <label>Código da Disciplina:
-                            <p>@discipline.code</p>
-                        </label>
-                    </div>
-                    <div class="large-4 columns">
-                        <label>Nome da Disciplina
-                            <p>@discipline.name</p>
-                        </label>
-                    </div>
-                    <div class="large-4 columns">
-                        <label>Curso da Disciplina
-                            <p>@discipline.course.description</p>
-                        </label>
-                    </div>
-                    <div class="large-2 columns">
-                        <label>Ano Lectivo:
-                            <p>@discipline.year</p>
-                        </label>
+    <div class="small-centered columns">
+
+        <dl class="tabs" data-tab>
+            <dd class="active"><a href="#ident">Identificação</a></dd>
+            <dd><a href="#projects_panel">Projetos</a></dd>
+            <dd><a href="#students_panel">Alunos</a></dd>
+        </dl>
+
+        <div class="tabs-content">
+            <div class="content active" id="ident">
+                <div class="panel radius">
+                    <h3>Informação</h3>
+                    <div class="row">
+                        <div class="large-2 columns">
+                            <label>Código da Disciplina:
+                                <p>@discipline.code</p>
+                            </label>
+                        </div>
+                        <div class="large-4 columns">
+                            <label>Nome da Disciplina
+                                <p>@discipline.name</p>
+                            </label>
+                        </div>
+                        <div class="large-4 columns">
+                            <label>Curso da Disciplina
+                                <p>@discipline.course.description</p>
+                            </label>
+                        </div>
+                        <div class="large-2 columns">
+                            <label>Ano Lectivo:
+                                <p>@discipline.year</p>
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
+
+
+            <div class="content" id="projects_panel">
+                <div class="panel radius">
+                    <div id="all_projects"></div>
+                </div>
+            </div>
+
+            <div class="content" id="students_panel">
+                <div class="panel radius">
+                    <div id="all_students"></div>
+                </div>
+            </div>
+
         </div>
-        <div class="large-12">
-            <a href="/dashboard/discipline/@{discipline.id}/project/new/" class="button tiny radius">Ver todos os alunos</a>
-        </div>
+
     </div>
+
 
     <div class="row">
         <div class="large-12 columns">
@@ -45,7 +67,7 @@
             <a href="/dashboard/discipline/@{discipline.id}/project/new/" class="button tiny radius">Criar novo Projeto</a>
         </div>
         <div class="large-6 columns">
-            <h3>Todas as Etapas</h3>
+            <h3>Últimas Etapas</h3>
             <div id="milestones"></div>
             <br />
             <a href="#" class="button tiny radius">Criar nova Etapa</a>
@@ -59,30 +81,76 @@
     </div>
     <script>
 
+        var allStudents = [];
+        @for(student <- discipline.users){
+
+            if (@{student.userType.toString() == "Student"}) {
+                allStudents.push({
+                    photo: "",
+                    code: "@{student.code}",
+                    name: "@{student.name}",
+                    avaliation: ""
+                });
+            }
+        };
+
+        $("#all_students").kendoGrid({
+            columns: [
+                {width:50,  title: "Foto", field: "photo" },
+                {width:35,  title: "Código",    field: "code", style: "text-align: center; font-size: 14px"},
+                {width:35,  title: "Nome",  field: "name", attributes: {"class": "table-cell", style: "text-align: center; font-size: 14px"}},
+                {width:35,  title: "Avaliação",  field: "avaliation", attributes: {"class": "table-cell", style: "text-align: center; font-size: 14px"}}
+            ],
+            dataSource: {
+                data: allStudents
+            },
+
+            height: 250,
+            sortable: true,
+            filterable: true
+        });
+
     var projects = [];
-        @for(lastProject <- projectsDiscipline) {
-            projects.push({
+    @for(lastProject <- projectsDiscipline) {
+        projects.push({
             projectname: "@lastProject.code",
             startDate: "@lastProject.startDate.format("YYYY-MM-dd")",
             endDate: "@lastProject.endDate.format("YYYY-MM-dd")",
             id_project: "@lastProject.id",
             id_discipline: "@discipline.id"
-            });
-        };
+        });
+    };
+
+    $("#all_projects").kendoGrid({
+        columns: [
+            {width:50,  title: "Projecto", field: "projectname", template: "<a href='/dashboard/discipline/${id_discipline}/project/${id_project}'>${projectname}</a>" },
+            {width:35,  title: "Início",    field: "startDate", filterable: { ui: "datetimepicker" }, attributes: {"class": "table-cell", style: "text-align: center; font-size: 14px"}},
+            {width:35,  title: "Entrega",  field: "endDate", filterable: { ui: "datetimepicker" }, attributes: {"class": "table-cell", style: "text-align: center; font-size: 14px"}}
+        ],
+        dataSource: {
+            data: projects
+        },
+
+        height: 250,
+        sortable: true,
+        filterable: true
+    });
 
     $("#projects").kendoGrid({
     columns: [
-    {width:50,  title: "Projecto", field: "projectname", template: "<a href='/dashboard/discipline/${id_discipline}/project/${id_project}'>${projectname}</a>" },
-    {width:35,  title: "Início",    field: "startDate", filterable: { ui: "datetimepicker" }, attributes: {"class": "table-cell", style: "text-align: center; font-size: 14px"}},
-    {width:35,  title: "Entrega",  field: "endDate", filterable: { ui: "datetimepicker" }, attributes: {"class": "table-cell", style: "text-align: center; font-size: 14px"}}
+        {width:50,  title: "Projecto", field: "projectname", template: "<a href='/dashboard/discipline/${id_discipline}/project/${id_project}'>${projectname}</a>" },
+        {width:35,  title: "Início",    field: "startDate", filterable: { ui: "datetimepicker" }, attributes: {"class": "table-cell", style: "text-align: center; font-size: 14px"}},
+        {width:35,  title: "Entrega",  field: "endDate", filterable: { ui: "datetimepicker" }, attributes: {"class": "table-cell", style: "text-align: center; font-size: 14px"}}
     ],
 
     dataSource: {
-    data:projects
+        data:projects
     },
+
     height:150,
     sortable: true,
     filterable: true
+
     });
 
 
@@ -108,7 +176,7 @@
     dataSource: {
     data:milestones
     },
-    height:250,
+    height:150,
     sortable: true,
     filterable: true
     });
@@ -137,7 +205,7 @@
     dataSource: {
     data:nextMilestones,
     },
-    height:250,
+    height:150,
     sortable: true,
     filterable: true
     });
