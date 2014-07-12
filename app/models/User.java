@@ -261,4 +261,10 @@ public class User extends Model {
         user.update();
         return user;
     }
+
+    public static List<User> findAllStudents(){
+        return find.where()
+                .eq("userType", "Student")
+                .findList();
+    }
 }

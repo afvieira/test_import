@@ -30,12 +30,12 @@ POST        /projects/:id/delete                                                
 POST        /projects/:id/update                                                                         controllers.Projects.update(id: Long)
 
 # Milestones
-GET         /milestones                                                                                    controllers.Milestones.all()
-GET         /milestone/new                                                                                 controllers.Milestones.create()
-GET         /milestones/:id                                                                                controllers.Milestones.show(id: Long)
-POST        /milestones                                                                                    controllers.Milestones.save()
-POST        /milestones/:id/delete                                                                         controllers.Milestones.delete(id: Long)
-POST        /milestones/:id/update                                                                         controllers.Milestones.update(id: Long)
+GET         /milestones                                                                                  controllers.Milestones.all()
+GET         /milestone/new                                                                               controllers.Milestones.create()
+GET         /milestones/:id                                                                              controllers.Milestones.show(id: Long)
+POST        /milestones                                                                                  controllers.Milestones.save()
+POST        /milestones/:id/delete                                                                       controllers.Milestones.delete(id: Long)
+POST        /milestones/:id/update                                                                       controllers.Milestones.update(id: Long)
 
 # Disciplinas
 GET         /disciplines                                                                                 controllers.Disciplines.all()
@@ -54,12 +54,12 @@ POST        /shifts/:id/delete                                                  
 POST        /shifts/:id/update                                                                           controllers.Shifts.update(id: Long)
 
 # Users
-GET         /users                                                                                      controllers.Users.all()
-GET         /user/new                                                                                   controllers.Users.create()
-GET         /users/:id                                                                                  controllers.Users.show(id: Long)
-POST        /users                                                                                      controllers.Users.save()
-POST        /users/:id/delete                                                                           controllers.Users.delete(id: Long)
-POST        /users/:id/update                                                                           controllers.Users.update(id: Long)
+GET         /users                                                                                       controllers.Users.all()
+GET         /user/new                                                                                    controllers.Users.create()
+GET         /users/:id                                                                                   controllers.Users.show(id: Long)
+POST        /users                                                                                       controllers.Users.save()
+POST        /users/:id/delete                                                                            controllers.Users.delete(id: Long)
+POST        /users/:id/update                                                                            controllers.Users.update(id: Long)
 
 
 GET         /course/:id_course/disciplines                                                               controllers.Disciplines.allByCourse(id_course: Long)
@@ -122,4 +122,5 @@ GET         /API_help                                                           
 
 # API
 GET         /API/V1/:entity.json                                                                         controllers.API.JSON.GetEntities(entity: String)
+GET         /API/V1/users/students.json                                                                  controllers.API.JSON.GetStudents()
 GET         /API/V1/:entity/:id.json                                                                     controllers.API.JSON.GetEntity(entity: String, id: Long)
