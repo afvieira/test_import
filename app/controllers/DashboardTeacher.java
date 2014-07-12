@@ -98,6 +98,28 @@ public class DashboardTeacher extends Controller {
                 )
         );
     }
+    @Security.Authenticated(Secured.class)
+    public static Result  updatingMilestone(Long id_project, Long id_milestone){
+        User u = User.findByEmail(request().username());
+        List<Project> lProjects = new ArrayList<>();
+        Milestone milestone = Milestone.getById(id_milestone);
+        lProjects.add(milestone.project);
+        if (lProjects.size() > 0){
+            return ok(
+                    views.html.Dashboard.Teacher.new_milestone.render(
+                            u,
+                            milestone,
+                            lProjects
+                    )
+            );
+        } else {
+            return badRequest(
+                    views.html.error.render(u,
+                            "Não foi encontrada nenhuma disciplina que lecione no corrente ano."
+                    )
+            );
+        }
+    }
 
     @Security.Authenticated(Secured.class)
     public static Result updatingProject(Long id){
@@ -322,8 +344,6 @@ public class DashboardTeacher extends Controller {
         pathResult = Application.uploadToPath(milestone.getProject().discipline.code + "/TrabPraticos/" +
                                               milestone.getProject().code + "/" +
                                               milestone.code);
-
-        System.out.println(pathResult);
 
         if (pathResult == null || pathResult.isEmpty()){
             return null;
