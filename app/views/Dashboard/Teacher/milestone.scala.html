@@ -40,7 +40,7 @@
                     </div>
                     <div class="large-12 columns text-center">
                         <p><b>Enunciado</b>:</p>
-                        @if(milestone.path.equals("")) {
+                        @if(milestone == null || milestone.path == null || milestone.path.equals("")) {
                             <div data-alert class="alert-box warning radius">Nenhum enunciado submetido.</div>
                         } else {
                             <p><a href="@{
@@ -51,6 +51,12 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="large-6 right columns">
+        <p class="right">
+            <a href="/dashboard/project/@{milestone.project.id}/milestone/@{milestone.id}/edit" class="button tiny radius">Editar Etapa</a>
+        </p>
     </div>
 
     <div class="row">

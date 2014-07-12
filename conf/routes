@@ -29,6 +29,14 @@ POST        /projects                                                           
 POST        /projects/:id/delete                                                                         controllers.Projects.delete(id: Long)
 POST        /projects/:id/update                                                                         controllers.Projects.update(id: Long)
 
+# Milestones
+GET         /milestones                                                                                    controllers.Milestones.all()
+GET         /milestone/new                                                                                 controllers.Milestones.create()
+GET         /milestones/:id                                                                                controllers.Milestones.show(id: Long)
+POST        /milestones                                                                                    controllers.Milestones.save()
+POST        /milestones/:id/delete                                                                         controllers.Milestones.delete(id: Long)
+POST        /milestones/:id/update                                                                         controllers.Milestones.update(id: Long)
+
 # Disciplinas
 GET         /disciplines                                                                                 controllers.Disciplines.all()
 GET         /discipline/new                                                                              controllers.Disciplines.create()
@@ -74,7 +82,12 @@ POST        /dashboard/discipline/:id_discipline/project/:id/delete             
 POST        /dashboard/discipline/:id_discipline/project/:id_project/upload                              controllers.DashboardTeacher.uploadFileToProject(id_discipline: Long, id_project: Long)
 
 # Dashboard Milestones
-#GET         /dashboard/project/:id_project/milestones                                                    controllers.Dashboards.milestones(id_project: Long)
+GET         /dashboard/discipline/:id_discipline/project/:id_project/milestone/new                       controllers.DashboardTeacher.newMilestoneProject(id_discipline: Long, id_project: Long)
+GET         /dashboard/milestone/new/                                                                    controllers.DashboardTeacher.newMilestone()
+POST        /dashboard/milestone                                                                         controllers.DashboardTeacher.saveMilestone()
+POST        /dashboard/milestone/:id/update                                                              controllers.DashboardTeacher.updateMilestone(id: Long)
+GET         /dashboard/project/:id_project/milestone/:id_milestone/edit                                  controllers.DashboardTeacher.updatingMilestone(id_project: Long, id_milestone: Long)
+
 GET         /dashboard/project/:id_project/milestone/:id_milestone                                       controllers.Dashboards.showMilestone(id_project: Long, id_milestone: Long)
 POST        /dashboard/project/:id_project/milestone                                                     controllers.Dashboards.createMilestone(id_project: Long)
 POST        /dashboard/project/:id_project/milestone/:id_milestone/delete                                controllers.Dashboards.deleteMilestone(id_project: Long, id_milestone: Long)

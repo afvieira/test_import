@@ -1,0 +1,180 @@
+@(user: User, milestone: Milestone, projects: List[Project])
+
+@import helper._
+
+@template(update: Boolean) = {
+
+@if(update){
+    <div>
+        <label>ID: @milestone.id
+            <input type="hidden" name="id" value="@{milestone.id}"/>
+        </label>
+    </div>
+    <br/>
+}
+
+    <div class="row">
+        <div class="large-4 columns">
+            <label>Código Milestone
+                <input name="code" @if(update){value="@{milestone.code}"} placeholder="Código" type="text">
+            </label>
+        </div>
+
+        <div class="large-8 columns">
+            <label>Projeto
+                <select name="projectID">
+                @for(d <- projects.sortBy(d=>d.title)){
+                    @if(update && (milestone.project.id == d.id)){
+                        <option value="@{d.id}" selected> @{d.title}</option>
+                    }else{
+                        <option value="@{d.id}"> @{d.title}</option>
+                    }
+                }
+                </select>
+            </label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="large-12 columns">
+            <label>Descrição
+                <textarea rows="5" name="description" placeholder="Descrição" type="text">@if(update){@{milestone.description}}</textarea>
+            </label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="large-6 columns">
+            <label>Data de início
+            <input name="startDate" @if(update){value="@{milestone.startDate.format("yyyy-MM-dd")}"} placeholder="Data de início" type="date">
+            </label>
+        </div>
+
+        <div class="large-6 columns">
+            <label>Data de fim
+            <input name="endDate" @if(update){value="@{milestone.endDate.format("yyyy-MM-dd")}"} placeholder="Data de fim" type="date">
+            </label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="large-6 columns">
+            <label>Número da etapa
+                <input name="number" @if(update){value="@{milestone.number}"} placeholder="Número da etapa" type="number">
+            </label>
+        </div>
+
+        <div class="large-6 columns">
+            <label>Percentagem da nota
+                <input name="percentage" @if(update){value="@{milestone.percentage}"} placeholder="Percentagem da nota" type="number">
+            </label>
+        </div>
+    </div>
+
+
+}
+
+@main(user) {
+
+<div class="small-centered columns">
+
+    <dl class="tabs" data-tab>
+        <dd class="active"><a href="#ident">Identificação</a></dd>
+        <dd><a href="#anexos">Anexos</a></dd>
+    </dl>
+    <div class="tabs-content">
+        <div class="content active" id="ident">
+            <div class="panel radius">
+            @if(milestone == null){
+                @form(routes.DashboardTeacher.saveMilestone()){
+                    @template(false)
+                    <input class="button tiny radius" name="commit" type="submit" value="Guardar">
+                }
+            }else{
+                @form(routes.DashboardTeacher.updateMilestone(milestone.id)){
+                    @template(true)
+                    <input class="button tiny radius" name="commit" type="submit" value="Atualizar">
+                    }
+            }
+            </div>
+        </div>
+
+        <div class="content" id="anexos">
+            <div class="panel radius">
+
+                <h4>Anexos</h4>
+
+                <hr/>
+
+                <table id="tabela_anexos" class="display" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th style="text-align : left ; width : 10 %">Ficheiro</th>
+                            <th style="text-align : left ; width : 30 %">Tipo</th>
+                            <th style="text-align : left ; width : 25 %">Data</th>
+                        </tr>
+                    </thead>
+                </table>
+
+                <hr/>
+
+                <h3>Adicionar novo anexo:</h3>
+                <div id="file-uploader">
+                    <noscript>
+                        <p>Please enable JavaScript to use file uploader.</p>
+                            <!-- or put a simple form for upload here -->
+                    </noscript>
+
+                    @if(milestone == null){
+                        <ul>
+                            <li>Por favor, guarde a etapa antes de anexar qualquer ficheiro.</li>
+                        </ul>
+                    }else{
+                        @form(action = routes.Dashboards.uploadFileMilestone(milestone.project.id, milestone.id),
+                              'enctype -> "multipart/form-data",
+                              'class -> "dropzone dz-clickable",
+                              'id -> "version-milestone") {
+
+                            <div class="dz-default dz-message">
+                                <span></span>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+
+
+        <script>
+            var allFiles = [];
+
+            Dropzone.options.versionMilestone = {
+            paramName: "file", // The name that will be used to transfer the file
+            maxFilesize: 100, // MB
+            //accept: function(file, done) {
+            //    done();
+            //},
+            complete: function(file, done){
+            tempFile = {
+            'name': file.name,
+            'type': 'temp file',
+            'date': 'temp date'
+            }
+            allFiles.push(tempFile);
+            console.log(file.xhr.response);
+            }
+            };
+
+            $('#tabela_anexos').DataTable( {
+            language: {url: "@routes.Assets.at("js/Portuguese.json")"},
+            data: allFiles,
+            columns: [
+            { data: 'name' },
+            { data: 'type' },
+            { data: 'date' }
+            ]
+            });
+        </script>
+    </div>
+</div>
+}

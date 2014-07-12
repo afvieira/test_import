@@ -39,7 +39,7 @@
                 </div>
                 <div class="large-6 columns text-center">
                     <p><b>Enunciado</b>:</p>
-                @if(milestone.path.equals("")){
+                @if(milestone == null || milestone.path == null || milestone.path.equals("")){
                     <div data-alert class="alert-box warning radius">Nenhum ficheiro submetido pelo professor.</div>
                 }else{
                     <p><a href="@{milestone.path}">Descarregar ficheiro da etapa, adicionado pelo professor.</a></p>

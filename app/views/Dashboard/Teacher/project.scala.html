@@ -10,7 +10,7 @@
                 <div class="row">
                     <div class="large-2 medium-6 columns">
                         <label>Projeto da disciplina:
-                            <p>@project.discipline.name</p>
+                            <p><a href="/dashboard/discipline/@{project.discipline.id}">@project.discipline.name</a></p>
                         </label>
                     </div>
                     <div class="large-4 medium-6 columns">
@@ -42,6 +42,7 @@
                 </div>
             </div>
             <a href="@{routes.DashboardTeacher.updatingProject(project.id)}" class="button tiny radius">Editar Projeto</a>
+            <a href="@{routes.DashboardTeacher.updatingProject(project.discipline.id)}" class="button tiny radius">Voltar à Disciplina</a>
         </div>
     </div>
 
@@ -51,7 +52,7 @@
             <dl class="accordion" data-accordion>
             @for(milestone <- allMilestones){
                 <dd>
-                    <a href="#milestone-@{milestone.id}"><b>Milestone:</b> @{milestone.code} ( De <b>@{milestone.getStartDate().format("YYYY-MM-dd")}</b> até <b>@{milestone.getEndDate().format("YYYY-MM-dd")}</b> )</a>
+                    <a href="#milestone-@{milestone.id}"><b>@{milestone.number}ª Milestone:</b> @{milestone.code} ( De <b>@{milestone.getStartDate().format("YYYY-MM-dd")}</b> até <b>@{milestone.getEndDate().format("YYYY-MM-dd")}</b> )</a>
                     <div id="milestone-@{milestone.id}" class="content @if(milestone.startDate.before(new Date()) && milestone.endDate.after(new Date())){ active }">
                         <div class="row panel radius">
                             <div class="large-6 columns text-center">
@@ -70,7 +71,7 @@
                             </div>
                             <div class="large-6 columns text-center">
                                 <p><b>Enunciado</b>:</p>
-                                @if(milestone.path.equals("")){
+                                @if(milestone == null || milestone.path == null || milestone.path.equals("")){
                                     <div data-alert class="alert-box warning radius">Nenhum ficheiro submetido pelo professor.</div>
                                 }else{
                                     <a href="@{milestone.path}">Descarregar ficheiro da etapa.</a> <br />
@@ -82,7 +83,7 @@
                             </div>
                             <div class="large-6 right columns">
                                 <p class="right">
-                                    <a href="/dashboard/project/@{milestone.project.id}/milestone/@{milestone.id}" class="button tiny radius">Ver toda a Etapa</a></a>
+                                    <a href="/dashboard/project/@{milestone.project.id}/milestone/@{milestone.id}/edit" class="button tiny radius">Editar Etapa</a> <a href="/dashboard/project/@{milestone.project.id}/milestone/@{milestone.id}" class="button tiny radius">Ver toda a Etapa</a></a>
                                 </p>
                             </div>
                         </div>
@@ -91,7 +92,7 @@
             }
             </dl>
             <br/>
-            <a href="#" class="button tiny radius">Criar nova Etapa</a>
+            <a href="/dashboard/discipline/@{project.discipline.id}/project/@{project.id}/milestone/new" class="button tiny radius">Criar nova Etapa</a>
         </div>
 
     </div>

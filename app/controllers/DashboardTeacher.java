@@ -98,6 +98,28 @@ public class DashboardTeacher extends Controller {
                 )
         );
     }
+    @Security.Authenticated(Secured.class)
+    public static Result  updatingMilestone(Long id_project, Long id_milestone){
+        User u = User.findByEmail(request().username());
+        List<Project> lProjects = new ArrayList<>();
+        Milestone milestone = Milestone.getById(id_milestone);
+        lProjects.add(milestone.project);
+        if (lProjects.size() > 0){
+            return ok(
+                    views.html.Dashboard.Teacher.new_milestone.render(
+                            u,
+                            milestone,
+                            lProjects
+                    )
+            );
+        } else {
+            return badRequest(
+                    views.html.error.render(u,
+                            "Não foi encontrada nenhuma disciplina que lecione no corrente ano."
+                    )
+            );
+        }
+    }
 
     @Security.Authenticated(Secured.class)
     public static Result updatingProject(Long id){
@@ -129,6 +151,12 @@ public class DashboardTeacher extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
+    public static Result updateMilestone(Long id) {
+        Milestone nMilestone = Milestones.updateHandler(id);
+        return redirect(routes.Dashboards.showMilestone(nMilestone.project.id, nMilestone.id));
+    }
+
+    @Security.Authenticated(Secured.class)
     public static Result newProject() {
         User u = User.findByEmail(request().username());
         int year = Calendar.getInstance().get(Calendar.YEAR);
@@ -151,12 +179,67 @@ public class DashboardTeacher extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
+    public static Result newMilestoneProject(Long id_discipline, Long id_project) {
+        User u = User.findByEmail(request().username());
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        List<Project> lProjects = new ArrayList<>();
+        lProjects.add(Project.getById(id_project));
+        if (lProjects.size() > 0) {
+            return ok(
+                    views.html.Dashboard.Teacher.new_milestone.render(
+                            u,
+                            null,
+                            lProjects
+                    )
+            );
+        } else {
+            return badRequest(
+                    views.html.error.render(u,
+                            "Não foi encontrada nenhuma disciplina que lecione no corrente ano."
+                    )
+            );
+        }
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result newMilestone() {
+        User u = User.findByEmail(request().username());
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        List<Project> lProjects = Project.allByUserYear(u.getEmail());//Discipline.allByUserYear(u.getEmail(), year);
+        if (lProjects.size() > 0) {
+            return ok(
+                    views.html.Dashboard.Teacher.new_milestone.render(
+                            u,
+                            null,
+                            lProjects
+                    )
+            );
+        } else {
+            return badRequest(
+                    views.html.error.render(u,
+                            "Não foi encontrada nenhuma disciplina que lecione no corrente ano."
+                    )
+            );
+        }
+    }
+
+    @Security.Authenticated(Secured.class)
     public static Result saveProject() {
         Project nProject = Projects.saveHandler();
         if (nProject == null) {
             return DashboardTeacher.newProject();
         } else {
             return redirect(routes.Dashboards.showProject(nProject.discipline.id, nProject.id));
+        }
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result saveMilestone() {
+        Milestone nMilestone = Milestones.saveHandler();
+        if (nMilestone == null) {
+            return DashboardTeacher.newMilestone();
+        } else {
+            return redirect(routes.Dashboards.showMilestone(nMilestone.getProject().discipline.id, nMilestone.id)); //.showProject(nProject.discipline.id, nProject.id));
         }
     }
 
@@ -261,8 +344,6 @@ public class DashboardTeacher extends Controller {
         pathResult = Application.uploadToPath(milestone.getProject().discipline.code + "/TrabPraticos/" +
                                               milestone.getProject().code + "/" +
                                               milestone.code);
-
-        System.out.println(pathResult);
 
         if (pathResult == null || pathResult.isEmpty()){
             return null;

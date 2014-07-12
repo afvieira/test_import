@@ -4,6 +4,7 @@ import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -180,4 +181,13 @@ public class Project extends Model {
                 .findList();
     }
     // TODO: TESTAR [END]
+
+
+
+    public static List<Project> allByUserYear(String emailUser){
+        return find.where()
+                .eq("createdBy.email", emailUser)
+                .le("endDate", new Date())
+                .findList();
+    }
 }
