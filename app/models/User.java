@@ -23,7 +23,6 @@ public class User extends Model {
 
     //Variáveis de instância
     @Id
-    @Constraints.Min(10)
     public Long id;
 
     public String code;
