@@ -123,8 +123,12 @@
             dataSource: {
                 data: allStudents
             },
+            pageable: {
+            pageSize: 7,
+                input: true,
+                numeric: false
+            },
 
-            height: 250,
             sortable: true,
             filterable: true
         });
@@ -150,7 +154,11 @@
             data: projects
         },
 
-        height: 250,
+        pageable: {
+            pageSize: 7,
+            input: true,
+            numeric: false
+        },
         sortable: true,
         filterable: true
     });
@@ -216,9 +224,9 @@
 
     $("#nextMilestones").kendoGrid({
     columns: [
-    {width:45,  title: "Projecto", field: "projectname", template: "<a href='/dashboard/discipline/${id_discipline}/project/${id_project}'>${projectname}</a>" },
-    {width:35,  title: "Etapa",    field: "milestone", template: "<a href='/dashboard/project/${id_project}/milestone/${id_milestone}'>${milestone}</a>" },
-    {width:30,  title: "Entrega",  field: "endDate", filterable: { ui: "datetimepicker" }}
+        {width:45,  title: "Projecto", field: "projectname", template: "<a href='/dashboard/discipline/${id_discipline}/project/${id_project}'>${projectname}</a>" },
+        {width:35,  title: "Etapa",    field: "milestone", template: "<a href='/dashboard/project/${id_project}/milestone/${id_milestone}'>${milestone}</a>" },
+        {width:30,  title: "Entrega",  field: "endDate", filterable: { ui: "datetimepicker" }}
     ],
 
     dataSource: {
@@ -229,7 +237,7 @@
     filterable: true
     });
 
-        var allStudents_school = [];
+    var allStudents_school = [];
     var infoGridStudents = $("#all_school_students").kendoGrid({
 
         dataSource: {
@@ -245,6 +253,7 @@
         filterable: true,
         scrollable: true,
         pageable: {
+            pageSize: 10,
             input: true,
             numeric: false
         },

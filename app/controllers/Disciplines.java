@@ -109,6 +109,5 @@ public class Disciplines extends Controller {
             discipline.update();
         } catch(Exception ex){}
         return ok();
-
     }
 }

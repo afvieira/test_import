@@ -61,6 +61,25 @@
             <div class="content" id="students_panel">
                 <div class="panel radius">
                     <div id="all_students"></div>
+
+                    <br />
+
+                    <div class="small-centered columns">
+                        <dl class="tabs" data-tab>
+                            <dd><a href="#add_students">Adicionar Estudantes ao Projeto</a></dd>
+                        </dl>
+
+                        <div class="tabs-content">
+                            <div class="content" id="add_students">
+                                <div class="panel callout radius">
+                                    <div id="all_school_students"></div><br />
+                                    <input type='submit' onclick='addStudents()' value='Adicionar os Estudantes Selecionados' class='small-centered button radius onTable'>
+                                    <input type='submit' onclick='addAllStudents()' value='Adicionar Todos os Estudantes' class='small-centered button radius onTable'>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
 
@@ -160,27 +179,32 @@
     });
 
     var allStudents = [];
-        @for(student <- project.students){
-            allStudents.push({
-                photo: "",
-                code: "@{student.student.code}",
-                name: "@{student.student.name}",
-                avaliation: "@{student.avaliation}"
-            });
-        };
+    @for(student <- project.students){
+        allStudents.push({
+            photo: "/assets/images/person.png",
+            code: "@{student.student.getCode()}",
+            name: "@{student.student.getName()}",
+            avaliation: "@{student.avaliation}"
+        });
+    };
+        console.log(allStudents);
 
     $("#all_students").kendoGrid({
     columns: [
-    {width:50,  title: "Foto", field: "photo" },
-    {width:35,  title: "Código",    field: "code", style: "text-align: center; font-size: 14px"},
-    {width:35,  title: "Nome",  field: "name", attributes: {"class": "table-cell", style: "text-align: center; font-size: 14px"}},
-    {width:35,  title: "Avaliação",  field: "avaliation", attributes: {"class": "table-cell", style: "text-align: center; font-size: 14px"}}
+    {width:100,  title: "Foto", field: "photo", template: "<center><img src='${photo}' height='100px' width='100px'/></center>" },
+    {width:200,  title: "Código",    field: "code", style: "text-align: center; font-size: 14px"},
+    {width:200,  title: "Nome",  field: "name", attributes: {"class": "table-cell", style: "text-align: center; font-size: 14px"}},
+    {width:200,  title: "Avaliação",  field: "avaliation", attributes: {"class": "table-cell", style: "text-align: center; font-size: 14px"}}
     ],
     dataSource: {
     data: allStudents
     },
 
-    height: 250,
+    pageable: {
+    pageSize: 10,
+    input: true,
+    numeric: false
+    },
     sortable: true,
     filterable: true
     });
@@ -210,5 +234,61 @@
     sortable: true,
     filterable: true
     });
+
+    var allDisciplineStudents = [];
+
+        @for(student <- project.discipline.users){
+            @if(student.userType.equals("Student")){
+            allDisciplineStudents.push ( {
+                    id: "@{student.id}",
+                    code : "@{student.code} ",
+                    name : "@{student.name} "
+                }) ;
+            }
+        };
+
+    $("#all_school_students").kendoGrid({
+    columns: [
+    {width:35,  title: "Código",    field: "code", style: "text-align: center; font-size: 14px",  attributes: { "id": "${id}", "field": "code"}},
+    {width:35,  title: "Nome",  field: "name", attributes: {"class": "table-cell", style: "text-align: center; font-size: 14px"}},
+    ],
+    dataSource: {
+        data: allDisciplineStudents
+    },
+    pageable: {
+    pageSize: 10,
+    input: true,
+    numeric: false
+    },
+
+    selectable: "multiple row",
+    sortable: true,
+    filterable: true
+    });
+
+
+    function addStudents() {
+
+    var search = $("#all_school_students" ).find(".k-state-selected");
+    search.each(function(index, element){
+    var ids = $(element).find("td" ),
+    st = {id: $(ids[0]).attr("id")};
+
+    $.get( "/project/@{project.id}/user/" + st.id + "/add", function( data ) {
+
+    });
+    });
+
+    location.hash = 'students_panel';
+    location.reload();
+    }
+
+    function addAllStudents() {
+    $.get( "/project/@{project.id}/alluser/add", function( data ) {
+
+    });
+    location.hash = 'students_panel';
+    location.reload();
+    }
     </script>
 }

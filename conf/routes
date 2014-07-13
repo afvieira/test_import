@@ -66,6 +66,8 @@ GET         /course/:id_course/disciplines                                      
 GET         /course/:id_course/discipline/:id_discipline                                                 controllers.Disciplines.showByCourse(id_course: Long, id_discipline: Long)
 
 GET         /discipline/:id_discipline/user/:id_user/add                                                 controllers.Disciplines.addStudentDiscipline(id_discipline: Long, id_user: Long)
+GET         /project/:id_project/user/:id_user/add                                                      controllers.Projects.addStudent(id_project: Long, id_user: Long)
+GET         /project/:id_project/alluser/add                                                             controllers.Projects.addAllStudent(id_project: Long)
 
 # Turnos
 
