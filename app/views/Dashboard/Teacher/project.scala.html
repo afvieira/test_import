@@ -3,46 +3,79 @@
 @main(user) {
     <h2>Projeto: <b>@project.title</b></h2>
 
-    <div class="row">
-        <div class="large-12 columns">
-            <div class="panel radius">
-                <h3>Informação</h3>
-                <div class="row">
-                    <div class="large-2 medium-6 columns">
-                        <label>Projeto da disciplina:
-                            <p><a href="/dashboard/discipline/@{project.discipline.id}">@project.discipline.name</a></p>
-                        </label>
-                    </div>
-                    <div class="large-4 medium-6 columns">
-                        <label>Número de etapas
-                            <p>@project.milestones.size()</p>
-                        </label>
-                    </div>
-                    <div class="large-4 medium-6 columns">
-                        <label>Curso
-                            <p>@project.discipline.course.description</p>
-                        </label>
-                    </div>
-                    <div class="large-2 medium-6 columns">
-                        <label>Ano Lectivo:
-                            <p>@project.discipline.year</p>
-                        </label>
-                    </div>
-                    <div class="large-12 columns">
-                        <label><b>Descrição</b>
-                            <p class="panel callout radius">
-                            @if(project.description == null || project.description.equals("")){
-                                Nenhuma descrição acerca do projeto.
-                            }else{
-                                @project.description
-                            }
-                            </p>
-                        </label>
+    <div class="small-centered columns">
+
+        <dl class="tabs" data-tab>
+            <dd class="active"><a href="#ident">Identificação</a></dd>
+            <dd><a href="#milestones_panel">Milestones</a></dd>
+            <dd><a href="#students_panel">Alunos</a></dd>
+            <dd><a href="#groups_panel">Grupos</a></dd>
+        </dl>
+
+        <div class="tabs-content">
+            <div class="content active" id="ident">
+                <div class="panel radius">
+                    <h3>Informação</h3>
+                    <div class="row">
+                        <div class="large-2 medium-6 columns">
+                            <label>Projeto da disciplina:
+                                <p><a href="/dashboard/discipline/@{project.discipline.id}">@project.discipline.name</a></p>
+                            </label>
+                        </div>
+                        <div class="large-4 medium-6 columns">
+                            <label>Número de etapas
+                                <p>@project.milestones.size()</p>
+                            </label>
+                        </div>
+                        <div class="large-4 medium-6 columns">
+                            <label>Curso
+                                <p>@project.discipline.course.description</p>
+                            </label>
+                        </div>
+                        <div class="large-2 medium-6 columns">
+                            <label>Ano Lectivo:
+                                <p>@project.discipline.year</p>
+                            </label>
+                        </div>
+                        <div class="large-12 columns">
+                            <label><b>Descrição</b>
+                                <p class="panel callout radius">
+                                @if(project.description == null || project.description.equals("")){
+                                    Nenhuma descrição acerca do projeto.
+                                }else{
+                                    @project.description
+                                }
+                                </p>
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <div class="content" id="milestones_panel">
+                <div class="panel radius">
+                    <div id="all_milestones"></div>
+                </div>
+            </div>
+
+            <div class="content" id="students_panel">
+                <div class="panel radius">
+                    <div id="all_students"></div>
+                </div>
+            </div>
+
+            <div class="content" id="groups_panel">
+                <div class="panel radius">
+                    <div id="all_groups"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
             <a href="@{routes.DashboardTeacher.updatingProject(project.id)}" class="button tiny radius">Editar Projeto</a>
-            <a href="@{routes.DashboardTeacher.updatingProject(project.discipline.id)}" class="button tiny radius">Voltar à Disciplina</a>
+            <a href="@{routes.Dashboards.showDiscipline(project.discipline.id)}" class="button tiny radius">Voltar à Disciplina</a>
         </div>
     </div>
 
@@ -96,4 +129,86 @@
         </div>
 
     </div>
+
+    <script>
+    var milestones = [];
+        @for(milestone <- allMilestones) {
+            milestones.push({
+            id_milestone: "@milestone.id",
+            id_project: "@milestone.project.id",
+            id_discipline: "@milestone.project.discipline.id",
+            projectname: "@milestone.project.code",
+            milestone: "@milestone.code",
+            initDate: "@milestone.startDate.format("YYYY-MM-dd")",
+            endDate: "@milestone.endDate.format("YYYY-MM-dd")"
+            });
+        };
+
+    $("#all_milestones").kendoGrid({
+    columns: [
+    {width:35,  title: "Etapa",    field: "milestone", template: "<a href='/dashboard/project/${id_project}/milestone/${id_milestone}'>${milestone}</a>" },
+    {width:30,  title: "Início",  field: "initDate", filterable: { ui: "datetimepicker" }},
+    {width:30,  title: "Entrega",  field: "endDate", filterable: { ui: "datetimepicker" }}
+    ],
+
+    dataSource: {
+    data:milestones
+    },
+    height:250,
+    sortable: true,
+    filterable: true
+    });
+
+    var allStudents = [];
+        @for(student <- project.students){
+            allStudents.push({
+                photo: "",
+                code: "@{student.student.code}",
+                name: "@{student.student.name}",
+                avaliation: "@{student.avaliation}"
+            });
+        };
+
+    $("#all_students").kendoGrid({
+    columns: [
+    {width:50,  title: "Foto", field: "photo" },
+    {width:35,  title: "Código",    field: "code", style: "text-align: center; font-size: 14px"},
+    {width:35,  title: "Nome",  field: "name", attributes: {"class": "table-cell", style: "text-align: center; font-size: 14px"}},
+    {width:35,  title: "Avaliação",  field: "avaliation", attributes: {"class": "table-cell", style: "text-align: center; font-size: 14px"}}
+    ],
+    dataSource: {
+    data: allStudents
+    },
+
+    height: 250,
+    sortable: true,
+    filterable: true
+    });
+
+    var allGroups = [];
+        @for(student <- project.groups){
+            var namesGroups = "";
+                @for(groupStudent <- student.group.students){
+                    namesGroups += @groupStudent.name + ", "
+                }
+            allStudents.push({
+            code: "@{student.group.code}",
+            name: namesGroups
+            });
+        };
+
+    $("#all_groups").kendoGrid({
+    columns: [
+        {width:35,  title: "Código",    field: "code", style: "text-align: center; font-size: 14px"},
+        {width:35,  title: "Nomes",  field: "name", attributes: {"class": "table-cell", style: "text-align: center; font-size: 14px"}},
+    ],
+    dataSource: {
+    data: allGroups
+    },
+
+    height: 250,
+    sortable: true,
+    filterable: true
+    });
+    </script>
 }

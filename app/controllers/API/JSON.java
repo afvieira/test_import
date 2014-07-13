@@ -44,6 +44,14 @@ public class JSON extends Controller {
         return notFound();
     }
 
+    public static Result GetStudents(){
+        List<UserView> result = new ArrayList<>();
+        for(User p: User.findAllStudents()){
+            result.add(new UserView(p));
+        }
+        return ok(Json.toJson(result));
+    }
+
     //<editor-fold desc="Courses">
     public static Result GetCourses() {
         List<CourseView> result = new ArrayList<>();
