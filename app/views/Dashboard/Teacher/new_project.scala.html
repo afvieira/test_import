@@ -1,4 +1,4 @@
-@(user: User, project: Project, disciplinas: List[Discipline])
+@(user: User, project: Project, disciplinas: List[Discipline], filesOfProject: List[java.io.File])
 
 @import helper._
 
@@ -103,10 +103,28 @@
                     <thead>
                         <tr>
                             <th style="text-align : left ; width : 10 %">Ficheiro</th>
-                            <th style="text-align : left ; width : 30 %">Tipo</th>
+                            <th style="text-align : left ; width : 30 %">Tamanho</th>
                             <th style="text-align : left ; width : 25 %">Data</th>
                         </tr>
                     </thead>
+                    <tbody id="tabela_anexos_body">
+                        @if(filesOfProject != null && filesOfProject.size() > 0){
+                            @for(file <- filesOfProject) {
+                                <tr>
+                                    <td>
+                                        <a href="/dashboard/discipline/@project.discipline.id/project/@project.id/file/@file.getName()">
+                                            @file.getName()
+                                        </a>
+                                    </td>
+                                    <td>@file.length() bytes</td>
+                                    <td>@{
+                                        val format = new java.text.SimpleDateFormat("yyyy-MM-dd")
+                                        format.format(file.lastModified())
+                                    }</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
                 </table>
 
                 <hr/>
@@ -237,32 +255,39 @@
         <script>
             var allFiles = [];
 
+            var rightNow = new Date();
+            var date = rightNow.toISOString().slice(0,10);//.replace(/-/g,"");
+
             Dropzone.options.versionMilestone = {
-            paramName: "file", // The name that will be used to transfer the file
-            maxFilesize: 100, // MB
-            //accept: function(file, done) {
-            //    done();
-            //},
-            complete: function(file, done){
-            tempFile = {
-            'name': file.name,
-            'type': 'temp file',
-            'date': 'temp date'
-            }
-            allFiles.push(tempFile);
-            console.log(file.xhr.response);
-            }
+                paramName: "file", // The name that will be used to transfer the file
+                maxFilesize: 100, // MB
+
+                init: function() {
+                    this.on("addedfile", function(file) {
+
+                        var tempFile = {
+                        'name': "<a href=\"/dashboard/discipline/@{if(project != null && project.discipline != null) project.discipline.id}/project/@{if(project != null) project.id}/file/" + file.name + "\">" + file.name + "</a>",
+                        'length': file.size,
+                        'date': date
+                        }
+
+                        var newRow = "<tr><td>" + tempFile.name + "</td><td>" + tempFile.length + "</td><td>" + tempFile.date + "</td></tr>"
+                        $("#tabela_anexos_body").append(newRow);
+                    });
+                }
             };
 
-            $('#tabela_anexos').DataTable( {
-            language: {url: "@routes.Assets.at("js/Portuguese.json")"},
-            data: allFiles,
-            columns: [
-            { data: 'name' },
-            { data: 'type' },
-            { data: 'date' }
-            ]
-            });
+            function uploadFile(){
+                $('#tabela_anexos').DataTable( {
+                language: {url: "@routes.Assets.at("js/Portuguese.json")"},
+                    columns: [
+                    { data: 'name' },
+                    { data: 'length' },
+                    { data: 'date' }
+                    ]
+                    });
+            }
+
         </script>
     </div>
 </div>

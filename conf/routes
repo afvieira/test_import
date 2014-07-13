@@ -80,6 +80,7 @@ GET         /dashboard/discipline/:id_discipline/project/:id                    
 GET         /dashboard/discipline/:id_discipline/project/new/                                            controllers.Dashboards.createProject(id_discipline: Long)
 POST        /dashboard/discipline/:id_discipline/project/:id/delete                                      controllers.Dashboards.deleteProject(id_discipline: Long, id: Long)
 POST        /dashboard/discipline/:id_discipline/project/:id_project/upload                              controllers.DashboardTeacher.uploadFileToProject(id_discipline: Long, id_project: Long)
+GET         /dashboard/discipline/:id_discipline/project/:id_project/file/:filename                      controllers.DashboardTeacher.downloadFilesOfProject(id_discipline: Long, id_project: Long, filename: String)
 
 # Dashboard Milestones
 GET         /dashboard/discipline/:id_discipline/project/:id_project/milestone/new                       controllers.DashboardTeacher.newMilestoneProject(id_discipline: Long, id_project: Long)

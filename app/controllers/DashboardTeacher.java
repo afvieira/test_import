@@ -1,13 +1,15 @@
 package controllers;
 
 import models.*;
+import play.Play;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 
+import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -94,7 +96,8 @@ public class DashboardTeacher extends Controller {
                 views.html.Dashboard.Teacher.new_project.render(
                         u,
                         null,
-                        lDiscipline
+                        lDiscipline,
+                        null
                 )
         );
     }
@@ -127,12 +130,15 @@ public class DashboardTeacher extends Controller {
         List<Discipline> lDisciplines = new ArrayList<>();
         Project project = Project.getById(id);
         lDisciplines.add(project.discipline);
+        List<File> files = filesOfProject(id);
+
         if (lDisciplines.size() > 0) {
             return ok(
                     views.html.Dashboard.Teacher.new_project.render(
                             u,
                             project,
-                            lDisciplines
+                            lDisciplines,
+                            files
                     )
             );
         } else {
@@ -166,7 +172,8 @@ public class DashboardTeacher extends Controller {
                     views.html.Dashboard.Teacher.new_project.render(
                             u,
                             null,
-                            lDisciplines
+                            lDisciplines,
+                            null
                     )
             );
         } else {
@@ -322,7 +329,7 @@ public class DashboardTeacher extends Controller {
         Project p = Project.getById(id_project);
         String pathResult;
 
-        String pathToSave = p.discipline.code + "_" + p.discipline.year + "_" + p.discipline.id.toString() +
+        String pathToSave = "Archive/" + p.discipline.code + "_" + p.discipline.year + "_" + p.discipline.id.toString() +
                             "/TrabPraticos/" + p.code + "_" + p.id.toString();
 
         pathResult = Application.uploadToPath(pathToSave);
@@ -334,6 +341,39 @@ public class DashboardTeacher extends Controller {
         }else{
             return controllers.DashboardTeacher.updatingProject(p.id);
         }
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static List<File> filesOfProject(Long id_project) {
+        Project p = Project.getById(id_project);
+        List<File> filesToReturn = new ArrayList<File>();
+
+        String path = "Archive/" + p.discipline.code + "_" + p.discipline.year + "_" + p.discipline.id.toString() +
+                      "/TrabPraticos/" + p.code + "_" + p.id.toString();
+
+        File files = Play.application().getFile(path);
+
+        if (files != null && files.listFiles() != null){
+            for(File f : files.listFiles()){
+                filesToReturn.add(f);
+            }
+            return filesToReturn;
+        }else{
+            return null;
+        }
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result downloadFilesOfProject(Long id_discipline, Long id_project, String filename) {
+        Project p = Project.getById(id_project);
+
+        String path = "Archive/" + p.discipline.code + "_" + p.discipline.year + "_" + p.discipline.id.toString() +
+                "/TrabPraticos/" + p.code + "_" + p.id.toString();
+
+        response().setContentType("application/x-download");
+        response().setHeader("Content-Disposition", "attachment; filename=" + filename);
+
+        return ok(new java.io.File(path + "/" + filename));
     }
 
     @Security.Authenticated(Secured.class)

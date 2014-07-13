@@ -117,11 +117,11 @@ public class Application extends Controller {
             File file = milestoneFile.getFile();
 
             // Cria as directorias se necessário
-            File createDirectories = new File("Archive/" + relativePath);
+            File createDirectories = new File(relativePath);
             createDirectories.mkdirs();
 
             // Move o ficheiro para a nova directoria
-            File newFile = new File("Archive/" + relativePath + "/" + new GregorianCalendar().getTimeInMillis() + "_" + fileName);
+            File newFile = new File(relativePath + "/" + fileName);
 
             // Renomeia
             file.renameTo(newFile);
