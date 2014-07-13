@@ -100,4 +100,15 @@ public class Disciplines extends Controller {
                 )
         );
     }
+
+    public static Result addStudentDiscipline(Long id_discipline, Long id_student){
+        try {
+            User user = User.getById(id_student);
+            Discipline discipline = Discipline.getById(id_discipline);
+            discipline.users.add(user);
+            discipline.update();
+        } catch(Exception ex){}
+        return ok();
+
+    }
 }

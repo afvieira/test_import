@@ -51,6 +51,25 @@
             <div class="content" id="students_panel">
                 <div class="panel radius">
                     <div id="all_students"></div>
+
+                    <br />
+
+                    <div class="small-centered columns">
+                        <dl class="tabs" data-tab>
+                            <dd><a href="#add_students">Adicionar Estudantes à Disciplina</a></dd>
+                        </dl>
+
+                        <div class="tabs-content">
+                            <div class="content" id="add_students">
+                                <div class="panel callout radius">
+                                    <div id="all_school_students"></div><br />
+                                    <input type='submit' onclick='addAllStudents()' value='Adicionar os Estudantes Selecionados' class='small-centered button radius onTable'>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
 
@@ -94,7 +113,7 @@
             }
         };
 
-        $("#all_students").kendoGrid({
+        var studentsDiscipline = $("#all_students").kendoGrid({
             columns: [
                 {width:50,  title: "Foto", field: "photo" },
                 {width:35,  title: "Código",    field: "code", style: "text-align: center; font-size: 14px"},
@@ -203,12 +222,71 @@
     ],
 
     dataSource: {
-    data:nextMilestones,
+        data:nextMilestones
     },
     height:150,
     sortable: true,
     filterable: true
     });
+
+        var allStudents_school = [];
+    var infoGridStudents = $("#all_school_students").kendoGrid({
+
+        dataSource: {
+            type: "json",
+
+            transport: {
+                read: "http://0.0.0.0:9000/API/V1/users/students.json"
+            },
+            pageSize: 10
+        },
+
+        sortable: true,
+        filterable: true,
+        scrollable: true,
+        pageable: {
+            input: true,
+            numeric: false
+        },
+        selectable: "multiple row",
+        columns: [
+            {title: "Código",    field: "code", attributes: { "id": "${id}", "field": "code"}},
+            {title: "Nome",  field: "name", attributes: { "field": "name"}},
+            {title: "Email",  field: "email",  attributes: { "field": "email"}}
+        ]
+    });
+
+
+    function addAllStudents() {
+
+        var search = $("#all_school_students" ).find(".k-state-selected");
+        search.each(function(index, element){
+            var ids = $(element).find("td" ),
+                st = {id: $(ids[0]).attr("id")};
+            st["photo"] = "";
+            ids.each(function(index2, element2){
+                var f = $(element2).attr("field");
+                var info = $(element2).text();
+                switch(f){
+                case "code":
+                st["code"] = info;
+                case "name":
+                st["name"] = info;
+                case "email":
+                st["email"] = info;
+                break;
+                }
+            });
+
+            $.get( "/discipline/@{discipline.id}/user/" + st.id + "/add", function( data ) {
+
+            });
+        });
+    location.hash = 'students_panel';
+    location.reload();
+
+    }
+
 
     </script>
 }

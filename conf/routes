@@ -65,6 +65,8 @@ POST        /users/:id/update                                                   
 GET         /course/:id_course/disciplines                                                               controllers.Disciplines.allByCourse(id_course: Long)
 GET         /course/:id_course/discipline/:id_discipline                                                 controllers.Disciplines.showByCourse(id_course: Long, id_discipline: Long)
 
+GET         /discipline/:id_discipline/user/:id_user/add                                                 controllers.Disciplines.addStudentDiscipline(id_discipline: Long, id_user: Long)
+
 # Turnos
 
 #GET         /course/:id_course/discipline/:id_discipline/shifts                                          controllers.Shifts.all(id_course: Long, id_discipline: Long)
