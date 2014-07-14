@@ -4,6 +4,7 @@ import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -52,6 +53,13 @@ public class Project extends Model {
 
     //Construtor
     public Project() {
+    }
+
+    public void addStudent(StudentProject student){
+        if (this.students == null){
+            this.students = new ArrayList<>();
+        }
+        this.students.add(student);
     }
 
     //ToString

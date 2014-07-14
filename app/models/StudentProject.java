@@ -36,6 +36,13 @@ public class StudentProject extends Model {
         this.student = student;
     }
 
+    public StudentProject(User student, Project project) {
+        this.student = student;
+        this.project = project;
+        this.avaliation = null;
+    }
+
+
     public StudentProject(Long id, User student, Project project, Integer avaliation) {
         this.id = id;
         this.student = student;
@@ -75,5 +82,12 @@ public class StudentProject extends Model {
         return find.where()
                 .eq("student.email", emailuser)
                 .findList();
+    }
+
+    public static StudentProject getByProjectStudent(Long id_project, String email){
+        return find.where()
+                .eq("student.email", email)
+                .eq("project.id", id_project)
+                .findUnique();
     }
 }
