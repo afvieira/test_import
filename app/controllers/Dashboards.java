@@ -34,6 +34,7 @@ public class Dashboards extends Controller {
     private static Result routing(Result callMethodStudent, Result callMethodTeacher, Result callMethodAdmininstrator){
         Result result = null;
         User u = User.findByEmail(request().username());
+
         if(u != null){
             switch(u.userType){
                 case "Teacher":

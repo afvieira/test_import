@@ -106,13 +106,16 @@ public class DashboardTeacher extends Controller {
         User u = User.findByEmail(request().username());
         List<Project> lProjects = new ArrayList<>();
         Milestone milestone = Milestone.getById(id_milestone);
+        List<File> files = filesOfMilestone(id_milestone);
+
         lProjects.add(milestone.project);
         if (lProjects.size() > 0){
             return ok(
                     views.html.Dashboard.Teacher.new_milestone.render(
                             u,
                             milestone,
-                            lProjects
+                            lProjects,
+                            files
                     )
             );
         } else {
@@ -196,7 +199,8 @@ public class DashboardTeacher extends Controller {
                     views.html.Dashboard.Teacher.new_milestone.render(
                             u,
                             null,
-                            lProjects
+                            lProjects,
+                            null
                     )
             );
         } else {
@@ -218,7 +222,8 @@ public class DashboardTeacher extends Controller {
                     views.html.Dashboard.Teacher.new_milestone.render(
                             u,
                             null,
-                            lProjects
+                            lProjects,
+                            null
                     )
             );
         } else {
@@ -314,7 +319,7 @@ public class DashboardTeacher extends Controller {
         return TODO;
     }
 
-    @Security.Authenticated(Secured.class)
+    /*@Security.Authenticated(Secured.class)
     public static Result uploadTempFile(){
         String pathFile = Application.uploadToPath("UploadFiles/temp/");
         if (pathFile != null){
@@ -322,6 +327,41 @@ public class DashboardTeacher extends Controller {
         } else {
             return badRequest();
         }
+    }*/
+
+    @Security.Authenticated(Secured.class)
+    public static List<File> filesOfMilestone(Long id_milestone) {
+        Milestone m = Milestone.getById(id_milestone);
+        List<File> filesToReturn = new ArrayList<File>();
+
+        String path = "Archive/" + m.project.discipline.code + "_" + m.project.discipline.year + "_" + m.project.discipline.id.toString() +
+                "/TrabPraticos/" + m.project.code + "_" + m.project.id.toString() + "/" + m.code + "_" + m.id.toString();
+
+        File files = Play.application().getFile(path);
+
+        if (files != null && files.listFiles() != null){
+            for(File f : files.listFiles()){
+                if(!f.isDirectory()){
+                    filesToReturn.add(f);
+                }
+            }
+            return filesToReturn;
+        }else{
+            return null;
+        }
+    }
+
+    @Security.Authenticated(Secured.class)
+    public static Result downloadFilesOfMilestone(Long id_Project, Long id_Milestone, String filename) {
+        Milestone m = Milestone.getById(id_Milestone);
+
+        String path = "Archive/" + m.project.discipline.code + "_" + m.project.discipline.year + "_" + m.project.discipline.id.toString() +
+                "/TrabPraticos/" + m.project.code + "_" + m.project.id.toString() + "/" + m.code + "_" + m.id.toString();
+
+        response().setContentType("application/x-download");
+        response().setHeader("Content-Disposition", "attachment; filename=" + filename);
+
+        return ok(new java.io.File(path + "/" + filename));
     }
 
     @Security.Authenticated(Secured.class)
@@ -355,7 +395,9 @@ public class DashboardTeacher extends Controller {
 
         if (files != null && files.listFiles() != null){
             for(File f : files.listFiles()){
-                filesToReturn.add(f);
+                if(!f.isDirectory()){
+                    filesToReturn.add(f);
+                }
             }
             return filesToReturn;
         }else{
@@ -378,18 +420,18 @@ public class DashboardTeacher extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result uploadFileMilestone(Long id_project, Long id_milestone) {
-        Milestone milestone = Milestone.getById(id_milestone);
+        Milestone m = Milestone.getById(id_milestone);
         String pathResult;
 
-        pathResult = Application.uploadToPath(milestone.getProject().discipline.code + "/TrabPraticos/" +
-                                              milestone.getProject().code + "/" +
-                                              milestone.code);
+        String pathToSave = "Archive/" + m.project.discipline.code + "_" + m.project.discipline.year + "_" + m.project.discipline.id.toString() +
+                "/TrabPraticos/" + m.project.code + "_" + m.project.id.toString() + "/" + m.code + "_" + m.id.toString();
+
+        pathResult = Application.uploadToPath(pathToSave);
 
         if (pathResult == null || pathResult.isEmpty()){
             return null;
         }else{
-            return controllers.Dashboards.showProject(milestone.getProject().discipline.id,
-                                                      milestone.getProject().id);
+            return controllers.DashboardTeacher.updatingMilestone(id_project, id_milestone);
         }
     }
 

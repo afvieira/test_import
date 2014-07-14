@@ -5,13 +5,14 @@
 <!-- MENUs -->
 @Menu() = {
 
-    <li><a href="/dashboard" class="">DashBoard</a></li>
-
     @if(user != null && user.getUserType() == User.UserType.Administrator.toString()) {
+        <li><a href="/users" class="">Utilizadores</a></li>
         <li><a href="/courses" class="">Cursos</a></li>
         <li><a href="/disciplines" class="">Disciplinas</a></li>
         <li><a href="/shifts" class="">Turnos</a></li>
         <li><a href="/projects" class="">Trabalhos Práticos</a></li>
+    }else{
+        <li><a href="/dashboard" class="">DashBoard</a></li>
     }
 
     <li><a href="/API_help" class="">Ajuda API</a></li>

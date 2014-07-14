@@ -160,6 +160,24 @@ public class DashboardStudent extends Controller {
 
     @Security.Authenticated(Secured.class)
     public static Result uploadFileMilestone(Long id_project, Long id_milestone) {
+        Milestone m = Milestone.getById(id_milestone);
+        String pathResult;
+        User u = User.findByEmail(request().username());
+
+        String pathToSave = "Archive/" + m.project.discipline.code + "_" + m.project.discipline.year + "_" + m.project.discipline.id.toString() +
+                "/TrabPraticos/" + m.project.code + "_" + m.project.id.toString() + "/" + m.code + "_" + m.id.toString() + "/" + u.code + "_" + u.name;
+
+        pathResult = Application.uploadToPath(pathToSave);
+
+        if (pathResult == null || pathResult.isEmpty()){
+            return null;
+        }else{
+            return ok();
+        }
+    }
+/*
+    @Security.Authenticated(Secured.class)
+    public static Result uploadFileMilestone(Long id_project, Long id_milestone) {
         String pathFile = Application.uploadToPath("UploadFiles/");
         if (pathFile != null){
             StudentMilestone sm = StudentMilestone.getByUserMilestone(request().username(), id_milestone);
@@ -170,7 +188,7 @@ public class DashboardStudent extends Controller {
         } else {
             return badRequest();
         }
-    }
+    }*/
 
     // Não faz sentido o aluno ver as notas da milestone dos restantes alunos?
     @Security.Authenticated(Secured.class)

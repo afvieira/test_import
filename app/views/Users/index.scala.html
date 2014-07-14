@@ -36,7 +36,7 @@
         alunos.push({id: "@{s.id}",
             code: "@{s.code}",
             name: "<a href='/users/@{s.id}'>@{s.name}</a>",
-            email: "@{s.email}'>@{s.email}",
+            email: "<a href='mailto:@{s.email}'>@{s.email}</a>",
             button: "<input type='submit' id=@{s.id} onclick='removerAlunos(@{s.id})' value='Apagar' class='small-centered button radius onTable'>"
             })
         };

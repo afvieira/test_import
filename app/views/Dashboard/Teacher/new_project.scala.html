@@ -256,7 +256,7 @@
             var allFiles = [];
 
             var rightNow = new Date();
-            var date = rightNow.toISOString().slice(0,10);//.replace(/-/g,"");
+            var date = rightNow.toISOString().slice(0,10);
 
             Dropzone.options.versionMilestone = {
                 paramName: "file", // The name that will be used to transfer the file
@@ -271,22 +271,11 @@
                         'date': date
                         }
 
-                        var newRow = "<tr><td>" + tempFile.name + "</td><td>" + tempFile.length + "</td><td>" + tempFile.date + "</td></tr>"
+                        var newRow = "<tr><td>" + tempFile.name + "</td><td>" + tempFile.length + " bytes</td><td>" + tempFile.date + "</td></tr>"
                         $("#tabela_anexos_body").append(newRow);
                     });
                 }
             };
-
-            function uploadFile(){
-                $('#tabela_anexos').DataTable( {
-                language: {url: "@routes.Assets.at("js/Portuguese.json")"},
-                    columns: [
-                    { data: 'name' },
-                    { data: 'length' },
-                    { data: 'date' }
-                    ]
-                    });
-            }
 
         </script>
     </div>
