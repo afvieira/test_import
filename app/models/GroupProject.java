@@ -40,6 +40,51 @@ public class GroupProject extends Model {
     public GroupProject() {
     }
 
+    public GroupProject(Project project) {
+        this.project = project;
+        this.State = StateOfProject.AT;
+    }
+
+    public GroupProject(Long id, Group group, Project project, String path, StateOfProject state) {
+        this.id = id;
+        this.group = group;
+        this.project = project;
+        this.path = path;
+        State = state;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public StateOfProject getState() {
+        return State;
+    }
+
+    public void setState(StateOfProject state) {
+        State = state;
+    }
+
     //ToString
     @Override
     public String toString() {
@@ -63,8 +108,15 @@ public class GroupProject extends Model {
         return find.all();
     }
 
-    public static void create(GroupProject groupProject){
+    public static GroupProject saveCourse(GroupProject groupProject, Long group_id){
+        groupProject.group = Group.getById(group_id);
+        groupProject.update();
+        return groupProject;
+    }
+
+    public static GroupProject create(GroupProject groupProject){
         groupProject.save();
+        return groupProject;
     }
 
     public static void delete(Long id){
@@ -77,4 +129,12 @@ public class GroupProject extends Model {
                 .eq("student.email", emailuser)
                 .orderBy("lastUpdate desc")
                 .findList();
-    }}
+    }
+
+    public static GroupProject findById(Long id){
+        return find.where()
+                .eq("id", id)
+                .findUnique();
+    }
+
+}

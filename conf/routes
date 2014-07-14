@@ -68,7 +68,7 @@ GET         /course/:id_course/discipline/:id_discipline                        
 GET         /discipline/:id_discipline/user/:id_user/add                                                 controllers.Disciplines.addStudentDiscipline(id_discipline: Long, id_user: Long)
 GET         /project/:id_project/user/:id_user/add                                                      controllers.Projects.addStudent(id_project: Long, id_user: Long)
 GET         /project/:id_project/alluser/add                                                             controllers.Projects.addAllStudent(id_project: Long)
-
+POST        /project/:id_project/group/user/add                                                         controllers.Projects.addUsersGroup(id_project: Long)
 # Turnos
 
 #GET         /course/:id_course/discipline/:id_discipline/shifts                                          controllers.Shifts.all(id_course: Long, id_discipline: Long)

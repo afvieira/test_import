@@ -72,7 +72,7 @@
                         <div class="tabs-content">
                             <div class="content" id="add_students">
                                 <div class="panel callout radius">
-                                    <div id="all_school_students"></div><br />
+                                    <div id="all_school_students_2"></div><br />
                                     <input type='submit' onclick='addStudents()' value='Adicionar os Estudantes Selecionados' class='small-centered button radius onTable'>
                                     <input type='submit' onclick='addAllStudents()' value='Adicionar Todos os Estudantes' class='small-centered button radius onTable'>
                                 </div>
@@ -86,6 +86,52 @@
             <div class="content" id="groups_panel">
                 <div class="panel radius">
                     <div id="all_groups"></div>
+
+                    <br />
+
+                    <div class="small-centered columns">
+                        <dl class="tabs" data-tab>
+                            <dd><a href="#add_groups">Adicionar Grupos ao Projeto</a></dd>
+                        </dl>
+
+                        <div class="tabs-content">
+                            <div class="content" id="add_groups">
+                                <div class="panel callout radius">
+                                    <div id="all_school_students"></div><br />
+                                    <div class="row">
+                                        <div class="large-4 columns">
+                                            <label>A que grupo?
+                                                <input name="code_group" type='number' value="Código do Grupo">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <input type='submit' onclick='addStudentsToGroup()' value='Adicionar os Estudantes Selecionados a um grupo' class='small-centered button radius onTable'>
+
+                                    <br /><br /><br />
+                                    <div class="row">
+                                        <div class="large-4 columns">
+                                        <label>Quantos grupos?
+                                            <input name="number_groups" type='number' value="Quantos grupos?">
+                                        </label>
+                                        </div>
+
+                                        <div class="large-4 columns">
+                                            <label>Quantos elementos?
+                                                <input name="number_elements" type='number' value="Quantos elementos?">
+                                            </label>
+                                        </div>
+
+                                        <div class="large-4 columns">
+                                            <label>Gerar Aleatoriamente?</label>
+                                                <input name="random_generator" type="checkbox"><label>Sim</label>
+                                        </div>
+                                    </div>
+                                    <input type='submit' onclick='addGroups()' value='Adicionar grupos' class='small-centered button radius onTable'>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -187,7 +233,6 @@
             avaliation: "@{student.avaliation}"
         });
     };
-        console.log(allStudents);
 
     $("#all_students").kendoGrid({
     columns: [
@@ -212,13 +257,16 @@
     var allGroups = [];
         @for(student <- project.groups){
             var namesGroups = "";
-                @for(groupStudent <- student.group.students){
+            @if(student.group != null && student.group.students != null) {
+                @for(groupStudent <- student.group.students) {
                     namesGroups += @groupStudent.name + ", "
                 }
+
             allStudents.push({
             code: "@{student.group.code}",
             name: namesGroups
             });
+            }
         };
 
     $("#all_groups").kendoGrid({
@@ -266,6 +314,25 @@
     filterable: true
     });
 
+    $("#all_school_students_2").kendoGrid({
+    columns: [
+    {width:35,  title: "Código",    field: "code", style: "text-align: center; font-size: 14px",  attributes: { "id": "${id}", "field": "code"}},
+    {width:35,  title: "Nome",  field: "name", attributes: {"class": "table-cell", style: "text-align: center; font-size: 14px"}},
+    ],
+    dataSource: {
+    data: allDisciplineStudents
+    },
+    pageable: {
+    pageSize: 10,
+    input: true,
+    numeric: false
+    },
+
+    selectable: "multiple row",
+    sortable: true,
+    filterable: true
+    });
+
 
     function addStudents() {
 
@@ -290,5 +357,36 @@
     location.hash = 'students_panel';
     location.reload();
     }
+
+
+        function addStudentsToGroup() {
+            var search = $("#all_school_students" ).find(".k-state-selected" ),
+                students_info = [];
+            search.each(function(index, element){
+                var ids = $(element).find("td" ),
+                st = {id: $(ids[0]).attr("id")};
+                students_info.push(st);
+            });
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: "/project/@{project.id}/group/user/add",
+                dataType: 'json',
+                async: false,
+                data: JSON.stringify({students: students_info}),
+                success: function(data) {
+                console.log("TESTE");
+                console.log(data);
+                },
+                failure: function(errMsg) {
+                console.log("TESTE2");
+                console.log(errMsg);
+                }
+            });
+        }
+
+
+
     </script>
 }

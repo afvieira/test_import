@@ -1,13 +1,19 @@
 package controllers;
 
-import models.Discipline;
-import models.Project;
-import models.StudentProject;
-import models.User;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import models.*;
 import play.data.Form;
+import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Random;
 
 /**
  * Created by afv on 25/04/14.
@@ -141,6 +147,59 @@ public class Projects extends Controller {
             System.out.println(ex);
         }
         return ok();
+    }
+
+    @BodyParser.Of(BodyParser.Json.class)
+    public static Result addUsersGroup(Long id_project){
+
+        JsonNode json = request().body().asJson();
+        if(json == null) {
+            return badRequest("Expecting Json data");
+        } else {
+            try {
+                JsonNode students = json.findPath("students");
+                if (students == null) {
+                    return badRequest("Missing parameter [students]");
+                } else {
+                    Project project = Project.getById(id_project);
+                    Group g = new Group(project.discipline, generateRandomWords(8), "", 5, "", false);
+                    Iterator<JsonNode> itStudents = students.elements();
+                    while(itStudents.hasNext()){
+                        JsonNode sID = (JsonNode) itStudents.next();
+                        g.addStudent(User.getById(sID.findPath("id").asLong()));
+                    }
+
+                    g.limitNumber = g.students.size();
+                    g.projects = new ArrayList<>();
+
+                    GroupProject gp = GroupProject.create(new GroupProject(project));
+                    g.addGroup(gp);
+
+                    Group gC = Group.create(g);
+                    GroupProject.saveCourse(gp, gC.id);
+
+                    return ok();
+                }
+            }catch(Exception e){
+                return ok();
+            }
+        }
+    }
+
+    public static String generateRandomWords(int numberOfWords)
+    {
+        String[] randomStrings = new String[numberOfWords];
+        Random random = new Random();
+        for(int i = 0; i < numberOfWords; i++)
+        {
+            char[] word = new char[random.nextInt(8)+3]; // words of length 3 through 10. (1 and 2 letter words are boring.)
+            for(int j = 0; j < word.length; j++)
+            {
+                word[j] = (char)('a' + random.nextInt(26));
+            }
+            randomStrings[i] = new String(word);
+        }
+        return randomStrings.toString();
     }
 
 
