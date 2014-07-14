@@ -4,6 +4,7 @@ import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,6 +50,29 @@ public class Group extends Model {
 
     //Construtor
     public Group() {
+    }
+
+    public Group(Discipline discipline, String code, String description, Integer limitNumber, String passwordRegistration, Boolean closed) {
+        this.discipline = discipline;
+        this.code = code;
+        this.description = description;
+        this.limitNumber = limitNumber;
+        this.passwordRegistration = passwordRegistration;
+        this.closed = closed;
+    }
+
+    public void addStudent(User student){
+        if(this.students == null){
+            this.students = new ArrayList<>();
+        }
+        this.students.add(student);
+    }
+
+    public void addGroup(GroupProject gp){
+        if (this.projects == null){
+            this.projects = new ArrayList<>();
+        }
+        this.projects.add(gp);
     }
 
     public Long getId() {
@@ -170,8 +194,9 @@ public class Group extends Model {
         return find.all();
     }
 
-    public static void create(Group group){
+    public static Group create(Group group){
         group.save();
+        return group;
     }
 
     public static void delete(Long id){
